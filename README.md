@@ -26,7 +26,7 @@ now you should be inside the terminal of the server
 3.  execute:
 
     ```bash
-    sudo apt update && sudo apt full-upgrade && sudo apt install git && cd / && sudo mkdir /bit_server && sudo chown -R pi /bit_server/ && cd /bit_server/ && git clone https://github.com/luca-botti/bit_server_config.git .
+    sudo apt update && sudo apt full-upgrade && sudo apt install git && git config --global user.email luca.botti.00@gmail.com && git config --global user.name luca-botti && cd / && sudo mkdir /bit_server && sudo chown -R pi /bit_server/ && cd /bit_server/ && git clone https://github.com/luca-botti/bit_server_config.git .
     ```
 
     this will clone this repository and start anything for us
