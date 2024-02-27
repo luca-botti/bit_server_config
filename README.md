@@ -63,18 +63,18 @@ now you should be inside the terminal of the server
     1. go to [deconz web page](about:blank) (the true address will be thee host address of the server and the port of the service setted using the secrets .env files)
     2. register using credentials found inside `secrets.txt`
     3. skip adding lights
-    4. go to *Menù (up-left 3 lines) -> Gateway -> Backup options -> load backup*
+    4. go to ***Menù (up-left 3 lines) -> Gateway -> Backup options -> load backup***
     5. load the backup file (could be necessary that you have download the backup file from the server to your local machine)
     6. wait to finish the procedure
-    7. click a button on all remotes and move the motion sensor until it will show up under *Menù -> Sensors*
+    7. click a button on all remotes and move the motion sensor until it will show up under ***Menù -> Sensors***
     8. (bonus) check everything is fine using vncViewer app (all info in secrets files)
 
 9. restoring pihole backup
 
     1. go to [pihole web page](about:blank) (the true address will be thee host address of the server and the port of thee service setted using the secrets .env files)
     2. insert the password and login
-    3. click on *>>* on the upper-left corner if the menù is not extended
-    4. go to *settings -> teleporter -> restore*
+    3. click on ***>>*** on the upper-left corner if the menù is not extended
+    4. go to ***settings -> teleporter -> restore***
     5. load the backup file
 
 
