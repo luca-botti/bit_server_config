@@ -1,3 +1,8 @@
+# TODO
+
+ - add backups encryption and upload to cloud
+
+
 # Instruction for deploy the server
 
 This instructions will deploy a copy of my personal home server and could be used by others with just their backups of the various installed services (HomeAssistant, Deconz and Pihole).
