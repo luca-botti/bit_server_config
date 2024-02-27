@@ -1,0 +1,279 @@
+title: Lights
+path: lights
+cards:
+  
+  # FIX for vertical Monitor
+  - type: vertical-stack
+    
+    cards:
+      
+      # Navigation Menu
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            template: chip_back
+            variables:
+              ulm_chip_back_path: home
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      # Title
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: custom:button-card
+            template: card_title
+            name: Luci
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      # List of rooms
+
+      #Salotto title
+      - type: custom:button-card
+        template: card_title
+        label: Salotto
+
+      
+      #Salotto light total
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.living_lights
+        variables:
+          ulm_card_light_name: Salotto
+          ulm_card_light_icon: mdi:lightbulb-group
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_slider_minSet: 0
+          ulm_card_light_enable_slider_maxSet: 100
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_enable_horizontal: false
+          ulm_card_light_enable_horizontal_wide: false
+          ulm_card_light_enable_color: true
+          ulm_card_light_force_background_color: false
+          ulm_card_light_enable_popup: false
+          ulm_card_light_enable_popup_tap: false
+          # ulm_card_light_color_palette
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Salotto lights grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sala_1
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sala_2
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sala_3
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sala_4
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: switch.smart_switch_20072959117396251h5648e1e928e76c_outlet
+            variables:
+              ulm_card_light_name: Lampada
+              ulm_card_light_icon: mdi:desk-lamp
+
+      #Space
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+
+      #Cucina title
+      - type: custom:button-card
+        template: card_title
+        label: Cucina
+
+      #Cucina light total
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.cucina
+        variables:
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_enable_color: true
+          
+
+      #Space
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+
+      #Sala da pranzo title
+      - type: custom:button-card
+        template: card_title
+        label: Sala da Pranzo
+
+      #Sala da pranzo light total
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.dining_lights
+        variables:
+          ulm_card_light_name: Sala da Pranzo
+          ulm_card_light_icon: mdi:lightbulb-group
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_enable_color: true
+
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Sala da pranzo lights grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sala_da_pranzo
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.lampada
+            variables:
+              ulm_card_light_icon: mdi:floor-lamp-torchiere
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.color_temperature_light_1
+            variables:
+              ulm_card_light_name: Faretto
+              ulm_card_light_icon: mdi:lightbulb-spot
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+
+      #Space
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      
+      #Cameretta title
+      - type: custom:button-card
+        template: card_title
+        label: Cameretta
+
+      
+      #Cameretta light total
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.bedroom_lights
+        variables:
+          ulm_card_light_name: Cameretta
+          ulm_card_light_icon: mdi:lightbulb-group
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_enable_color: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Cameretta lights grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.cameretta
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.luce_scrivania
+            variables:
+              ulm_card_light_icon: mdi:led-strip-variant
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.color_temperature_light_2
+            variables:
+              ulm_card_light_icon: mdi:lightbulb-spot
+              ulm_card_light_name: Faretto Scrivania
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+
+      #Space
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      
+      #Balconi title
+      - type: custom:button-card
+        template: card_title
+        label: Balconi
+
+      #Balconi lights grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sonoff_1000f9103b
+            variables:
+              ulm_card_light_icon: mdi:track-light
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sonoff_1000fa41c9
+            variables:
+              ulm_card_light_icon: mdi:track-light
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+
+      
+
+      

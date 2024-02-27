@@ -1,0 +1,23 @@
+# services.yaml
+hello_world:
+  name: Hello World
+  description: Print a hello message in info log
+  fields:
+    name:
+      description: Your Name
+      example: Luca
+night_charge:
+  name: Night Charge
+  description: Charge the device during the night
+  fields:
+    charger:
+      description: Charger for the phone
+      example: switch.caricatore
+    battery:
+      description: Sensor for the battery of the phone
+      example: sensor.poco_f1_battery_level
+    alarm:
+      description: The alarm Sensor that can be used for have the 80% at the right hour
+      example: sensor.poco_f1_next_alarm
+    trigger_data:
+      description: Data from the trigger of this service

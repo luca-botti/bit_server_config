@@ -1,0 +1,351 @@
+title: Home
+path: home
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_esh_welcome
+        triggers_update: input_boolean.minimalist_welcome_toggle
+        variables:
+          ulm_card_esh_welcome_collapse: input_boolean.minimalist_welcome_toggle
+          ulm_weather: weather.forecast_home
+          entity_1:
+            nav: home
+            icon: mdi:home
+            name: House
+            color: blue
+          entity_2:
+            nav: lights
+            icon: mdi:lightbulb
+            name: Lights
+            color: yellow
+          entity_3:
+            nav: media_players
+            icon: mdi:television-speaker
+            name: Media
+            color: green
+          entity_4:
+            nav: others
+            icon: mdi:toggle-switch
+            name: Others
+            color: red
+          entity_5:
+            nav: /dashboard-dev
+            icon: mdi:dev-to
+            name: DEV
+            color: purple
+
+      #Space
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            template: card_person_info
+            variables:
+              ulm_card_person_entity: person.luca
+              ulm_card_person_use_entity_picture: true
+              # ulm_card_person_zone1: zone.uw
+              # ulm_card_person_zone2: zone.store
+              ulm_multiline: true
+              # ulm_card_person_driving_entity: binary_sensor.lee_in_car
+              # ulm_card_person_commute_entity: sensor.uw_commute
+              # ulm_card_person_commute_icon: mdi:bus
+              ulm_card_person_battery_entity: sensor.poco_f1_battery_level
+              ulm_card_person_battery_state_entity: sensor.poco_f1_battery_state
+          # - type: custom:button-card
+          #   template: card_person_info
+          #   variables:
+          #     ulm_card_person_entity: person.anna
+          #     ulm_card_person_use_entity_picture: true
+          #     ulm_multiline: true
+          #     ulm_card_person_battery_entity: sensor.sm_a525f_battery_level
+          #     ulm_card_person_battery_state_entity: binary_sensor.sm_a525f_is_charging
+          # - type: "custom:button-card"
+          #   template: card_person_info
+          #   variables:
+          #     ulm_card_person_entity: person.sara
+          #     ulm_card_person_use_entity_picture: true
+          #     ulm_multiline: true
+          #     ulm_card_person_battery_entity: sensor.sm_m307fn_battery_level
+          #     ulm_card_person_battery_state_entity: sensor.sm_m307fn_battery_state
+
+      - type: custom:button-card
+        template: card_title
+        name: Rooms
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          # - type: custom:button-card
+          #   template: custom_card_drealine_roomview
+          #   variables:
+          #     icon: mdi:sofa
+          #     name: Salotto
+          #     group_lights: light.luci_soggiorno
+          #     group_motions: binary_sensor.tradfri_motion_sensor
+          #     # group_doors:
+          #     # group_windows:
+          #     # group_outlets:
+          #     group_tv: media_player.tv_salotto
+          #     # group_water:
+          #     # group_windows_shutters:
+          #     temperature: sensor.vindstyrka
+          #     humidity: sensor.humidity_8
+          - type: custom:button-card
+            template:
+              - card_esh_room
+              - yellow_on
+            name: Salotto
+            entity: light.living_lights
+            icon: mdi:sofa
+            tap_action:
+              action: navigate
+              navigation_path: living_room
+            variables:
+              ulm_custom_card_esh_room_light_entity: light.living_lights
+              ulm_custom_card_esh_room_climate_entity: climate.soggiorno_ac
+              # ulm_card_esh_room_light_icon_on
+              # ulm_card_esh_room_light_icon_off
+              ulm_card_light_enable_popup: false
+              ulm_card_thermostat_enable_popup: false
+              ulm_card_dynamic_color: true # (requires ulm_custom_card_esh_room_light_entity)
+            label: '[[[ return "TV is " + states["media_player.ue40d6500"].state ]]]'
+
+          - type: custom:button-card
+            template:
+              - card_esh_room
+              - purple_on
+            name: Sala da Pranzo
+            entity: light.dining_lights
+            icon: mdi:table-chair
+            tap_action:
+              action: navigate
+              navigation_path: dining_room
+            variables:
+              ulm_custom_card_esh_room_light_entity: light.sala_da_pranzo
+              ulm_card_dynamic_color: true
+            label: "No additional Info"
+
+          - type: custom:button-card
+            template:
+              - card_esh_room
+              - red_on
+            name: Cucina
+            entity: light.cucina
+            icon: mdi:chef-hat
+            tap_action:
+              action: navigate
+              navigation_path: kitchen
+            variables:
+              ulm_custom_card_esh_room_light_entity: light.cucina
+              ulm_card_dynamic_color: true
+            label: '[[[ return "NestHub is " + states["media_player.nesthub"].state ]]]'
+
+          - type: custom:button-card
+            template:
+              - card_esh_room
+              - pink_on
+            name: Cameretta
+            entity: light.bedroom_lights
+            icon: mdi:bed
+            tap_action:
+              action: navigate
+              navigation_path: bedroom
+            variables:
+              ulm_custom_card_esh_room_light_entity: light.cameretta
+              ulm_card_dynamic_color: true
+            label: '[[[ return "Fan is " + states["fan.fan_id8"].state ]]]'
+
+          - type: custom:button-card
+            template:
+              - card_esh_room
+            name: Camera da letto
+            icon: mdi:bed-king-outline
+            tap_action:
+              action: navigate
+              navigation_path: mum_bedroom
+            label: '[[[ return "FireTV is " + states["media_player.firetvstick_di_famiglia"].state ]]]'
+
+          - type: custom:button-card
+            template:
+              - card_esh_room
+            name: Bagno Grande
+            icon: mdi:shower-head
+            tap_action:
+              action: navigate
+              navigation_path: bathroom
+            label: '[[[ return "Echo Dot is " + states["media_player.echo_dot"].state ]]]'
+
+          - type: custom:button-card
+            template:
+              - card_esh_room
+            name: Balconi
+            entity: light.balconi_lights
+            icon: mdi:balcony
+            tap_action:
+              action: navigate
+              navigation_path: balcony
+            label: ""
+
+          - type: custom:button-card
+            template:
+              - card_esh_room
+            name: Corridoio
+            icon: mdi:coat-rack
+            tap_action:
+              action: navigate
+              navigation_path: hallway
+            label: ""
+
+      #Space
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      - type: custom:button-card
+        template: card_title
+        name: Air Quality & Meteo
+        label: Lodi (LO) - 26900 - Italy
+
+      
+      - type: "custom:button-card"
+        template: card_weather
+        entity: weather.forecast_home
+        variables:
+          ulm_card_weather_name: "Lodi"
+          ulm_card_weather_primary_info:
+            - precipitation
+            - precipitation_probability
+          ulm_card_weather_secondary_info:
+            - extrema
+            - humidity
+          ulm_card_weather_backdrop:
+            fade: true
+
+
+      #Space
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.particulatematter_9_pm25
+                # attribute:
+                # name:
+                # color:
+                # unit:
+                # aggregate_func:
+                # show_state:
+                # show_indicator:
+                # show_graph:
+                # show_line:
+                # show_fill:
+                # show_points:
+                # show_legend:
+                state_adaptive_color: false
+                # y_axis:
+                # fixed_value:
+                # smoothing:
+            icon: mdi:air-filter
+            name: PM 2.5
+            # unit:
+            tap_action: more-info
+            #  group:
+            hours_to_show: 24
+            points_per_hour: 2
+            # aggregate_func:
+            # group_by:
+            update_interval: 1800
+            cache: true
+            show:
+              # name: true
+              icon: false
+              # state: true
+              # graph: true
+              # fill: true
+              # points: hover
+              # legend: true
+              # average: false
+              extrema: true
+              labels: false # hover
+              # labels_secondary: hover
+              name_adaptive_color: true
+              # icon_adaptive_color: false
+            animate: true
+            height: 140
+            # bar_spacing: 4
+            # line_width: 5
+            # line_color: var(--accent-color)
+            color_thresholds:
+              - value: 10
+                color: "#00ff00"
+              - value: 50
+                color: "#ffff00"
+              - value: 100
+                color: "#ff0000"
+              - value: 150
+                color: "#800000"
+              - value: 250
+                color: "#300000"
+            # color_thresholds_transition: smooth
+            decimals: 0
+            hour24: true
+            font_size: 100
+            font_size_header: 14
+            align_header: right # default
+            # align_icon: right
+            align_state: center # left
+            # lower_bound: 0
+            # upper_bound: 1000
+            # min_bound_range:
+            # lower_bound_secondary:
+            # upper_bound_secondary:
+            # min_bound_range_secondary:
+            # smoothing: true
+            # state_map:
+            # value_factor: 0
+            # logarithmic: false
+
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.airquality_10_ppb
+                state_adaptive_color: false
+            icon: mdi:air-purifier
+            name: TVOC
+            tap_action: more-info
+            hours_to_show: 24
+            points_per_hour: 2
+            update_interval: 1800
+            cache: true
+            show:
+              icon: false
+              extrema: true
+              labels: false # hover
+              name_adaptive_color: true
+            animate: true
+            height: 140
+            color_thresholds:
+              - value: 10
+                color: "#00ff00"
+              - value: 50
+                color: "#ffff00"
+              - value: 100
+                color: "#ff0000"
+              - value: 150
+                color: "#800000"
+              - value: 250
+                color: "#300000"
+            decimals: 0
+            hour24: true
+            font_size: 100
+            font_size_header: 14
+            align_header: right # default
+            align_state: center # left

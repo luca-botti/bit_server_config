@@ -1,0 +1,271 @@
+title: Soggiorno
+path: living_room
+cards:
+  # FIX for vertical Monitor
+  - type: vertical-stack
+
+    cards:
+      # Navigation Menu
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            template: chip_back
+            variables:
+              ulm_chip_back_path: home
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      # Title
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: custom:button-card
+            template: card_title
+            name: Soggiorno
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      # Chips
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            template: chip_mdi_icon_state
+            variables:
+              ulm_chip_mdi_icon_state_entity: sensor.vindstyrka
+              ulm_chip_mdi_icon_state_icon: mdi:thermometer
+              # ulm_chip_mdi_icon_state_icon_color: orangered
+              # ulm_chip_mdi_icon_state_label_color:
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            template: chip_mdi_icon_state
+            variables:
+              ulm_chip_mdi_icon_state_entity: sensor.humidity_8
+              ulm_chip_mdi_icon_state_icon: mdi:water-percent
+              # ulm_chip_mdi_icon_state_icon_color: deepskyblue
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      #Luci title
+      - type: custom:button-card
+        template: card_title
+        label: Luci
+
+      #lights grid
+      #Salotto light total
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.living_lights
+        variables:
+          ulm_card_light_name: Salotto
+          ulm_card_light_icon: mdi:lightbulb-group
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_slider_minSet: 0
+          ulm_card_light_enable_slider_maxSet: 100
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_enable_horizontal: false
+          ulm_card_light_enable_horizontal_wide: false
+          ulm_card_light_enable_color: true
+          ulm_card_light_force_background_color: false
+          ulm_card_light_enable_popup: false
+          ulm_card_light_enable_popup_tap: false
+          # ulm_card_light_color_palette
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Salotto lights grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sala_1
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sala_2
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sala_3
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sala_4
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: switch.smart_switch_20072959117396251h5648e1e928e76c_outlet
+            variables:
+              ulm_card_light_name: Lampada
+              ulm_card_light_icon: mdi:desk-lamp
+
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Media Players title
+      - type: custom:button-card
+        template: card_title
+        label: Media Players
+
+      #media players grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.ue40d6500
+            variables:
+              ulm_card_media_player_name: TV Salotto
+              ulm_card_media_player_icon: mdi:television
+              # ulm_card_media_player_enable_art: false
+              # ulm_card_media_player_enable_controls: false
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              # ulm_card_media_player_player_controls_entity
+              # ulm_card_media_player_enable_popup: false
+              # ulm_card_media_player_more_info: false
+              ulm_card_media_player_power_button: true
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.chromecast
+            variables:
+              ulm_card_media_player_name: Chromecast
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.hitachi_speaker
+            variables:
+              ulm_card_media_player_name: Hitachi Speaker
+              ulm_card_media_player_icon: mdi:speaker-multiple
+              ulm_card_media_player_power_button: true
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.home
+            variables:
+              ulm_card_media_player_name: Google Home
+              ulm_card_media_player_icon: mdi:cast-audio
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.philips_tv
+            variables:
+              ulm_card_media_player_name: TV Philips
+              ulm_card_media_player_icon: mdi:television
+              ulm_card_media_player_power_button: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Others title
+      - type: custom:button-card
+        template: card_title
+        label: Others
+
+      #Salotto Switches grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.presa_2
+            variables:
+              ulm_card_power_outlet_consumption_sensor: sensor.outlet_2_power_local
+              ulm_card_power_outlet_name: Presa TV
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.presa_1
+            variables:
+              ulm_card_power_outlet_consumption_sensor: sensor.outlet_1_power_local
+              ulm_card_power_outlet_name: Presa Casse
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          ulm_card_binary_sensor_alert: true
+          ulm_card_binary_sensor_show_last_changed: true
+          ulm_card_binary_sensor_name: Sensore di movimento entrata
+        entity: binary_sensor.tradfri_motion_sensor
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      - type: "custom:button-card"
+        template: card_thermostat
+        entity: climate.soggiorno_ac
+        variables:
+          ulm_card_thermostat_name: Aria Condizionata
+          ulm_card_thermostat_icon: mdi:air-conditioner
+          ulm_card_thermostat_enable_collapse: true
+          ulm_card_thermostat_enable_controls: true
+          ulm_card_thermostat_enable_hvac_modes: true
+          ulm_card_thermostat_enable_background_color: true
+          ulm_card_thermostat_enable_display_temperature: true
+          ulm_card_thermostat_enable_horizontal: false
+          ulm_card_thermostat_enable_popup: false
+          # ulm_card_thermostat_fan_entity:
+          # ulm_card_thermostat_minimum_temp_spread:
+          ulm_card_thermostat_temp_step: 1.0

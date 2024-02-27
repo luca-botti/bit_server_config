@@ -1,0 +1,160 @@
+title: Cameretta
+path: bedroom
+cards:
+  # FIX for vertical Monitor
+  - type: vertical-stack
+
+    cards:
+      # Navigation Menu
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            template: chip_back
+            variables:
+              ulm_chip_back_path: home
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      # Title
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: custom:button-card
+            template: card_title
+            name: Cameretta
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      #Luci title
+      - type: custom:button-card
+        template: card_title
+        label: Luci
+
+      #lights grid
+      #Cameretta light total
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.bedroom_lights
+        variables:
+          ulm_card_light_name: Cameretta
+          ulm_card_light_icon: mdi:lightbulb-group
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_enable_color: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Cameretta lights grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.cameretta
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.luce_scrivania
+            variables:
+              ulm_card_light_icon: mdi:led-strip-variant
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.color_temperature_light_2
+            variables:
+              ulm_card_light_icon: mdi:lightbulb-spot
+              ulm_card_light_name: Faretto Scrivania
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Media Players title
+      - type: custom:button-card
+        template: card_title
+        label: Media Players
+
+      #media players grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.echo
+            variables:
+              ulm_card_media_player_name: Echo
+              ulm_card_media_player_icon: mdi:cast-audio
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Others title
+      - type: custom:button-card
+        template: card_title
+        label: Others
+
+      #Cameretta Switches grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta_1
+            variables:
+              ulm_card_power_outlet_name: Caricatore telefono
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta_2
+            variables:
+              ulm_card_power_outlet_name: Presa
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta_3
+            variables:
+              ulm_card_power_outlet_name: Presa sveglia
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta_usb
+            variables:
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      - type: custom:button-card
+        template: custom_card_saxel_fan
+        entity: fan.fan_id8
+        name: Pale Cameretta
+        variables:
+          collapsible: false

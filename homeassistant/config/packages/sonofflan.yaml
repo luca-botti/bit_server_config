@@ -1,0 +1,12 @@
+sonoff:
+  username: !secret username_ewelink_account
+  password: !secret password_ewelink_account
+  # force_update: [temperature, power]
+  # scan_interval: '00:05:00'  # (optional) default 5 minutes
+  # sensors: [temperature, humidity, power, current, voltage]
+  devices:
+    1000fa41c9:
+      device_class: light
+    1000f9103b:
+      device_class: light
+#

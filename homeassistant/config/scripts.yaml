@@ -1,0 +1,28 @@
+speed_test:
+  alias: Speed Test
+  sequence:
+  - service: homeassistant.update_entity
+    data: {}
+    target:
+      entity_id:
+      - sensor.speedtest_ping
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+  mode: single
+  icon: mdi:speedometer
+reaload_automation:
+  alias: Reaload Automation
+  sequence:
+  - service: automation.reload
+    data: {}
+  mode: single
+  icon: mdi:reload-alert
+turn_on_tv_samsung:
+  alias: Turn On TV Samsung
+  sequence:
+  - service: media_player.turn_on
+    data: {}
+    target:
+      entity_id: media_player.samsung_tv
+  mode: single
+  icon: mdi:television

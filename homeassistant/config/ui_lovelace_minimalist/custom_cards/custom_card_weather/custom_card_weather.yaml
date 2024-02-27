@@ -1,0 +1,54 @@
+---
+### Card Weather ###
+custom_card_weather:
+  template:
+    - "ulm_actions_card_overlay"
+  variables:
+    ulm_custom_card_weather_name: "[[[ return entity.attributes.friendly_name ]]]"
+    ulm_custom_card_weather_backdrop: false
+    ulm_custom_card_weather_primary_info: "extrema"
+    ulm_custom_card_weather_secondary_info: "precipitation"
+  tap_action: 
+    action: none
+  hold_action:
+    action: none
+  double_tap_action:
+    action: none
+  show_icon: false
+  show_name: false
+  show_label: false
+  styles:
+    grid:
+      - grid-template-areas: "'item1'"
+      - grid-template-columns: "1fr"
+      - grid-template-rows: "min-content"
+      - row-gap: "12px"
+    card:
+      - border-radius: "var(--border-radius)"
+      - box-shadow: "var(--box-shadow)"
+      - padding: "0px"
+  custom_fields:
+    item1:
+      card:
+        type: "custom:simple-weather-card"
+        entity: "[[[ return entity.entity_id; ]]]"
+        name: "[[[ return variables.ulm_custom_card_weather_name]]]"
+        primary_info: "[[[ return variables.ulm_custom_card_weather_primary_info ]]]"
+        secondary_info: "[[[ return variables.ulm_custom_card_weather_secondary_info ]]]"
+        backdrop: "[[[ return variables.ulm_custom_card_weather_backdrop ]]]"
+        tap_action:
+          action: none
+        style: |
+          ha-card {
+            border-radius: 14px;
+            box-shadow: none;
+          }
+          ha-card.type-custom-simple-weather-card {
+            padding: 24px;
+          }
+          ha-card[bg].type-custom-simple-weather-card{
+            color: white;
+          }
+          ha-card.type-custom-simple-weather-card .weather__info {
+            text-align: left
+          }

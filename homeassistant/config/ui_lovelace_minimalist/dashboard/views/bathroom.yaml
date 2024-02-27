@@ -1,0 +1,56 @@
+title: Bagno
+path: bathroom
+cards:
+  # FIX for vertical Monitor
+  - type: vertical-stack
+
+    cards:
+      # Navigation Menu
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            template: chip_back
+            variables:
+              ulm_chip_back_path: home
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      # Title
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: custom:button-card
+            template: card_title
+            name: Bagno
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      #Media Players title
+      - type: custom:button-card
+        template: card_title
+        label: Media Players
+
+      #media players grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.echo_dot
+            variables:
+              ulm_card_media_player_name: Echo Dot
+              ulm_card_media_player_icon: mdi:cast-audio
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true

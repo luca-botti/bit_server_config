@@ -1,0 +1,74 @@
+title: Cucina
+path: kitchen
+cards:
+  # FIX for vertical Monitor
+  - type: vertical-stack
+
+    cards:
+      # Navigation Menu
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            template: chip_back
+            variables:
+              ulm_chip_back_path: home
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      # Title
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: custom:button-card
+            template: card_title
+            name: Cucina
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      #Luci title
+      - type: custom:button-card
+        template: card_title
+        label: Luci
+
+      #Cucina light total
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.cucina
+        variables:
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_enable_color: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Media Players title
+      - type: custom:button-card
+        template: card_title
+        label: Media Players
+
+      #media players grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.nesthub
+            variables:
+              ulm_card_media_player_name: NestHub
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true

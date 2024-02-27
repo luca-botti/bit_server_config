@@ -1,0 +1,14 @@
+language: it
+intents:
+  CustomListAddItem:
+    data:
+      - sentences:
+          - aggiungi {item} <to> {todoList}
+          - inserisci {item} <in> {todoList}
+        requires_context:
+          domain: todo
+lists:
+  item:
+    wildcard: true
+  todoList:
+    wildcard: true

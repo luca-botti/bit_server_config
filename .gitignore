@@ -1,0 +1,53 @@
+*~
+
+# temp installation files
+.gdrive
+
+
+# caddy
+caddy/*
+!caddy/Caddyfile
+
+# deconz (just create the folder)
+deconz/*
+!deconz/.nodata
+
+# pihole
+pihole/*
+!pihole/lighttpd
+
+# homeassistant
+homeassistant/config/*
+
+!homeassistant/config/*.yaml 
+homeassistant/config/secrets.yaml
+
+!homeassistant/config/ui_lovelace_minimalist
+!homeassistant/config/ui_lovelace_minimalist/dashboard
+homeassistant/config/ui_lovelace_minimalist/dashboard/adaptive-dash
+
+!homeassistant/config/pyscript
+!homeassistant/config/python_scripts
+!homeassistant/config/packages
+!homeassistant/config/custom_sentences
+!homeassistant/config/blueprints
+
+
+# backups (just create the folders)
+!backups/*
+backups/.temp/*
+!backups/.temp/.nodata
+backups/deconz/*
+!backups/deconz/.nodata
+backups/homeassistant/*
+!backups/homeassistant/.nodata
+backups/pihole/*
+!backups/pihole/.nodata
+backups/secrets/*
+!backups/secrets/.nodata
+
+# secrets
+other_files/secrets/*
+!other_files/secrets/others
+other_files/secrets/others/*
+!other_files/secrets/others/.nodata

@@ -1,0 +1,10 @@
+CustomListAddItem:
+  actions:
+    service: todo.add_item
+    target:
+      entity_id: "todo.{{todo-list}}"
+    data:
+      item: "{{item}}"
+  speech:
+    type: plain
+    text: "{item} aggiunto a {todo-list}"

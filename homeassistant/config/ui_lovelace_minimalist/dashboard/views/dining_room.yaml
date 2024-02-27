@@ -1,0 +1,83 @@
+title: Sala da Pranzo
+path: dining_room
+cards:
+  # FIX for vertical Monitor
+  - type: vertical-stack
+
+    cards:
+      # Navigation Menu
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            template: chip_back
+            variables:
+              ulm_chip_back_path: home
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      # Title
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: custom:button-card
+            template: card_title
+            name: Sala da Pranzo
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      #Luci title
+      - type: custom:button-card
+        template: card_title
+        label: Luci
+
+      #lights grid
+      #Sala da pranzo light total
+      - type: "custom:button-card"
+        template: card_light
+        entity: light.dining_lights
+        variables:
+          ulm_card_light_name: Sala da Pranzo
+          ulm_card_light_icon: mdi:lightbulb-group
+          ulm_card_light_enable_slider: true
+          ulm_card_light_enable_collapse: true
+          ulm_card_light_enable_color: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Sala da pranzo lights grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.sala_da_pranzo
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.lampada
+            variables:
+              ulm_card_light_icon: mdi:floor-lamp-torchiere
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.color_temperature_light_1
+            variables:
+              ulm_card_light_name: Faretto
+              ulm_card_light_icon: mdi:lightbulb-spot
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_collapse: true
+              ulm_card_light_enable_color: true

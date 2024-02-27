@@ -1,0 +1,106 @@
+blueprint:
+  name: FIX - Do Not Deactivate - Zigbee Ikea LIghts fix
+  description: fix the random turn on of lights (you will need an input_boolean for each lights you want to fix)
+  domain: automation
+  author: bit00
+  # homeassistant:
+  #   min_version:
+  input:
+    ikea_light_entity:
+      name: Ikea Light Entity
+      description: the light entity of the ikea light that randomly turns on
+      selector:
+        entity:
+          filter:
+            domain: light
+      # default:
+    input_boolean:
+      name: input_boolean
+      description: the created input_boolean needed for the automation (To add one, go to Settings > Devices & Services > Helpers and click the add button; next choose the Toggle option. Another options is to add it on the configuration.yaml file under input_boolean:)
+      selector:
+        entity:
+          filter:
+            domain: input_boolean
+
+mode: queued
+max: 10
+max_exceeded: warning
+
+trigger:
+  - platform: event
+    event_type: call_service
+    event_data:
+      domain: light
+      service: turn_on
+      service_data:
+        entity_id:
+          - !input ikea_light_entity
+    id: call
+  - platform: event
+    event_type: call_service
+    event_data:
+      domain: light
+      service: toggle
+      service_data:
+        entity_id:
+          - !input ikea_light_entity
+    id: toggle
+  - platform: state
+    entity_id:
+      - !input ikea_light_entity
+    to: "on"
+    id: "on"
+  - platform: state
+    entity_id:
+      - !input ikea_light_entity
+    to: "off"
+    id: "off"
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - call
+        sequence:
+          - service: input_boolean.turn_on
+            metadata: {}
+            data: {}
+            target:
+              entity_id: !input input_boolean
+      - conditions:
+          - condition: trigger
+            id:
+              - toggle
+          - condition: state
+            entity_id: !input ikea_light_entity
+            state: "off"
+        sequence:
+          - service: input_boolean.turn_on
+            metadata: {}
+            data: {}
+            target:
+              entity_id: !input input_boolean
+      - conditions:
+          - condition: trigger
+            id:
+              - "on"
+          - condition: state
+            entity_id: !input input_boolean
+            state: "off"
+        sequence:
+          - service: light.turn_off
+            metadata: {}
+            data: {}
+            target:
+              entity_id: !input ikea_light_entity
+      - conditions:
+          - condition: trigger
+            id:
+              - "off"
+        sequence:
+          - service: input_boolean.turn_off
+            metadata: {}
+            data: {}
+            target:
+              entity_id: !input input_boolean

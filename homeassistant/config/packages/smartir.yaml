@@ -1,0 +1,40 @@
+fan:
+  - platform: smartir
+    name: fan_id8
+    unique_id: fan_id8
+    device_code: 2000
+    controller_data: remote.rm4_mini
+#
+
+media_player:
+  - platform: smartir
+    name: philips_tv
+    unique_id: philips_tv
+    device_code: 1003
+    controller_data: remote.rm4_pro
+    # delay: 0.5
+    # power_sensor:
+    # source_names:
+  - platform: smartir
+    name: samsung_tv
+    unique_id: samsung_tv
+    device_code: 1064
+    controller_data: remote.rm4_pro
+    power_sensor: binary_sensor.samsung_tv_power
+  - platform: smartir
+    name: hitachi_speaker
+    unique_id: hitachi_speaker
+    device_code: 1002
+    controller_data: remote.rm4_pro
+    # power_sensor: binary_sensor.hitachi_speakers_power
+
+climate:
+  - platform: smartir
+    name: soggiorno_ac
+    unique_id: soggiorno_ac
+    device_code: 1120
+    controller_data: remote.rm4_pro
+    temperature_sensor: sensor.vindstyrka
+    humidity_sensor: sensor.humidity_8
+    # power_sensor:
+    # power_sensor_restore_state

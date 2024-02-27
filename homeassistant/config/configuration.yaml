@@ -1,0 +1,437 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+#### Additional Files ####
+
+
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+# pyscript: !include pyscript/config.yaml
+
+homeassistant:
+  customize: !include customize.yaml
+  # customize_domain:
+  # customize_glob:
+  # allowlist_external_dirs:
+  # allowlist_external_urls:
+  # media_dirs:
+  packages: !include_dir_named packages
+
+#### Service Configuration ####
+
+# python_script:
+#
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.0.0.0/8
+#
+
+recorder:
+  purge_keep_days: 28
+# https://www.home-assistant.io/integrations/recorder
+
+lovelace:
+  mode: storage
+# https://www.home-assistant.io/dashboards/dashboards/
+
+logger:
+  default: warn
+  logs:
+    custom_components.ui_lovelace_minimalist: warn
+# https://www.home-assistant.io/integrations/logger/
+
+tts: # Text to speech
+  - platform: google_translate
+    service_name: google_say
+    language: "it"
+#
+
+api:
+#
+
+bluetooth:
+#
+
+google_assistant:
+  project_id: home-assistant-a8b6a
+  service_account: !include home-assistant-a8b6a-4e24bfb44d18.json
+  report_state: true
+  expose_by_default: false
+  entity_config:
+    light.color_temperature_light_1:
+      expose: true
+      name: Faretto
+    light.color_temperature_light_2:
+      expose: true
+      name: Faretto Scrivania
+    fan.fan_id8:
+      expose: true
+      name: Pale Cameretta
+    switch.ciabatta_1:
+      expose: true
+      name: Caricatore
+    switch.ciabatta_2:
+      expose: false
+      name: Presa
+    switch.ciabatta_3:
+      expose: false
+      name: Sveglia
+    switch.ciabatta_usb:
+      expose: false
+      name: USB
+    light.luce_scrivania:
+      expose: true
+      name: Luce Scrivania
+    light.sonoff_1000fa41c9:
+      expose: true
+      name: Luce balcone cucina
+    light.sonoff_1000f9103b:
+      expose: true
+      name: Luce balcone salotto
+# https://www.home-assistant.io/integrations/google_assistant/
+
+alexa:
+  smart_home:
+    filter:
+      exclude_domains:
+        - alarm_control_panel
+        - alert
+        - automation
+        - binary_sensor
+        - camera
+        - climate
+        - cover
+        - fan
+        - group
+        - input_boolean
+        - light
+        - lock
+        - media_player
+        - scene
+        - script
+        - sensor
+        - switch
+        - input_number
+        - number
+      include_entities:
+        - light.color_temperature_light_1
+        - light.color_temperature_light_2
+        - fan.fan_id8
+        - light.luce_scrivania
+        - light.sonoff_1000fa41c9
+        - light.sonoff_1000f9103b
+    entity_config:
+      light.color_temperature_light_1:
+        name: Faretto
+      light.color_temperature_light_2:
+        name: Faretto Scrivania
+      light.sonoff_1000fa41c9:
+        name: Luce balcone cucina
+      light.sonoff_1000f9103b:
+        name: Luce balcone salotto
+      fan.fan_id8:
+        name: Pale Cameretta
+# https://www.nabucasa.com/config/amazon_alexa/
+
+smartir:
+  check_updates: false # use the automatic tool in hacs
+#
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret api_key_telegram
+    allowed_chat_ids:
+      - !secret chat_id_telegram_1
+
+notify:
+  - platform: telegram
+    name: Telegram Default
+    chat_id: !secret chat_id_telegram_1
+#
+
+#### Conversation Testing ####
+
+conversation:
+#
+
+dialogflow:
+#
+# webhook link: https://bottihassio.duckdns.org:446/api/webhook/hzJMBzbt3blPMtdKEa2vMGw671bFBepXj3jdNRqtnNaXEpmcNU
+
+intent_script: !include intent_script.yaml
+
+#### Light Groups ####
+
+light:
+  - platform: group
+    name: bedroom_lights
+    unique_id: bedroom_lights
+    entities:
+      - light.cameretta
+      - light.luce_scrivania
+      - light.color_temperature_light_2
+  - platform: group
+    name: dining_lights
+    unique_id: dining_lights
+    entities:
+      - light.color_temperature_light_1
+      - light.lampada
+      - light.sala_da_pranzo
+  - platform: group
+    name: balconi_lights
+    unique_id: balconi_lights
+    entities:
+      - light.sonoff_1000fa41c9
+      - light.sonoff_1000f9103b
+  - platform: group
+    name: living_lights
+    unique_id: living_lights
+    entities:
+      - light.sala_1
+      - light.sala_2
+      - light.sala_3
+      - light.sala_4
+  - platform: group
+    name: all_lights
+    unique_id: all_lights
+    entities:
+      - light.cameretta
+      - light.luce_scrivania
+      - light.color_temperature_light_2
+      - light.color_temperature_light_1
+      - light.lampada
+      - light.sala_da_pranzo
+      - light.sonoff_1000fa41c9
+      - light.sonoff_1000f9103b
+      - light.sala_1
+      - light.sala_2
+      - light.sala_3
+      - light.sala_4
+      - light.cucina
+#
+
+#### Other Services ####
+
+panel_iframe:
+  phoscon:
+    title: "Phoscon"
+    url: "http://192.168.178.34:40850/"
+    icon: mdi:alpha-p
+    require_admin: true
+  # portainer:
+  #   title: "Portainer"
+  #   url: "http://192.168.178.34:9000/#!/2/docker/containers"
+  #   icon: mdi:docker
+  #   require_admin: true
+  # duplicati:
+  #   title: "Duplicati"
+  #   url: "http://192.168.178.34:8200/"
+  #   icon: mdi:cloud
+  #   require_admin: true
+  pihole:
+    title: "Pi-Hole"
+    url: "http://192.168.178.34:7543/admin/index.php"
+    icon: mdi:pi-hole
+    require_admin: true
+#
+
+
+#### Sensors ####
+# teplate sensors and bynary sensors
+template:
+  - sensor:
+      - name: outlet_1_power_local
+        unique_id: outlet_1_power_local
+        availability: "{{ is_state('binary_sensor.state_outlet_1', 'off') }}"
+        state: "{{ state_attr('switch.presa_1', 'current_consumption') }}"
+        unit_of_measurement: "W"
+        state_class: measurement
+        device_class: power
+        # icon:
+        # pictures:
+        # attributes:
+      - name: outlet_2_power_local
+        unique_id: outlet_2_power_local
+        availability: "{{ is_state('binary_sensor.state_outlet_2', 'off') }}"
+        state: "{{ state_attr('switch.presa_2', 'current_consumption') }}"
+        unit_of_measurement: "W"
+        state_class: measurement
+        device_class: power
+  - binary_sensor:
+      # - name: someone_home
+      #   unique_id: someone_home
+      #   state: >-
+      #     {{ is_state ('person.luca', 'home') or 
+      #        is_state ('person.anna', 'home') or 
+      #        is_state ('person.sara', 'home') }}
+      #   device_class: presence
+        # availability:
+        # delay_on:
+        # delay_off:
+        # auto_off:
+        # icon:
+        # pictures:
+        # attributes:
+      - name: samsung_tv_status
+        unique_id: samsung_tv_status
+        state: >-
+          {{ (states('sensor.outlet_2_power_local') | int) > 0 }}
+        device_class: power
+        availability: "{{ is_state('binary_sensor.state_outlet_2', 'off') }}"
+      # - name: hitachi_speakers_status
+      #   unique_id: hitachi_speakers_status
+      #   state: >-
+      #     {{ states('sensor.presa_1_power_local') | int > 0 }}
+      #   device_class: power
+      #   availability: "{{ is_state('binary_sensor.state_presa1', 'off') }}"
+
+      # List of Errors
+      - name: state_power_strip
+        unique_id: state_power_strip
+        state: >-
+          {{ is_state ('switch.ciabatta_1', 'unavailable') or 
+             is_state ('switch.ciabatta_2', 'unavailable') or 
+             is_state ('switch.ciabatta_3', 'unavailable') or 
+             is_state ('switch.ciabatta_usb', 'unavailable') }}
+        device_class: problem
+      - name: state_outlet_1
+        unique_id: state_outlet_1
+        state: >-
+          {{ is_state ('switch.presa_1', 'unavailable') }}
+        device_class: problem
+      - name: state_outlet_2
+        unique_id: state_outlet_2
+        state: >-
+          {{ is_state ('switch.presa_2', 'unavailable') }}
+        device_class: problem
+      - name: state_outlet_3
+        unique_id: state_outlet_3
+        state: >-
+          {{ is_state ('switch.smart_switch_20072959117396251h5648e1e928e76c_outlet', 'unavailable') }}
+        device_class: problem
+      - name: state_sonoff_1000fa41c9
+        unique_id: state_sonoff_1000fa41c9
+        state: >-
+          {{ is_state ('light.sonoff_1000fa41c9', 'unavailable') }}
+        device_class: problem
+      - name: state_sonoff_1000f9103b
+        unique_id: state_sonoff_1000f9103b
+        state: >-
+          {{ is_state ('light.sonoff_1000f9103b', 'unavailable') }}
+        device_class: problem
+      - name: state_rm4_mini
+        unique_id: state_rm4_mini
+        state: >-
+          {{ not ( is_state('remote.rm4_mini', 'on') ) }}
+        device_class: problem
+      - name: state_rm4_pro
+        unique_id: state_rm4_pro
+        state: >-
+          {{ not ( is_state('remote.rm4_pro', 'on') ) }}
+        device_class: problem
+      - name: state_luce_scrivania
+        unique_id: state_luce_scrivania
+        state: >-
+          {{ is_state('light.luce_scrivania', 'unavailable') }}
+        device_class: problem
+      - name: state_faretto_deconz_device
+        unique_id: state_faretto_deconz_device
+        state: >-
+          {{ not ( is_state('light.color_temperature_light_1', 'on') or is_state('light.color_temperature_light_1', 'off') ) }}
+        device_class: problem
+      - name: state_faretto_scrivania_deconz_device
+        unique_id: state_faretto_scrivania_deconz_device
+        state: >-
+          {{ not ( is_state('light.color_temperature_light_2', 'on') or is_state('light.color_temperature_light_2', 'off') ) }}
+        device_class: problem
+      - name: state_ikea_button_deconz_device
+        unique_id: state_ikea_button_deconz_device
+        state: >-
+          {{ is_state ('sensor.tradfri_remote_control_battery', 'unavailable') }}
+        device_class: problem
+      - name: state_ikea2_button_deconz_device
+        unique_id: state_ikea2_button_deconz_device
+        state: >-
+          {{ is_state ('sensor.tradfri_on_off_switch_battery', 'unavailable') }}
+        device_class: problem
+      - name: state_hue_button_deconz_device
+        unique_id: state_hue_button_deconz_device
+        state: >-
+          {{ is_state ('sensor.switch_4_battery', 'unavailable') }}
+        device_class: problem
+      - name: state_philips_button_deconz_device
+        unique_id: state_philips_button_deconz_device
+        state: >-
+          {{ is_state ('sensor.dimmer_switch_battery', 'unavailable') }}
+        device_class: problem
+      - name: state_cameretta_hue_device
+        unique_id: state_cameretta_hue_device
+        state: >-
+          {{ not ( is_state('light.cameretta', 'on') or is_state('light.cameretta', 'off') ) }}
+        device_class: problem
+      - name: state_lampada_hue_device
+        unique_id: state_lampada_hue_device
+        state: >-
+          {{ not ( is_state('light.lampada', 'on') or is_state('light.lampada', 'off') ) }}
+        device_class: problem
+      - name: state_sala_da_pranzo_hue_device
+        unique_id: state_sala_da_pranzo_hue_device
+        state: >-
+          {{ not ( is_state('light.sala_da_pranzo', 'on') or is_state('light.sala_da_pranzo', 'off') ) }}
+        device_class: problem
+      - name: state_sala_3_hue_device
+        unique_id: state_sala_3_hue_device
+        state: >-
+          {{ not ( is_state('light.sala_3', 'on') or is_state('light.sala_3', 'off') ) }}
+        device_class: problem
+      - name: state_sala_4_hue_device
+        unique_id: state_sala_4_hue_device
+        state: >-
+          {{ not ( is_state('light.sala_4', 'on') or is_state('light.sala_4', 'off') ) }}
+        device_class: problem
+      - name: state_cucina_hue_device
+        unique_id: state_cucina_hue_device
+        state: >-
+          {{ not ( is_state('light.cucina', 'on') or is_state('light.cucina', 'off') ) }}
+        device_class: problem
+      - name: state_sala_2_hue_device
+        unique_id: state_sala_2_hue_device
+        state: >-
+          {{ not ( is_state('light.sala_2', 'on') or is_state('light.sala_2', 'off') ) }}
+        device_class: problem
+      - name: state_sala_1_hue_device
+        unique_id: state_sala_1_hue_device
+        state: >-
+          {{ not ( is_state('light.sala_1', 'on') or is_state('light.sala_1', 'off') ) }}
+        device_class: problem
+      - name: state_ikea_motion_sensor
+        unique_id: state_ikea_motion_sensor
+        state: >-
+          {{ not ( is_state('binary_sensor.tradfri_motion_sensor', 'on') or is_state('binary_sensor.tradfri_motion_sensor', 'off') ) }}
+        device_class: problem
+      - name: state_ikea_air_quality_detector
+        unique_id: state_ikea_air_quality_detector
+        state: >-
+          {{ is_state ('sensor.vindstyrka', 'unavailable' ) }}
+        device_class: problem
+#
+
+#### Helpers ####
+
+input_boolean:
+  minimalist_welcome_toggle:
+    name: Minimalist welcome toggle
+  ikea_light_1_fix:
+    name: Ikea light 1 fix
+  ikea_light_2_fix:
+    name: Ikea light 2 fix
+#

@@ -1,0 +1,681 @@
+Start
+
+- heat_cool_auto_on_18
+- heat_cool_auto_on_19
+- heat_cool_auto_on_20
+- heat_cool_auto_on_21
+- heat_cool_auto_on_22
+- heat_cool_auto_on_23
+- heat_cool_auto_on_24
+- heat_cool_auto_on_25
+- heat_cool_auto_on_26
+- heat_cool_auto_on_27
+- heat_cool_auto_on_28
+- heat_cool_auto_on_29
+- heat_cool_auto_on_30
+
+- heat_cool_auto_off_18
+- heat_cool_auto_off_19
+- heat_cool_auto_off_20
+- heat_cool_auto_off_21
+- heat_cool_auto_off_22
+- heat_cool_auto_off_23
+- heat_cool_auto_off_24
+- heat_cool_auto_off_25
+- heat_cool_auto_off_26
+- heat_cool_auto_off_27
+- heat_cool_auto_off_28
+- heat_cool_auto_off_29
+- heat_cool_auto_off_30
+
+
+- heat_cool_silent_on_18
+- heat_cool_silent_on_19
+- heat_cool_silent_on_20
+- heat_cool_silent_on_21
+- heat_cool_silent_on_22
+- heat_cool_silent_on_23
+- heat_cool_silent_on_24
+- heat_cool_silent_on_25
+- heat_cool_silent_on_26
+- heat_cool_silent_on_27
+- heat_cool_silent_on_28
+- heat_cool_silent_on_29
+- heat_cool_silent_on_30
+
+- heat_cool_silent_off_18
+- heat_cool_silent_off_19
+- heat_cool_silent_off_20
+- heat_cool_silent_off_21
+- heat_cool_silent_off_22
+- heat_cool_silent_off_23
+- heat_cool_silent_off_24
+- heat_cool_silent_off_25
+- heat_cool_silent_off_26
+- heat_cool_silent_off_27
+- heat_cool_silent_off_28
+- heat_cool_silent_off_29
+- heat_cool_silent_off_30
+
+
+- heat_cool_low_on_18
+- heat_cool_low_on_19
+- heat_cool_low_on_20
+- heat_cool_low_on_21
+- heat_cool_low_on_22
+- heat_cool_low_on_23
+- heat_cool_low_on_24
+- heat_cool_low_on_25
+- heat_cool_low_on_26
+- heat_cool_low_on_27
+- heat_cool_low_on_28
+- heat_cool_low_on_29
+- heat_cool_low_on_30
+
+- heat_cool_low_off_18
+- heat_cool_low_off_19
+- heat_cool_low_off_20
+- heat_cool_low_off_21
+- heat_cool_low_off_22
+- heat_cool_low_off_23
+- heat_cool_low_off_24
+- heat_cool_low_off_25
+- heat_cool_low_off_26
+- heat_cool_low_off_27
+- heat_cool_low_off_28
+- heat_cool_low_off_29
+- heat_cool_low_off_30
+
+
+- heat_cool_lowMedium_on_18
+- heat_cool_lowMedium_on_19
+- heat_cool_lowMedium_on_20
+- heat_cool_lowMedium_on_21
+- heat_cool_lowMedium_on_22
+- heat_cool_lowMedium_on_23
+- heat_cool_lowMedium_on_24
+- heat_cool_lowMedium_on_25
+- heat_cool_lowMedium_on_26
+- heat_cool_lowMedium_on_27
+- heat_cool_lowMedium_on_28
+- heat_cool_lowMedium_on_29
+- heat_cool_lowMedium_on_30
+
+- heat_cool_lowMedium_off_18
+- heat_cool_lowMedium_off_19
+- heat_cool_lowMedium_off_20
+- heat_cool_lowMedium_off_21
+- heat_cool_lowMedium_off_22
+- heat_cool_lowMedium_off_23
+- heat_cool_lowMedium_off_24
+- heat_cool_lowMedium_off_25
+- heat_cool_lowMedium_off_26
+- heat_cool_lowMedium_off_27
+- heat_cool_lowMedium_off_28
+- heat_cool_lowMedium_off_29
+- heat_cool_lowMedium_off_30
+
+
+- heat_cool_medium_on_18
+- heat_cool_medium_on_19
+- heat_cool_medium_on_20
+- heat_cool_medium_on_21
+- heat_cool_medium_on_22
+- heat_cool_medium_on_23
+- heat_cool_medium_on_24
+- heat_cool_medium_on_25
+- heat_cool_medium_on_26
+- heat_cool_medium_on_27
+- heat_cool_medium_on_28
+- heat_cool_medium_on_29
+- heat_cool_medium_on_30
+
+- heat_cool_medium_off_18
+- heat_cool_medium_off_19
+- heat_cool_medium_off_20
+- heat_cool_medium_off_21
+- heat_cool_medium_off_22
+- heat_cool_medium_off_23
+- heat_cool_medium_off_24
+- heat_cool_medium_off_25
+- heat_cool_medium_off_26
+- heat_cool_medium_off_27
+- heat_cool_medium_off_28
+- heat_cool_medium_off_29
+- heat_cool_medium_off_30
+
+
+- heat_cool_mediumHigh_on_18
+- heat_cool_mediumHigh_on_19
+- heat_cool_mediumHigh_on_20
+- heat_cool_mediumHigh_on_21
+- heat_cool_mediumHigh_on_22
+- heat_cool_mediumHigh_on_23
+- heat_cool_mediumHigh_on_24
+- heat_cool_mediumHigh_on_25
+- heat_cool_mediumHigh_on_26
+- heat_cool_mediumHigh_on_27
+- heat_cool_mediumHigh_on_28
+- heat_cool_mediumHigh_on_29
+- heat_cool_mediumHigh_on_30
+
+- heat_cool_mediumHigh_off_18
+- heat_cool_mediumHigh_off_19
+- heat_cool_mediumHigh_off_20
+- heat_cool_mediumHigh_off_21
+- heat_cool_mediumHigh_off_22
+- heat_cool_mediumHigh_off_23
+- heat_cool_mediumHigh_off_24
+- heat_cool_mediumHigh_off_25
+- heat_cool_mediumHigh_off_26
+- heat_cool_mediumHigh_off_27
+- heat_cool_mediumHigh_off_28
+- heat_cool_mediumHigh_off_29
+- heat_cool_mediumHigh_off_30
+
+
+- heat_cool_high_on_18
+- heat_cool_high_on_19
+- heat_cool_high_on_20
+- heat_cool_high_on_21
+- heat_cool_high_on_22
+- heat_cool_high_on_23
+- heat_cool_high_on_24
+- heat_cool_high_on_25
+- heat_cool_high_on_26
+- heat_cool_high_on_27
+- heat_cool_high_on_28
+- heat_cool_high_on_29
+- heat_cool_high_on_30
+
+- heat_cool_high_off_18
+- heat_cool_high_off_19
+- heat_cool_high_off_20
+- heat_cool_high_off_21
+- heat_cool_high_off_22
+- heat_cool_high_off_23
+- heat_cool_high_off_24
+- heat_cool_high_off_25
+- heat_cool_high_off_26
+- heat_cool_high_off_27
+- heat_cool_high_off_28
+- heat_cool_high_off_29
+- heat_cool_high_off_30
+
+
+- heat_cool_powerful_on_18
+- heat_cool_powerful_on_19
+- heat_cool_powerful_on_20
+- heat_cool_powerful_on_21
+- heat_cool_powerful_on_22
+- heat_cool_powerful_on_23
+- heat_cool_powerful_on_24
+- heat_cool_powerful_on_25
+- heat_cool_powerful_on_26
+- heat_cool_powerful_on_27
+- heat_cool_powerful_on_28
+- heat_cool_powerful_on_29
+- heat_cool_powerful_on_30
+
+- heat_cool_powerful_off_18
+- heat_cool_powerful_off_19
+- heat_cool_powerful_off_20
+- heat_cool_powerful_off_21
+- heat_cool_powerful_off_22
+- heat_cool_powerful_off_23
+- heat_cool_powerful_off_24
+- heat_cool_powerful_off_25
+- heat_cool_powerful_off_26
+- heat_cool_powerful_off_27
+- heat_cool_powerful_off_28
+- heat_cool_powerful_off_29
+- heat_cool_powerful_off_30
+
+
+
+- dry_auto_on
+- dry_auto_off
+
+
+- dry_powerful_on
+- dry_powerful_off
+
+
+
+- cool_auto_on_18
+- cool_auto_on_19
+- cool_auto_on_20
+- cool_auto_on_21
+- cool_auto_on_22
+- cool_auto_on_23
+- cool_auto_on_24
+- cool_auto_on_25
+- cool_auto_on_26
+- cool_auto_on_27
+- cool_auto_on_28
+- cool_auto_on_29
+- cool_auto_on_30
+
+- cool_auto_off_18
+- cool_auto_off_19
+- cool_auto_off_20
+- cool_auto_off_21
+- cool_auto_off_22
+- cool_auto_off_23
+- cool_auto_off_24
+- cool_auto_off_25
+- cool_auto_off_26
+- cool_auto_off_27
+- cool_auto_off_28
+- cool_auto_off_29
+- cool_auto_off_30
+
+
+- cool_silent_on_18
+- cool_silent_on_19
+- cool_silent_on_20
+- cool_silent_on_21
+- cool_silent_on_22
+- cool_silent_on_23
+- cool_silent_on_24
+- cool_silent_on_25
+- cool_silent_on_26
+- cool_silent_on_27
+- cool_silent_on_28
+- cool_silent_on_29
+- cool_silent_on_30
+
+- cool_silent_off_18
+- cool_silent_off_19
+- cool_silent_off_20
+- cool_silent_off_21
+- cool_silent_off_22
+- cool_silent_off_23
+- cool_silent_off_24
+- cool_silent_off_25
+- cool_silent_off_26
+- cool_silent_off_27
+- cool_silent_off_28
+- cool_silent_off_29
+- cool_silent_off_30
+
+
+- cool_low_on_18
+- cool_low_on_19
+- cool_low_on_20
+- cool_low_on_21
+- cool_low_on_22
+- cool_low_on_23
+- cool_low_on_24
+- cool_low_on_25
+- cool_low_on_26
+- cool_low_on_27
+- cool_low_on_28
+- cool_low_on_29
+- cool_low_on_30
+
+- cool_low_off_18
+- cool_low_off_19
+- cool_low_off_20
+- cool_low_off_21
+- cool_low_off_22
+- cool_low_off_23
+- cool_low_off_24
+- cool_low_off_25
+- cool_low_off_26
+- cool_low_off_27
+- cool_low_off_28
+- cool_low_off_29
+- cool_low_off_30
+
+
+- cool_lowMedium_on_18
+- cool_lowMedium_on_19
+- cool_lowMedium_on_20
+- cool_lowMedium_on_21
+- cool_lowMedium_on_22
+- cool_lowMedium_on_23
+- cool_lowMedium_on_24
+- cool_lowMedium_on_25
+- cool_lowMedium_on_26
+- cool_lowMedium_on_27
+- cool_lowMedium_on_28
+- cool_lowMedium_on_29
+- cool_lowMedium_on_30
+
+- cool_lowMedium_off_18
+- cool_lowMedium_off_19
+- cool_lowMedium_off_20
+- cool_lowMedium_off_21
+- cool_lowMedium_off_22
+- cool_lowMedium_off_23
+- cool_lowMedium_off_24
+- cool_lowMedium_off_25
+- cool_lowMedium_off_26
+- cool_lowMedium_off_27
+- cool_lowMedium_off_28
+- cool_lowMedium_off_29
+- cool_lowMedium_off_30
+
+
+- cool_medium_on_18
+- cool_medium_on_19
+- cool_medium_on_20
+- cool_medium_on_21
+- cool_medium_on_22
+- cool_medium_on_23
+- cool_medium_on_24
+- cool_medium_on_25
+- cool_medium_on_26
+- cool_medium_on_27
+- cool_medium_on_28
+- cool_medium_on_29
+- cool_medium_on_30
+
+- cool_medium_off_18
+- cool_medium_off_19
+- cool_medium_off_20
+- cool_medium_off_21
+- cool_medium_off_22
+- cool_medium_off_23
+- cool_medium_off_24
+- cool_medium_off_25
+- cool_medium_off_26
+- cool_medium_off_27
+- cool_medium_off_28
+- cool_medium_off_29
+- cool_medium_off_30
+
+
+- cool_mediumHigh_on_18
+- cool_mediumHigh_on_19
+- cool_mediumHigh_on_20
+- cool_mediumHigh_on_21
+- cool_mediumHigh_on_22
+- cool_mediumHigh_on_23
+- cool_mediumHigh_on_24
+- cool_mediumHigh_on_25
+- cool_mediumHigh_on_26
+- cool_mediumHigh_on_27
+- cool_mediumHigh_on_28
+- cool_mediumHigh_on_29
+- cool_mediumHigh_on_30
+
+- cool_mediumHigh_off_18
+- cool_mediumHigh_off_19
+- cool_mediumHigh_off_20
+- cool_mediumHigh_off_21
+- cool_mediumHigh_off_22
+- cool_mediumHigh_off_23
+- cool_mediumHigh_off_24
+- cool_mediumHigh_off_25
+- cool_mediumHigh_off_26
+- cool_mediumHigh_off_27
+- cool_mediumHigh_off_28
+- cool_mediumHigh_off_29
+- cool_mediumHigh_off_30
+
+
+- cool_high_on_18
+- cool_high_on_19
+- cool_high_on_20
+- cool_high_on_21
+- cool_high_on_22
+- cool_high_on_23
+- cool_high_on_24
+- cool_high_on_25
+- cool_high_on_26
+- cool_high_on_27
+- cool_high_on_28
+- cool_high_on_29
+- cool_high_on_30
+
+- cool_high_off_18
+- cool_high_off_19
+- cool_high_off_20
+- cool_high_off_21
+- cool_high_off_22
+- cool_high_off_23
+- cool_high_off_24
+- cool_high_off_25
+- cool_high_off_26
+- cool_high_off_27
+- cool_high_off_28
+- cool_high_off_29
+- cool_high_off_30
+
+
+- cool_powerful_on
+- cool_powerful_off
+
+
+
+- fan_only_auto_on
+- fan_only_silent_on
+- fan_only_low_on
+- fan_only_lowMedium_on
+- fan_only_medium_on
+- fan_only_mediumHigh_on
+- fan_only_high_on
+- fan_only_powerful_on
+
+- fan_only_auto_off
+- fan_only_silent_off
+- fan_only_low_off
+- fan_only_lowMedium_off
+- fan_only_medium_off
+- fan_only_mediumHigh_off
+- fan_only_high_off
+- fan_only_powerful_off
+
+
+
+- heat_auto_on_18
+- heat_auto_on_19
+- heat_auto_on_20
+- heat_auto_on_21
+- heat_auto_on_22
+- heat_auto_on_23
+- heat_auto_on_24
+- heat_auto_on_25
+- heat_auto_on_26
+- heat_auto_on_27
+- heat_auto_on_28
+- heat_auto_on_29
+- heat_auto_on_30
+
+- heat_auto_off_18
+- heat_auto_off_19
+- heat_auto_off_20
+- heat_auto_off_21
+- heat_auto_off_22
+- heat_auto_off_23
+- heat_auto_off_24
+- heat_auto_off_25
+- heat_auto_off_26
+- heat_auto_off_27
+- heat_auto_off_28
+- heat_auto_off_29
+- heat_auto_off_30
+
+
+- heat_silent_on_18
+- heat_silent_on_19
+- heat_silent_on_20
+- heat_silent_on_21
+- heat_silent_on_22
+- heat_silent_on_23
+- heat_silent_on_24
+- heat_silent_on_25
+- heat_silent_on_26
+- heat_silent_on_27
+- heat_silent_on_28
+- heat_silent_on_29
+- heat_silent_on_30
+
+- heat_silent_off_18
+- heat_silent_off_19
+- heat_silent_off_20
+- heat_silent_off_21
+- heat_silent_off_22
+- heat_silent_off_23
+- heat_silent_off_24
+- heat_silent_off_25
+- heat_silent_off_26
+- heat_silent_off_27
+- heat_silent_off_28
+- heat_silent_off_29
+- heat_silent_off_30
+
+
+- heat_low_on_18
+- heat_low_on_19
+- heat_low_on_20
+- heat_low_on_21
+- heat_low_on_22
+- heat_low_on_23
+- heat_low_on_24
+- heat_low_on_25
+- heat_low_on_26
+- heat_low_on_27
+- heat_low_on_28
+- heat_low_on_29
+- heat_low_on_30
+
+- heat_low_off_18
+- heat_low_off_19
+- heat_low_off_20
+- heat_low_off_21
+- heat_low_off_22
+- heat_low_off_23
+- heat_low_off_24
+- heat_low_off_25
+- heat_low_off_26
+- heat_low_off_27
+- heat_low_off_28
+- heat_low_off_29
+- heat_low_off_30
+
+
+- heat_lowMedium_on_18
+- heat_lowMedium_on_19
+- heat_lowMedium_on_20
+- heat_lowMedium_on_21
+- heat_lowMedium_on_22
+- heat_lowMedium_on_23
+- heat_lowMedium_on_24
+- heat_lowMedium_on_25
+- heat_lowMedium_on_26
+- heat_lowMedium_on_27
+- heat_lowMedium_on_28
+- heat_lowMedium_on_29
+- heat_lowMedium_on_30
+
+- heat_lowMedium_off_18
+- heat_lowMedium_off_19
+- heat_lowMedium_off_20
+- heat_lowMedium_off_21
+- heat_lowMedium_off_22
+- heat_lowMedium_off_23
+- heat_lowMedium_off_24
+- heat_lowMedium_off_25
+- heat_lowMedium_off_26
+- heat_lowMedium_off_27
+- heat_lowMedium_off_28
+- heat_lowMedium_off_29
+- heat_lowMedium_off_30
+
+
+- heat_medium_on_18
+- heat_medium_on_19
+- heat_medium_on_20
+- heat_medium_on_21
+- heat_medium_on_22
+- heat_medium_on_23
+- heat_medium_on_24
+- heat_medium_on_25
+- heat_medium_on_26
+- heat_medium_on_27
+- heat_medium_on_28
+- heat_medium_on_29
+- heat_medium_on_30
+
+- heat_medium_off_18
+- heat_medium_off_19
+- heat_medium_off_20
+- heat_medium_off_21
+- heat_medium_off_22
+- heat_medium_off_23
+- heat_medium_off_24
+- heat_medium_off_25
+- heat_medium_off_26
+- heat_medium_off_27
+- heat_medium_off_28
+- heat_medium_off_29
+- heat_medium_off_30
+
+
+- heat_mediumHigh_on_18
+- heat_mediumHigh_on_19
+- heat_mediumHigh_on_20
+- heat_mediumHigh_on_21
+- heat_mediumHigh_on_22
+- heat_mediumHigh_on_23
+- heat_mediumHigh_on_24
+- heat_mediumHigh_on_25
+- heat_mediumHigh_on_26
+- heat_mediumHigh_on_27
+- heat_mediumHigh_on_28
+- heat_mediumHigh_on_29
+- heat_mediumHigh_on_30
+
+- heat_mediumHigh_off_18
+- heat_mediumHigh_off_19
+- heat_mediumHigh_off_20
+- heat_mediumHigh_off_21
+- heat_mediumHigh_off_22
+- heat_mediumHigh_off_23
+- heat_mediumHigh_off_24
+- heat_mediumHigh_off_25
+- heat_mediumHigh_off_26
+- heat_mediumHigh_off_27
+- heat_mediumHigh_off_28
+- heat_mediumHigh_off_29
+- heat_mediumHigh_off_30
+
+
+- heat_high_on_18
+- heat_high_on_19
+- heat_high_on_20
+- heat_high_on_21
+- heat_high_on_22
+- heat_high_on_23
+- heat_high_on_24
+- heat_high_on_25
+- heat_high_on_26
+- heat_high_on_27
+- heat_high_on_28
+- heat_high_on_29
+- heat_high_on_30
+
+- heat_high_off_18
+- heat_high_off_19
+- heat_high_off_20
+- heat_high_off_21
+- heat_high_off_22
+- heat_high_off_23
+- heat_high_off_24
+- heat_high_off_25
+- heat_high_off_26
+- heat_high_off_27
+- heat_high_off_28
+- heat_high_off_29
+- heat_high_off_30
+
+
+- heat_powerful_on
+- heat_powerful_off
+
+
+
+End

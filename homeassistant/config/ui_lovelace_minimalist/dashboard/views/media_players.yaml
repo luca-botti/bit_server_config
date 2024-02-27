@@ -1,0 +1,222 @@
+title: Media Players
+path: media_players
+cards:
+  # FIX for vertical Monitor
+  - type: vertical-stack
+
+    cards:
+      # Navigation Menu
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            template: chip_back
+            variables:
+              ulm_chip_back_path: home
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            template: chip_navigate
+            label: "Others"
+            variables:
+              ulm_chip_navigate_path: others
+              ulm_chip_navigate_icon: mdi:toggle-switch
+              ulm_chip_navigate_icon_color: red
+
+      # Title
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: custom:button-card
+            template: card_title
+            name: Media Players
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      #Salotto title
+      - type: custom:button-card
+        template: card_title
+        label: Salotto
+
+      #media players grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.ue40d6500
+            variables:
+              ulm_card_media_player_name: TV Salotto
+              ulm_card_media_player_icon: mdi:television
+              # ulm_card_media_player_enable_art: false
+              # ulm_card_media_player_enable_controls: false
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              # ulm_card_media_player_player_controls_entity
+              # ulm_card_media_player_enable_popup: false
+              # ulm_card_media_player_more_info: false
+              ulm_card_media_player_power_button: true
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.chromecast
+            variables:
+              ulm_card_media_player_name: Chromecast
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.hitachi_speaker
+            variables:
+              ulm_card_media_player_name: Hitachi Speaker
+              ulm_card_media_player_icon: mdi:speaker-multiple
+              ulm_card_media_player_power_button: true
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.home
+            variables:
+              ulm_card_media_player_name: Google Home
+              ulm_card_media_player_icon: mdi:cast-audio
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            color_type: blank-card
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.philips_tv
+            variables:
+              ulm_card_media_player_name: TV Philips
+              ulm_card_media_player_icon: mdi:television
+              ulm_card_media_player_power_button: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Cucina title
+      - type: custom:button-card
+        template: card_title
+        label: Cucina
+
+      #media players grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.nesthub
+            variables:
+              ulm_card_media_player_name: NestHub
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Camera title
+      - type: custom:button-card
+        template: card_title
+        label: Camera
+
+      #media players grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.firetvstick_di_famiglia
+            variables:
+              ulm_card_media_player_name: FireTV Stick
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Camereta title
+      - type: custom:button-card
+        template: card_title
+        label: Cameretta
+
+      #media players grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.echo
+            variables:
+              ulm_card_media_player_name: Echo
+              ulm_card_media_player_icon: mdi:cast-audio
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Bagno title
+      - type: custom:button-card
+        template: card_title
+        label: Bagno
+
+      #media players grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.echo_dot
+            variables:
+              ulm_card_media_player_name: Echo Dot
+              ulm_card_media_player_icon: mdi:cast-audio
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true

@@ -1,0 +1,702 @@
+- id: '1659692369838'
+  alias: Autospegnimento TV inattiva
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - media_player.chromecast
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    id: 'off'
+  - platform: state
+    entity_id:
+    - media_player.ue40d6500
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    id: 'on'
+  - platform: state
+    entity_id:
+    - media_player.chromecast
+    to: idle
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    id: chromecast-inactive
+  - platform: state
+    entity_id:
+    - media_player.chromecast
+    to: buffering
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    id: chromecast-preloading
+  condition:
+  - condition: state
+    entity_id: media_player.ue40d6500
+    state: 'on'
+  - condition: or
+    conditions:
+    - condition: and
+      conditions:
+      - condition: trigger
+        id:
+        - chromecast-inactive
+      - condition: state
+        entity_id: media_player.chromecast
+        state: idle
+    - condition: and
+      conditions:
+      - condition: trigger
+        id:
+        - chromecast-preloading
+      - condition: state
+        entity_id: media_player.chromecast
+        state: buffering
+    - condition: and
+      conditions:
+      - condition: trigger
+        id:
+        - 'off'
+        - 'on'
+      - condition: state
+        entity_id: media_player.chromecast
+        state: 'off'
+  action:
+  - service: media_player.turn_off
+    data: {}
+    target:
+      entity_id:
+      - media_player.ue40d6500
+      - media_player.chromecast
+  mode: single
+- id: '1659889242111'
+  alias: REMOTES - Hue - On
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 00:17:88:01:09:a6:3c:7f
+      event: 1002
+    id: short
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 00:17:88:01:09:a6:3c:7f
+      event: 1003
+    id: long
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: long
+      sequence:
+      - service: automation.toggle
+        target:
+          entity_id: automation.autospegnimento_tv_inattiva
+        data: {}
+      - if:
+        - condition: state
+          entity_id: light.luci_soggiorno
+          state: 'on'
+        then:
+        - repeat:
+            count: 2
+            sequence:
+            - service: light.turn_on
+              data:
+                brightness_pct: 50
+              target:
+                entity_id: light.luci_soggiorno
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 0
+                milliseconds: 500
+            - service: light.turn_on
+              data:
+                brightness_pct: 100
+              target:
+                entity_id: light.luci_soggiorno
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 0
+                milliseconds: 500
+        - service: light.turn_on
+          data:
+            brightness_pct: 100
+          target:
+            entity_id: light.luci_soggiorno
+        else:
+        - repeat:
+            count: 2
+            sequence:
+            - service: light.turn_on
+              data:
+                brightness_pct: 20
+              target:
+                entity_id: light.luci_soggiorno
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 0
+                milliseconds: 500
+            - service: light.turn_off
+              data: {}
+              target:
+                entity_id: light.luci_soggiorno
+            - delay:
+                hours: 0
+                minutes: 0
+                seconds: 0
+                milliseconds: 500
+        - service: light.turn_on
+          data:
+            brightness_pct: 100
+          target:
+            entity_id: light.luci_soggiorno
+        - delay:
+            hours: 0
+            minutes: 0
+            seconds: 0
+            milliseconds: 100
+        - service: light.turn_off
+          data: {}
+          target:
+            entity_id: light.luci_soggiorno
+    - conditions:
+      - condition: trigger
+        id: short
+      sequence:
+      - service: light.toggle
+        target:
+          area_id: cucina
+        data:
+          brightness_pct: 100
+  mode: single
+- id: '1659889262632'
+  alias: REMOTES - Hue - Off
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 00:17:88:01:09:a6:3c:7f
+      event: 4000
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: cucina
+  mode: single
+- id: short
+  alias: REMOTES - Hue - Up
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 00:17:88:01:09:a6:3c:7f
+      event: 2000
+  condition: []
+  action:
+  - service: light.toggle
+    data:
+      brightness_pct: 100
+      kelvin: 2700
+    target:
+      area_id: soggiorno
+  mode: single
+- id: '1659889328993'
+  alias: REMOTES - Hue - Dowm
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 00:17:88:01:09:a6:3c:7f
+      event: 3000
+  condition: []
+  action:
+  - if:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: light.lampada
+        state: 'on'
+      - condition: state
+        entity_id: light.color_temperature_light_1
+        state: 'on'
+    then:
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id:
+        - light.color_temperature_light_1
+        - light.lampada
+  - service: light.toggle
+    target:
+      entity_id: light.sala_da_pranzo
+    data:
+      brightness_pct: 100
+  mode: single
+- id: '1659889543315'
+  alias: REMOTES - Ikea On/Off - Off
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 0c:43:14:ff:fe:fd:c3:b7
+      event: 2002
+  condition: []
+  action:
+  - service: light.toggle
+    target:
+      entity_id: light.color_temperature_light_2
+    data: {}
+  mode: single
+- id: '1659889563783'
+  alias: REMOTES - Ikea ON/Off - On
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 0c:43:14:ff:fe:fd:c3:b7
+      event: 1002
+  condition: []
+  action:
+  - service: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.luce_scrivania
+  mode: single
+- id: '1659889648186'
+  alias: REMOTES - Philips - On
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 00:17:88:01:04:0b:1b:69
+      event: 1000
+  condition: []
+  action:
+  - service: light.toggle
+    target:
+      entity_id: light.cameretta
+    data:
+      brightness_pct: 100
+  mode: single
+- id: '1659889697755'
+  alias: REMOTES - Philips - Off
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 00:17:88:01:04:0b:1b:69
+      event: 4000
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: cameretta
+  - service: fan.turn_off
+    data: {}
+    target:
+      entity_id: fan.fan_id8
+  mode: single
+- id: '1659889738197'
+  alias: REMOTES - Philips - Up
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 00:17:88:01:04:0b:1b:69
+      event: 2000
+  condition: []
+  action:
+  - service: fan.increase_speed
+    data: {}
+    target:
+      entity_id: fan.fan_id8
+  mode: single
+- id: '1659889752031'
+  alias: REMOTES - Philips - Down
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: 00:17:88:01:04:0b:1b:69
+      event: 3000
+  condition: []
+  action:
+  - service: fan.decrease_speed
+    data: {}
+    target:
+      entity_id: fan.fan_id8
+  mode: single
+- id: '1659889915692'
+  alias: REMOTES - Ikea Rotondo - On
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: bc:33:ac:ff:fe:82:b2:1b
+      event: 1002
+  condition: []
+  action:
+  - service: light.toggle
+    target:
+      entity_id: light.cucina
+    data:
+      brightness_pct: 100
+  mode: single
+- id: '1661187291141'
+  alias: REMOTES - Ikea Rotondo - Right
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: bc:33:ac:ff:fe:82:b2:1b
+      event: 5002
+  condition: []
+  action:
+  - service: light.toggle
+    target:
+      entity_id: light.sala_da_pranzo
+    data:
+      brightness_pct: 100
+  mode: single
+- id: '1661187324296'
+  alias: REMOTES - Ikea Rotondo - Left
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: bc:33:ac:ff:fe:82:b2:1b
+      event: 4002
+  condition: []
+  action:
+  - service: light.toggle
+    data:
+      brightness_pct: 100
+      kelvin: 2700
+    target:
+      area_id: soggiorno
+  mode: single
+- id: '1661187366199'
+  alias: REMOTES - Ikea Rotondo - Up
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: bc:33:ac:ff:fe:82:b2:1b
+      event: 2002
+  condition: []
+  action:
+  - service: light.toggle
+    target:
+      entity_id:
+      - light.color_temperature_light_1
+      - light.lampada
+    data:
+      brightness_pct: 100
+  mode: single
+- id: '1661187434503'
+  alias: REMOTES - Ikea Rotondo - Down
+  description: ''
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      unique_id: bc:33:ac:ff:fe:82:b2:1b
+      event: 3002
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id:
+      - cucina
+      - sala_da_pranzo
+      - soggiorno
+  mode: single
+- id: '1664824401251'
+  alias: FIX - Do Not Deactivate - Remotes
+  description: Automatically fix the remotes, reloading all the automations after
+    5 minuts from the start of home assistant
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: script.turn_on
+    data: {}
+    target:
+      entity_id: script.reaload_automation
+  mode: single
+- id: '1668452611169'
+  alias: MOTION - Luci entrata
+  description: Accende le luci quando si entra in casa e non ci sono luci accese
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.tradfri_motion_sensor
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: light.all_lights
+    state: 'off'
+  - condition: state
+    entity_id: media_player.ue40d6500
+    state: 'off'
+  - condition: or
+    conditions:
+    - condition: and
+      conditions:
+      - condition: template
+        value_template: '{% set n = now() %} {{ (n.month == 10 and n.day >= 15) or
+          (n.month >= 11) or (n.month == 3 and n.day < 15) or (n.month <= 2) }}'
+      - condition: sun
+        before: sunrise
+        before_offset: 01:00:00
+        after: sunset
+        after_offset: -01:00:00
+    - condition: and
+      conditions:
+      - condition: template
+        value_template: '{% set n = now() %} {{ not ((n.month == 10 and n.day >= 15)
+          or (n.month >= 11) or (n.month == 3 and n.day < 15) or (n.month <= 2)) }}'
+      - condition: sun
+        before: sunrise
+        before_offset: -00:30:00
+        after_offset: 00:30:00
+        after: sunset
+  action:
+  - service: light.turn_on
+    data:
+      brightness_pct: 100
+    target:
+      entity_id: light.living_lights
+  - wait_template: '{{ is_state("light.living_lights", "off") }}'
+    continue_on_timeout: true
+    timeout: 00:05:00
+  - if:
+    - condition: template
+      value_template: '{{ not wait.completed }}'
+    then:
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id: light.living_lights
+  mode: single
+- id: '1669654346659'
+  alias: Casse TV
+  description: Accende e spegne le case in base allo stato della tv
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.samsung_tv_status
+    from: 'off'
+    to: 'on'
+    id: 'on'
+  - platform: state
+    entity_id:
+    - binary_sensor.samsung_tv_status
+    id: 'off'
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  - platform: time_pattern
+    minutes: /5
+    id: fix
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      - condition: state
+        entity_id: media_player.hitachi_speaker
+        state: 'off'
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.presa_1
+        data: {}
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 5
+          milliseconds: 0
+      - service: media_player.turn_on
+        data: {}
+        target:
+          entity_id: media_player.hitachi_speaker
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      - condition: state
+        entity_id: media_player.hitachi_speaker
+        state: 'on'
+      sequence:
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.hitachi_speaker
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 5
+          milliseconds: 0
+      - service: switch.turn_off
+        target:
+          entity_id: switch.presa_1
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: fix
+      - condition: state
+        entity_id: binary_sensor.samsung_tv_status
+        state: 'off'
+      - condition: state
+        entity_id: media_player.hitachi_speaker
+        state: 'on'
+      sequence:
+      - service: media_player.turn_off
+        data: {}
+        target:
+          entity_id: media_player.hitachi_speaker
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 5
+          milliseconds: 0
+      - service: switch.turn_off
+        target:
+          entity_id: switch.presa_1
+        data: {}
+  mode: single
+- id: '1675009912724'
+  alias: Phone Charging
+  description: Turn on charger if phone battery is below 70 and turn it off if the
+    battery is over 79
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.poco_f1_battery_level
+    - binary_sensor.poco_f1_is_charging
+  - platform: zone
+    entity_id: device_tracker.poco_f1
+    zone: zone.home
+    event: enter
+  condition:
+  - condition: zone
+    entity_id: device_tracker.poco_f1
+    zone: zone.home
+  action:
+  - choose:
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.poco_f1_battery_level
+        above: 79
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.ciabatta_1
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.poco_f1_battery_level
+        below: 70
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          entity_id: switch.ciabatta_1
+  mode: single
+- id: '1681226691070'
+  alias: FIX - Do Not Deactivate - Samsung tv
+  description: Fix turn on on samsung tv default integration after losing support
+    for yaml configurations
+  trigger:
+  - platform: samsungtv.turn_on
+    entity_id: media_player.ue40d6500
+  condition: []
+  action:
+  - service: media_player.turn_on
+    data: {}
+    target:
+      entity_id: media_player.samsung_tv
+  mode: single
+- id: '1706968326673'
+  alias: FIX - Do Not Deactivate - Zigbee Ikea LIghts fix 1
+  description: ''
+  use_blueprint:
+    path: custom/ikea_lights_fix.yaml
+    input:
+      ikea_light_entity: light.color_temperature_light_1
+      input_boolean: input_boolean.ikea_light_1_fix
+- id: '1706968347879'
+  alias: FIX - Do Not Deactivate - Zigbee Ikea LIghts fix 2
+  description: ''
+  use_blueprint:
+    path: custom/ikea_lights_fix.yaml
+    input:
+      ikea_light_entity: light.color_temperature_light_2
+      input_boolean: input_boolean.ikea_light_2_fix
+- id: '1708159948663'
+  alias: FIX - Do not deactivate - Remotes after updates
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ now().isoweekday() == 2  and now().hour == 5 and now().minute
+      == 00 }}'
+  condition: []
+  action:
+  - service: homeassistant.restart
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1708294754169'
+  alias: Scheduled BackUp
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ now().isoweekday() == 2  and now().hour == 2 and now().minute
+      == 00 }}'
+  condition: []
+  action:
+  - service: backup.create
+    data: {}
+  mode: single

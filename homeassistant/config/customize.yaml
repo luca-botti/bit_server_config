@@ -1,0 +1,93 @@
+# person
+person.luca:
+  entity_picture: /local/IMG_20200805_131050.jpg
+person.anna:
+  entity_picture: /local/IMG_20200804_111506.jpg
+person.sara:
+  entity_picture: /local/IMG_20200807_201520.jpg
+
+# state sensors
+sensor.outlet_1_power_local:
+  friendly_name: Consumo Presa 1
+sensor.outlet_2_power_local:
+  friendly_name: Consumo Presa 2
+binary_sensor.someone_home:
+  friendly_name: Qualcuno in casa
+binary_sensor.samsung_tv_status:
+  friendly_name: Samsung TV Status
+# binary_sensor.hitachi_speakers_status:
+#   friendly_name: Hitachi Speakers Status
+binary_sensor.state_power_strip:
+  friendly_name: Problema Ciabatta Smart
+binary_sensor.state_outlet_1:
+  friendly_name: Problema Presa 1
+binary_sensor.state_outlet_2:
+  friendly_name: Problema Presa 2
+binary_sensor.state_outlet_3:
+  friendly_name: Problema Presa 3
+binary_sensor.state_sonoff_1000fa41c9:
+  friendly_name: Problema Balcone Sala da pranzo
+binary_sensor.state_sonoff_1000f9103b:
+  friendly_name: Problema Balcone Cucina
+binary_sensor.state_rm4_mini:
+  friendly_name: Problema Controller Infrarossi RM4 Mini
+binary_sensor.state_rm4_pro:
+  friendly_name: Problema Controller Infrarossi RM4 Pro
+binary_sensor.state_luce_scrivania:
+  friendly_name: Problema Luce Scrivania
+binary_sensor.state_faretto_deconz_device:
+  friendly_name: Problema Faretto
+binary_sensor.state_faretto_scrivania_deconz_device:
+  friendly_name: Problema Faretto Scrivania
+binary_sensor.state_ikea_button_deconz_device:
+  friendly_name: Problema Telecomando Ikea Rotondo
+binary_sensor.state_ikea2_button_deconz_device:
+  friendly_name: Problema Telecomando Ikea On/Off
+binary_sensor.state_hue_button_deconz_device:
+  friendly_name: Problema Telecomando Hue
+binary_sensor.state_philips_button_deconz_device:
+  friendly_name: Problema Telecomando Philips
+binary_sensor.state_cameretta_hue_device:
+  friendly_name: Problema Luce Hue Cameretta
+binary_sensor.state_lampada_hue_device:
+  friendly_name: Problema Luce Hue Lampada
+binary_sensor.state_sala_da_pranzo_hue_device:
+  friendly_name: Problema Luce Hue Sala da Pranzo
+binary_sensor.state_sala_3_hue_device:
+  friendly_name: Problema Luce Hue Sala 3
+binary_sensor.state_sala_4_hue_device:
+  friendly_name: Problema Luce Hue Sala 4
+binary_sensor.state_cucina_hue_device:
+  friendly_name: Problema Luce Hue Cucina
+binary_sensor.state_sala_2_hue_device:
+  friendly_name: Problema Luce Hue Sala 2
+binary_sensor.state_sala_1_hue_device:
+  friendly_name: Problema Luce Hue Sala 1
+binary_sensor.state_ikea_motion_sensor:
+  friendly_name: Problema Sensore di Movimento Ikea
+binary_sensor.state_ikea_air_quality_detector:
+  friendly_name: Problema Sensore Qualità dell'Aria Ikea
+
+# smartIr
+fan.fan_id8:
+  friendly_name: Pale Cameretta
+media_player.philips_tv:
+  friendly_name: TV Philips
+media_player.samsung_tv:
+  friendly_name: TV samsung
+media_player.hitachi_speaker:
+  friendly_name: Speaker Hitachi
+climate.soggiorno_ac:
+  friendly_name: Aria Condizionata Soggiorno
+
+# light groups
+light.bedroom_lights:
+  friendly_name: Luci Cameretta
+light.dining_lights:
+  friendly_name: Luci Sala da Pranzo
+light.balconi_lights:
+  friendly_name: Luci Balconi
+light.living_lights:
+  friendly_name: Luci Soggiorno
+light.all_lights:
+  friendly_name: Tutte le luci

@@ -1,0 +1,28 @@
+#  When your config is ok comment block below to disable use of AMCE staging server
+#{
+#    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory 
+#}
+
+# (https_header) {
+#   header {
+#     Strict-Transport-Security "max-age=31536000; includeSubdomains"
+#     X-XSS-Protection "1; mode=block"
+#     X-Content-Type-Options "nosniff"
+#     X-Frame-Options "SAMEORIGIN"
+#     Referrer-Policy "same-origin"
+#   }
+# }
+
+https://{$EXTERNAL_HASSIO_URL}:{$EXTERNAL_HASSIO_PORT} {
+	tls {
+		dns duckdns {env.DUCK_DNS_TOKEN} # used to defer replacment at runtime
+	}
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubdomains"
+		X-XSS-Protection "1; mode=block"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		Referrer-Policy "same-origin"
+	}
+	reverse_proxy http://{$HOST_ADDRESS}:{$LOCAL_HASSIO_PORT}
+}

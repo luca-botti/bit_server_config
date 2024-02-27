@@ -1,0 +1,165 @@
+title: Others
+path: others
+cards:
+  # FIX for vertical Monitor
+  - type: vertical-stack
+
+    cards:
+      # Navigation Menu
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            template: chip_back
+            variables:
+              ulm_chip_back_path: home
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            template: chip_navigate
+            label: "Media Players"
+            variables:
+              ulm_chip_navigate_path: media_players
+              ulm_chip_navigate_icon: mdi:television-speaker
+              ulm_chip_navigate_icon_color: green
+
+      # Title
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: custom:button-card
+            template: card_title
+            name: Other Stuff
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      #Salotto title
+      - type: custom:button-card
+        template: card_title
+        label: Salotto
+
+      #Salotto Switches grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.presa_2
+            variables:
+              ulm_card_power_outlet_consumption_sensor: sensor.outlet_2_power_local
+              ulm_card_power_outlet_name: Presa TV
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.presa_1
+            variables:
+              ulm_card_power_outlet_consumption_sensor: sensor.outlet_1_power_local
+              ulm_card_power_outlet_name: Presa Casse
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      - type: "custom:button-card"
+        template: card_binary_sensor
+        variables:
+          ulm_card_binary_sensor_alert: true
+          ulm_card_binary_sensor_show_last_changed: true
+          ulm_card_binary_sensor_name: Sensore di movimento entrata
+        entity: binary_sensor.tradfri_motion_sensor
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      - type: "custom:button-card"
+        template: card_thermostat
+        entity: climate.soggiorno_ac
+        variables:
+          ulm_card_thermostat_name: Aria Condizionata
+          ulm_card_thermostat_icon: mdi:air-conditioner
+          ulm_card_thermostat_enable_collapse: true
+          ulm_card_thermostat_enable_controls: true
+          ulm_card_thermostat_enable_hvac_modes: true
+          ulm_card_thermostat_enable_background_color: true
+          ulm_card_thermostat_enable_display_temperature: true
+          ulm_card_thermostat_enable_horizontal: false
+          ulm_card_thermostat_enable_popup: false
+          # ulm_card_thermostat_fan_entity:
+          # ulm_card_thermostat_minimum_temp_spread:
+          ulm_card_thermostat_temp_step: 1.0
+
+      #Space
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Cameretta title
+      - type: custom:button-card
+        template: card_title
+        label: Cameretta
+
+      #Cameretta Switches grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta_1
+            variables:
+              ulm_card_power_outlet_name: Caricatore telefono
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta_2
+            variables:
+              ulm_card_power_outlet_name: Presa
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta_3
+            variables:
+              ulm_card_power_outlet_name: Presa sveglia
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta_usb
+            variables:
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      - type: custom:button-card
+        template: custom_card_saxel_fan
+        entity: fan.fan_id8
+        name: Pale Cameretta
+        variables:
+          collapsible: false
+
+      #Space
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Camera title
+      # - type: custom:button-card
+      #   template: card_title
+      #   label: Camera
+
+      # - type: "custom:button-card"
+      #   template: custom_card_mpse_printer
+      #   entity: sensor.epson_et_2750_series
+      #   variables:
+      #     ulm_card_printer_name: Epson ET-2750
+      #     ulm_card_printer_black_name: sensor.epson_et_2750_series_black_ink
+      #     ulm_card_printer_yellow_name: sensor.epson_et_2750_series_yellow_ink
+      #     ulm_card_printer_cyan_name: sensor.epson_et_2750_series_cyan_ink
+      #     ulm_card_printer_magenta_name: sensor.epson_et_2750_series_magenta_ink

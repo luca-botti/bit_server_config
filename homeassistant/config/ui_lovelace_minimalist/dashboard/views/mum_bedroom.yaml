@@ -1,0 +1,75 @@
+title: Camera
+path: mum_bedroom
+cards:
+  # FIX for vertical Monitor
+  - type: vertical-stack
+
+    cards:
+      # Navigation Menu
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            template: chip_back
+            variables:
+              ulm_chip_back_path: home
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      # Title
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            color_type: blank-card
+
+          - type: custom:button-card
+            template: card_title
+            name: Camera
+
+          - type: "custom:button-card"
+            color_type: blank-card
+
+      #Media Players title
+      - type: custom:button-card
+        template: card_title
+        label: Media Players
+
+      #media players grid
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.firetvstick_di_famiglia
+            variables:
+              ulm_card_media_player_name: FireTV Stick
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true
+
+      - type: "custom:button-card"
+        color_type: blank-card
+      - type: "custom:button-card"
+        color_type: blank-card
+
+      #Others title
+      # - type: custom:button-card
+      #   template: card_title
+      #   label: Others
+
+      # - type: "custom:button-card"
+      #   template: custom_card_mpse_printer
+      #   entity: sensor.epson_et_2750_series
+      #   variables:
+      #     ulm_card_printer_name: Epson ET-2750
+      #     ulm_card_printer_black_name: sensor.epson_et_2750_series_black_ink
+      #     ulm_card_printer_yellow_name: sensor.epson_et_2750_series_yellow_ink
+      #     ulm_card_printer_cyan_name: sensor.epson_et_2750_series_cyan_ink
+      #     ulm_card_printer_magenta_name: sensor.epson_et_2750_series_magenta_ink
