@@ -9,12 +9,12 @@ Starting from a windows terminal:
     ```powershell
     ssh-keygen -t rsa -b 4096 -C "<your_comment>"
     ```
-1.  execute (change *<user>* and *<host>* to the user and the address, or hostname, of the server), will require the password of the server
+1.  execute (change *user* and *host* to the user and the address, or hostname, of the server), will require the password of the server
 
     ```powershell
     cat ~/.ssh/id_rsa.pub | ssh "<user>@<host>" "mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chmod -R go= ~/.ssh && cat >> ~/.ssh/authorized_keys"
     ```
-2.  then execute this to log on the server (change <user> and <host> to the user and the address, or hostname, of the server)
+2.  then execute this to log on the server (change *user* and *host* to the user and the address, or hostname, of the server)
 
     ```powershell
     ssh <user>@<host>
@@ -22,14 +22,14 @@ Starting from a windows terminal:
 
 now you should be inside the terminal of the server
 
-3.  execute this list of commands (substitute <email> with your email, <user> with your username for git, and <user> with the user logged in the server):
+3.  execute this list of commands (substitute *email* with your email, *git-user* with your username for git, and *user* with the user logged in the server):
 
     ```bash
     sudo apt update && \
     sudo apt full-upgrade -y && \
     sudo apt install git -y && \
     git config --global user.email '<email>' && \
-    git config --global user.name '<user>' && \
+    git config --global user.name '<git-user>' && \
     cd / && \
     sudo mkdir /bit_server && \
     sudo chown -R '<user>' /bit_server/ && \
