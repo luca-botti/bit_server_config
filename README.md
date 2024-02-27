@@ -4,12 +4,12 @@ This instructions will deploy a copy of my personal home server and could be use
 
 Starting from a windows terminal:
 
-0.  if the file at `$USERFOLDER/.ssh/id-rsa` is not present, execute this to create the fingerprint ( <your_comment> could be anything, but normally is used an email for identification ).
+0.  if the file at `$USERFOLDER/.ssh/id-rsa` is not present, execute this to create the fingerprint ( *your_comment* could be anything, but normally is used an email for identification ).
 
     ```powershell
     ssh-keygen -t rsa -b 4096 -C "<your_comment>"
     ```
-1.  execute (change <user> and <host> to the user and the address, or hostname, of the server), will require the password of the server
+1.  execute (change *<user>* and *<host>* to the user and the address, or hostname, of the server), will require the password of the server
 
     ```powershell
     cat ~/.ssh/id_rsa.pub | ssh "<user>@<host>" "mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chmod -R go= ~/.ssh && cat >> ~/.ssh/authorized_keys"
