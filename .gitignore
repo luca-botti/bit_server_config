@@ -51,3 +51,8 @@ other_files/secrets/*
 !other_files/secrets/others
 other_files/secrets/others/*
 !other_files/secrets/others/.nodata
+
+# backups upload cache
+other_files/scripts/backups/gdrive/.temp
+# other_files/scripts/backups/gdrive/.temp/*
+# !other_files/scripts/backups/gdrive/.temp/.nodata

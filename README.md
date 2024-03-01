@@ -1,6 +1,6 @@
 # TODO
 
- - add backups encryption and upload to cloud
+ - add backups encryption and older backup remove polocy
 
 
 # Instruction for deploy the server
@@ -81,6 +81,12 @@ now you should be inside the terminal of the server
     3. click on ***>>*** on the upper-left corner if the menù is not extended
     4. go to ***settings -> teleporter -> restore***
     5. load the backup file
+
+10. then for activate the automatic backup we need to configure the gdrive cli application already installed using the account credentials that can be found in `secrets`, just run (*file_name* is the exported account token from gdrive)
+
+    ```bash
+    gdrive account import /bit_server/other_files/secrets/others/<file-name>.tar
+    ```
 
 
 

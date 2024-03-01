@@ -41,7 +41,7 @@ echo "Installing backup scripts dependencies..."
 
 # backup dependencies
 
-sudo apt install jq cron findutils coreutils diffutils -y # used in backup scripts
+sudo apt install jq cron findutils coreutils diffutils csvkit coreutils gpg -y # used in backup scripts
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y # installing rust
 source "$HOME/.cargo/env" # adding rust binaries to PATH

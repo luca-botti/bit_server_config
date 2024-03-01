@@ -1,63 +1,69 @@
 #!/bin/bash
 
-set -e
+QUIET=0     # DEBUG=0 quiet
+ERROR=1     # DEBUG=1 only error <- default
+WARN=2      # DEBUG=2 error and some info
+INFO=3      # DEBUG=3 print all
+DEBUG=4     # debug=4 will set the -x parameter and disable all manual echo
 
-DEBUG=${DEBUG_OVERRIDE:-0}
+VERBOSE=${VERBOSE_OVERRIDE:-1}
 
 cleanExit() {
-    [[ $DEBUG > 0 ]] && echo "Pihole auto backup script - ENDING ..."
+    [[ $VERBOSE -ge $INFO ]] && echo "Pihole auto backup script - ENDING ..."
 }
 
 trap cleanExit EXIT # setting exit function
 
-[[ $DEBUG > 0 ]] && echo "Pihole auto backup script - STARTING ..."
+[[ $VERBOSE -ge $INFO ]] && echo "Pihole auto backup script - STARTING ..."
 
 DATE=${DATE_OVERRIDE:-$(date +"%Y-%m-%d-%H-%M-%S")}
 DO_NOT_DELETE_KEY=${DO_NOT_DELETE_KEY_OVERRIDE:-"DO-NOT-DELETE"}
 
-[[ $DEBUG > 0 ]] && echo "Checking input variables"
+[[ $VERBOSE -ge $INFO ]] && echo "Checking input variables"
 
 if [[ -z $BACKUP_FOLDER ]]; then
-    [[ $DEBUG > 0 ]] && echo "BACKUP_FOLDER variable is empty or not set"
+    [[ $VERBOSE -ge $ERROR ]] && echo "BACKUP_FOLDER variable is empty or not set"
     exit 0
 fi
 
 if [[ -z $LONG_TERM_BACKUP_FOLDER ]]; then
-    [[ $DEBUG > 0 ]] && echo "LONG_TERM_BACKUP_FOLDER variable is empty or not set"
+    [[ $VERBOSE -ge $ERROR ]] && echo "LONG_TERM_BACKUP_FOLDER variable is empty or not set"
     exit 0
 fi
 
-[[ $DEBUG > 0 ]] && echo "All variables inserted"
-[[ $DEBUG > 0 ]] && echo "Creating backup of pihole"
+[[ $VERBOSE -ge $INFO ]] && echo "All variables inserted"
+[[ $VERBOSE -ge $INFO ]] && echo "Creating backup of pihole"
 
-docker exec -w "/backups" pihole bash pihole -a -t
+result=$(docker exec -w "/backups" pihole bash pihole -a -t)
+[[ $VERBOSE -ge $INFO ]] && echo "Backup pihole result: $result"
 sleep 10
 
 if [[ -z "$(ls -A $BACKUP_FOLDER)" ]]; then
-    [[ $DEBUG > 0 ]] && echo "backup folder: $BACKUP_FOLDER, is empty"
+    [[ $VERBOSE -ge $ERROR ]] && echo "backup folder: $BACKUP_FOLDER, is empty"
     exit 0
 fi
 
-[[ $DEBUG > 0 ]] && echo "Backup done"
-[[ $DEBUG > 0 ]] && echo "Moving backups in long term storage"
+[[ $VERBOSE -ge $INFO ]] && echo "Backup done"
+[[ $VERBOSE -ge $INFO ]] && echo "Moving backups in long term storage"
 
 for x in $BACKUP_FOLDER/*; do
 
-    FILE_BASEPATH=${x##*/} # basepath
-    [[ $DEBUG > 0 ]] && echo "found $FILE_BASEPATH"
+    basepath=$(basename $x)
+    [[ $VERBOSE -ge $INFO ]] && echo "found $basepath"
 
-    USER="${FILE_BASEPATH:8:12}" # from position 8 for 12 characters
-    DAY=${FILE_BASEPATH:32:10}
-    TIME=${FILE_BASEPATH:43:8}
-    TIME=${TIME/-/:}
-    TIME=${TIME/-/:}
-    FORMATTED_FILE_DATE=$(date -d "$DAY $TIME" +"%Y-%m-%d-%H-%M-%S")
+    user="${basepath:8:12}" # from position 8 for 12 characters
+    day=${basepath:32:10}
+    _time=${basepath:43:8}
+    __time=${_time//-/:}
+    formatted_file_date=$(date -d "$day $__time" +"%Y-%m-%d-%H-%M-%S")
 
 
-    if [[ "$FILE_BASEPATH" =~ $DO_NOT_DELETE_KEY ]]; then
-        cp "$x" "$LONG_TERM_BACKUP_FOLDER/pihole_backup-$USER-$FORMATTED_FILE_DATE.tar"
+    if [[ "$basepath" =~ $DO_NOT_DELETE_KEY ]]; then
+        cp "$x" "$LONG_TERM_BACKUP_FOLDER/pihole_backup-$user-$formatted_file_date.tar"
     else
-        mv "$x" "$LONG_TERM_BACKUP_FOLDER/pihole_backup-$USER-$FORMATTED_FILE_DATE.tar"
+        mv "$x" "$LONG_TERM_BACKUP_FOLDER/pihole_backup-$user-$formatted_file_date.tar"
     fi
 
 done
+
+exit 0

@@ -1,100 +1,107 @@
 #!/bin/bash
 
-set -e
+QUIET=0     # DEBUG=0 quiet
+ERROR=1     # DEBUG=1 only error <- default
+WARN=2      # DEBUG=2 error and some info
+INFO=3      # DEBUG=3 print all
+DEBUG=4     # debug=4 will set the -x parameter and disable all manual echo
 
-DEBUG=${DEBUG_OVERRIDE:-0}
+VERBOSE=${VERBOSE_OVERRIDE:-1}
 
 cleanExit() {
-    [[ $DEBUG > 0 ]] && echo "HomeAssistant auto backup script - ENDING ..."
+    [[ $VERBOSE -ge $WARN ]] && echo "HomeAssistant auto backup script - ENDING ..."
 }
 
 trap cleanExit EXIT # setting exit function
 
-[[ $DEBUG > 0 ]] && echo "HomeAssistant auto backup script - STARTING ..."
+[[ $VERBOSE -ge $INFO ]] && echo "HomeAssistant auto backup script - STARTING ..."
 
 DATE=${DATE_OVERRIDE:-$(date +"%Y-%m-%d-%H-%M-%S")}
 DO_NOT_DELETE_KEY=${DO_NOT_DELETE_KEY_OVERRIDE:-"DO-NOT-DELETE"}
 HOST_ADDRESS=${HOST_ADDRESS_OVERRIDE:-"localhost"}
 HASSIO_PORT=${HASSIO_PORT_OVERRIDE:-"8123"}
 
-[[ $DEBUG > 0 ]] && echo "Checking input variables"
+[[ $VERBOSE -ge $INFO ]] && echo "Checking input variables"
 
 if [[ -z $BACKUP_FOLDER ]]; then
-    [[ $DEBUG > 0 ]] && echo "BACKUP_FOLDER variable is empty or not set"
+    [[ $VERBOSE -ge $ERROR ]] && echo "BACKUP_FOLDER variable is empty or not set"
     exit 0
 fi
 
 if [[ -z $LONG_TERM_BACKUP_FOLDER ]]; then
-    [[ $DEBUG > 0 ]] && echo "LONG_TERM_BACKUP_FOLDER variable is empty or not set"
+    [[ $VERBOSE -ge $ERROR ]] && echo "LONG_TERM_BACKUP_FOLDER variable is empty or not set"
     exit 0
 fi
 
 if [[ -z $LONG_TERM_TOKEN ]]; then
-    [[ $DEBUG > 0 ]] && echo "LONG_TERM_TOKEN variable is empty or not set"
+    [[ $VERBOSE -ge $ERROR ]] && echo "LONG_TERM_TOKEN variable is empty or not set"
     exit 0
 fi
 
 if [[ -z $TEMP_FOLDER ]]; then
-    [[ $DEBUG > 0 ]] && echo "TEMP_FOLDER variable is empty or not set, this will result that only the last alphabetical file is moved to the long term folder, the others are discarded"
+    [[ $VERBOSE -ge $WARN ]] && echo "TEMP_FOLDER variable is empty or not set, this will result that only the last alphabetical file is moved to the long term folder, the others are discarded"
     # exit 0
 fi
 
 
-[[ $DEBUG > 0 ]] && echo "All variables inserted"
-[[ $DEBUG > 0 ]] && echo "Creating backup of homeassistant"
+[[ $VERBOSE -ge $INFO ]] && echo "All variables inserted"
+[[ $VERBOSE -ge $INFO ]] && echo "Creating backup of homeassistant"
 
-curl -X POST -H "Authorization: Bearer $LONG_TERM_TOKEN" -H "Content-Type: application/json" http://$HOST_ADDRESS:$HASSIO_PORT/api/services/backup/create
-sleep 60
+result=$(curl -s -X POST -H "Authorization: Bearer $LONG_TERM_TOKEN" -H "Content-Type: application/json" http://$HOST_ADDRESS:$HASSIO_PORT/api/services/backup/create)
+[[ $VERBOSE -ge $WARN ]] && echo "Backup homeassistant result: $result"
+sleep 10
 
 if [[ -z "$(ls -A $BACKUP_FOLDER)" ]]; then
-    [[ $DEBUG > 0 ]] && echo "backup folder: $BACKUP_FOLDER, is empty"
+    [[ $VERBOSE -ge $ERROR ]] && echo "backup folder: $BACKUP_FOLDER, is empty"
     exit 0
 fi
 
-[[ $DEBUG > 0 ]] && echo "Backup done"
+[[ $VERBOSE -ge $INFO ]] && echo "Backup done"
 
 JSON_FILE_NAME="backup.json"
 DATE_ATTRIBUTE="date"
 SLUG_ATTRIBUTE="slug"
 
 
-[[ $DEBUG > 0 ]] && echo "Moving backups in long term storage"
+[[ $VERBOSE -ge $INFO ]] && echo "Moving backups in long term storage"
 
 for x in $BACKUP_FOLDER/*; do
 
-    FILE_BASEPATH=${x##*/} # basepath
-    [[ $DEBUG > 0 ]] && echo "found $FILE_BASEPATH"
+    basepath=$(basename $x)
+    [[ $VERBOSE -ge $INFO ]] && echo "found $basepath"
 
     if [[ -z $TEMP_FOLDER ]]; then
-        if [[ "$FILE_BASEPATH" =~ $DO_NOT_DELETE_KEY ]]; then
+        if [[ "$basepath" =~ $DO_NOT_DELETE_KEY ]]; then
             cp "$x" "$LONG_TERM_BACKUP_FOLDER/home_assistant_backup_$DATE.tar"
         else
             mv "$x" "$LONG_TERM_BACKUP_FOLDER/home_assistant_backup_$DATE.tar"
         fi
     else
-        [[ $DEBUG > 0 ]] && echo "decompressing $FILE_BASEPATH"
+        [[ $VERBOSE -ge $INFO ]] && echo "decompressing $basepath"
 
         tar -x -f "$x" -C "$TEMP_FOLDER"
 
-        [[ $DEBUG > 0 ]] && echo "done"
-        [[ $DEBUG > 0 ]] && echo "moving $FILE_BASEPATH"
+        [[ $VERBOSE -ge $INFO ]] && echo "done"
+        [[ $VERBOSE -ge $INFO ]] && echo "moving $basepath"
 
-        FILE_DATE=$(jq -r ".$DATE_ATTRIBUTE" "$TEMP_FOLDER/$JSON_FILE_NAME")
-        SLUG=$(jq -r ".$SLUG_ATTRIBUTE" "$TEMP_FOLDER/$JSON_FILE_NAME")
-        FORMATTED_FILE_DATE=$(date -d "$FILE_DATE" +"%Y-%m-%d-%H-%M-%S")
+        file_date=$(jq -r ".$DATE_ATTRIBUTE" "$TEMP_FOLDER/$JSON_FILE_NAME")
+        slug=$(jq -r ".$SLUG_ATTRIBUTE" "$TEMP_FOLDER/$JSON_FILE_NAME")
+        formatted_file_date=$(date -d "$file_date" +"%Y-%m-%d-%H-%M-%S")
 
-        if [[ "$FILE_BASEPATH" =~ $DO_NOT_DELETE_KEY ]]; then
-            cp "$x" "$LONG_TERM_BACKUP_FOLDER/home_assistant_backup-$SLUG-$FORMATTED_FILE_DATE.tar"
+        if [[ "$basepath" =~ $DO_NOT_DELETE_KEY ]]; then
+            cp "$x" "$LONG_TERM_BACKUP_FOLDER/home_assistant_backup-$slug-$formatted_file_date.tar"
         else
-            mv "$x" "$LONG_TERM_BACKUP_FOLDER/home_assistant_backup-$SLUG-$FORMATTED_FILE_DATE.tar"
+            mv "$x" "$LONG_TERM_BACKUP_FOLDER/home_assistant_backup-$slug-$formatted_file_date.tar"
         fi
         
-        [[ $DEBUG > 0 ]] && echo "done moving $FILE_BASEPATH"
-        [[ $DEBUG > 0 ]] && echo "cleaning temporary files"
+        [[ $VERBOSE -ge $INFO ]] && echo "done moving $basepath"
+        [[ $VERBOSE -ge $INFO ]] && echo "cleaning temporary files"
 
         rm -f -r "$TEMP_FOLDER"/*
 
-        [[ $DEBUG > 0 ]] && echo "done cleaning temporary files"
+        [[ $VERBOSE -ge $INFO ]] && echo "done cleaning temporary files"
 
     fi
 done
+
+exit 0
