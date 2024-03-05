@@ -53,24 +53,23 @@ cards:
               # ulm_card_person_commute_entity: sensor.uw_commute
               # ulm_card_person_commute_icon: mdi:bus
               ulm_card_person_battery_entity: sensor.poco_f1_battery_level
-              ulm_card_person_battery_state_entity: sensor.poco_f1_battery_state
-          # - type: custom:button-card
-          #   template: card_person_info
-          #   variables:
-          #     ulm_card_person_entity: person.anna
-          #     ulm_card_person_use_entity_picture: true
-          #     ulm_multiline: true
-          #     ulm_card_person_battery_entity: sensor.sm_a525f_battery_level
-          #     ulm_card_person_battery_state_entity: binary_sensor.sm_a525f_is_charging
-          # - type: "custom:button-card"
-          #   template: card_person_info
-          #   variables:
-          #     ulm_card_person_entity: person.sara
-          #     ulm_card_person_use_entity_picture: true
-          #     ulm_multiline: true
-          #     ulm_card_person_battery_entity: sensor.sm_m307fn_battery_level
-          #     ulm_card_person_battery_state_entity: sensor.sm_m307fn_battery_state
-
+              ulm_card_person_battery_state_entity: sensor.poco_f1_is_charging
+          - type: custom:button-card
+            template: card_person_info
+            variables:
+              ulm_card_person_entity: person.anna
+              ulm_card_person_use_entity_picture: true
+              ulm_multiline: true
+              ulm_card_person_battery_entity: sensor.sm_a525f_battery_level
+              ulm_card_person_battery_state_entity: binary_sensor.sm_a525f_is_charging
+          - type: "custom:button-card"
+            template: card_person_info
+            variables:
+              ulm_card_person_entity: person.sara
+              ulm_card_person_use_entity_picture: true
+              ulm_multiline: true
+              ulm_card_person_battery_entity: sensor.sm_m307fn_battery_level
+              ulm_card_person_battery_state_entity: sensor.sm_m307fn_is_charging
       - type: custom:button-card
         template: card_title
         name: Rooms

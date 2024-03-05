@@ -26,3 +26,17 @@ turn_on_tv_samsung:
       entity_id: media_player.samsung_tv
   mode: single
   icon: mdi:television
+request_location_update_mobile_apps:
+  alias: Request Location Update - Mobile Apps
+  sequence:
+  - service: notify.mobile_app_poco_f1
+    data:
+      message: request_location_update
+  - service: notify.mobile_app_sm_a525f
+    data:
+      message: request_location_update
+  - service: notify.mobile_app_sm_m307fn
+    data:
+      message: request_location_update
+  mode: single
+  icon: mdi:google-maps
