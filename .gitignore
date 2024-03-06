@@ -56,3 +56,7 @@ other_files/secrets/others/*
 other_files/scripts/backups/gdrive/.temp
 # other_files/scripts/backups/gdrive/.temp/*
 # !other_files/scripts/backups/gdrive/.temp/.nodata
+
+# logs
+other_files/scripts/logs/*
+!other_files/scripts/logs/.nodata

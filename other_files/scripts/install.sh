@@ -62,13 +62,15 @@ sudo rm -r .gdrive #cleaning
 
 # adding automated update script
 sudo crontab -l > sudocrontab 
-echo "0 4 * * 2 /bit_server/other_files/scripts/update.sh" >> sudocrontab
+echo "SHELL=/bin/bash" >> sudocrontab
+echo "0 4 * * 2 /bit_server/other_files/scripts/update.sh | while IFS= read -r line; do printf '[%s] -  %s\n' \"\$(date +\"%a %d-%b-%Y--%H:%M:%S:%N\")\" \"\$line\"; done >> /bit_server/other_files/scripts/logs/docker.log 2>&1" >> sudocrontab
 sudo crontab sudocrontab
 sudo rm sudocrontab
 
 # adding automated backup script
 crontab -l > usercrontab 
-echo "30 3 * * 2 /bit_server/other_files/scripts/backup-starter.sh" >> usercrontab
+echo "SHELL=/bin/bash" >> usercrontab
+echo "30 3 * * 2 /bit_server/other_files/scripts/backup-starter.sh | while IFS= read -r line; do printf '[%s] -  %s\n' \"\$(date +\"%a %d-%b-%Y--%H:%M:%S:%N\")\" \"\$line\"; done >> /bit_server/other_files/scripts/logs/backups.log 2>&1" >> usercrontab
 crontab usercrontab
 rm usercrontab
 
