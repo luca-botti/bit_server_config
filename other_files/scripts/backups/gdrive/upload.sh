@@ -64,7 +64,11 @@ default () {
         exit 0
     fi
 
-    local v=$VERBOSE
+    if [[ $VERBOSE -ge $DEBUG ]]; then
+        local v=3
+    else
+        local v=0
+    fi
 
     [[ $VERBOSE -ge $INFO ]] && echo "Done cheching variables"
 
