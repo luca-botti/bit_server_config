@@ -60,17 +60,23 @@ sudo cp target/release/gdrive /usr/local/bin # adding gdrive to PATH
 cd ../..
 sudo rm -r .gdrive #cleaning
 
+#setting script to be executables
+sudo chmod u+x /bit_server/other_files/scripts/backup-starter.sh
+sudo chmod u+x /bit_server/other_files/scripts/updater.sh
+
 # adding automated update script
 sudo crontab -l > sudocrontab 
-echo "SHELL=/bin/bash" >> sudocrontab
-echo "0 4 * * 2 /bit_server/other_files/scripts/update.sh | while IFS= read -r line; do printf '[%s] -  %s\n' \"\$(date +\"%a %d-%b-%Y--%H:%M:%S:%N\")\" \"\$line\"; done >> /bit_server/other_files/scripts/logs/docker.log 2>&1" >> sudocrontab
+echo "PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin" >> usercrontab
+echo "LD_LIBRARY_PATH=/usr/local/lib" >> usercrontab
+echo "0 4 * * 2 /bin/bash -c \"/bit_server/other_files/scripts/updater.sh\"" >> sudocrontab
 sudo crontab sudocrontab
 sudo rm sudocrontab
 
 # adding automated backup script
-crontab -l > usercrontab 
-echo "SHELL=/bin/bash" >> usercrontab
-echo "30 3 * * 2 /bit_server/other_files/scripts/backup-starter.sh | while IFS= read -r line; do printf '[%s] -  %s\n' \"\$(date +\"%a %d-%b-%Y--%H:%M:%S:%N\")\" \"\$line\"; done >> /bit_server/other_files/scripts/logs/backups.log 2>&1" >> usercrontab
+crontab -l > usercrontab
+echo "PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin" >> usercrontab
+echo "LD_LIBRARY_PATH=/usr/local/lib" >> usercrontab
+echo "30 03 * * 2 /bin/bash -c \"/bit_server/other_files/scripts/backup-starter.sh\"" >> usercrontab
 crontab usercrontab
 rm usercrontab
 
