@@ -106,7 +106,7 @@
         data: {}
       - if:
         - condition: state
-          entity_id: light.luci_soggiorno
+          entity_id: light.living_lights
           state: 'on'
         then:
         - repeat:
@@ -116,7 +116,7 @@
               data:
                 brightness_pct: 50
               target:
-                entity_id: light.luci_soggiorno
+                area_id: soggiorno
             - delay:
                 hours: 0
                 minutes: 0
@@ -126,7 +126,7 @@
               data:
                 brightness_pct: 100
               target:
-                entity_id: light.luci_soggiorno
+                area_id: soggiorno
             - delay:
                 hours: 0
                 minutes: 0
@@ -136,7 +136,7 @@
           data:
             brightness_pct: 100
           target:
-            entity_id: light.luci_soggiorno
+            area_id: soggiorno
         else:
         - repeat:
             count: 2
@@ -145,7 +145,7 @@
               data:
                 brightness_pct: 20
               target:
-                entity_id: light.luci_soggiorno
+                area_id: soggiorno
             - delay:
                 hours: 0
                 minutes: 0
@@ -154,7 +154,7 @@
             - service: light.turn_off
               data: {}
               target:
-                entity_id: light.luci_soggiorno
+                area_id: soggiorno
             - delay:
                 hours: 0
                 minutes: 0
@@ -164,7 +164,7 @@
           data:
             brightness_pct: 100
           target:
-            entity_id: light.luci_soggiorno
+            area_id: soggiorno
         - delay:
             hours: 0
             minutes: 0
@@ -173,7 +173,7 @@
         - service: light.turn_off
           data: {}
           target:
-            entity_id: light.luci_soggiorno
+            area_id: soggiorno
     - conditions:
       - condition: trigger
         id: short

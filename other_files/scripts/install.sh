@@ -76,7 +76,7 @@ sudo rm sudocrontab
 crontab -l > usercrontab
 echo "PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin" >> usercrontab
 echo "LD_LIBRARY_PATH=/usr/local/lib" >> usercrontab
-echo "30 03 * * 2 /bin/bash -c \"/bit_server/other_files/scripts/backup-starter.sh\"" >> usercrontab
+echo "30 3 * * 2 /bin/bash -c \"/bit_server/other_files/scripts/backup-starter.sh\"" >> usercrontab
 crontab usercrontab
 rm usercrontab
 
