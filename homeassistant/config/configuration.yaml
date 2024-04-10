@@ -219,31 +219,6 @@ light:
       - light.cucina
 #
 
-#### Other Services ####
-
-panel_iframe:
-  phoscon:
-    title: "Phoscon"
-    url: "http://192.168.178.34:40850/"
-    icon: mdi:alpha-p
-    require_admin: true
-  # portainer:
-  #   title: "Portainer"
-  #   url: "http://192.168.178.34:9000/#!/2/docker/containers"
-  #   icon: mdi:docker
-  #   require_admin: true
-  # duplicati:
-  #   title: "Duplicati"
-  #   url: "http://192.168.178.34:8200/"
-  #   icon: mdi:cloud
-  #   require_admin: true
-  pihole:
-    title: "Pi-Hole"
-    url: "http://192.168.178.34:7543/admin/index.php"
-    icon: mdi:pi-hole
-    require_admin: true
-#
-
 
 #### Sensors ####
 # teplate sensors and bynary sensors
