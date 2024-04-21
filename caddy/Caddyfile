@@ -13,10 +13,20 @@
 #   }
 # }
 
-https://{$EXTERNAL_HASSIO_URL}:{$EXTERNAL_HASSIO_PORT} {
+
+https://{$HASSIO_EXT_URL}:{$HASSIO_EXT_PORT} {
+	log {
+		level INFO
+		output file {env.LOG_FILE} {
+			roll_size 10MB
+			roll_keep 10
+		}
+	}
+
 	tls {
 		dns duckdns {env.DUCK_DNS_TOKEN} # used to defer replacment at runtime
 	}
+
 	header {
 		Strict-Transport-Security "max-age=31536000; includeSubdomains"
 		X-XSS-Protection "1; mode=block"
@@ -24,5 +34,49 @@ https://{$EXTERNAL_HASSIO_URL}:{$EXTERNAL_HASSIO_PORT} {
 		X-Frame-Options "SAMEORIGIN"
 		Referrer-Policy "same-origin"
 	}
-	reverse_proxy http://{$HOST_ADDRESS}:{$LOCAL_HASSIO_PORT}
+
+	reverse_proxy http://{$HOST_ADDRESS}:{$HASSIO_INT_PORT} {
+		header_up X-Real-IP {remote_host}
+	}
+}
+
+# Uncomment this in addition with the import admin_redir statement allow access to the admin interface only from local networks
+(admin_redir) {
+	@admin {
+		path /admin*
+		not remote_ip private_ranges
+	}
+	redir @admin /
+}
+
+https://{$VAULT_EXT_URL}:{$VAULT_EXT_PORT} {
+	log {
+		level INFO
+		output file {env.LOG_FILE} {
+			roll_size 10MB
+			roll_keep 10
+		}
+	}
+
+	tls {
+		dns duckdns {env.DUCK_DNS_TOKEN} # used to defer replacment at runtime
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000;"
+		X-XSS-Protection "0"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+	}
+
+	encode gzip
+
+	import admin_redir
+
+	# Proxy everything Rocket
+	reverse_proxy http://{$HOST_ADDRESS}:{$VAULT_INT_PORT} {
+		# Send the true remote IP to Rocket, so that vaultwarden can put this in the
+		# log, so that fail2ban can ban the correct IP.
+		header_up X-Real-IP {remote_host}
+	}
 }

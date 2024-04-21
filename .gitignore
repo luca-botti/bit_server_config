@@ -32,6 +32,9 @@ homeassistant/config/ui_lovelace_minimalist/dashboard/adaptive-dash
 !homeassistant/config/custom_sentences
 !homeassistant/config/blueprints
 
+# vaultwarden
+vaultwarden/*
+
 
 # backups (just create the folders)
 !backups/*
@@ -45,6 +48,8 @@ backups/pihole/*
 !backups/pihole/.nodata
 backups/secrets/*
 !backups/secrets/.nodata
+backups/vaultwarden/*
+!backups/vaultwarden/.nodata
 
 # secrets
 other_files/secrets/*

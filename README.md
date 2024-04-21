@@ -1,6 +1,7 @@
 # TODO
 
- - add backups encryption and older backup remove polocy
+ - add backups encryption
+ - older backup remove polocy
 
 
 # Instruction for deploy the server
@@ -52,18 +53,21 @@ now you should be inside the terminal of the server
     - deconz
     - pihole
     - secrets
+    - vaultwarden
 
 5. for restoring the secrets we just copy the `secrets` folder that's inside the backup to `/bit_server/other_files`
 
 6. then we need to restore the backup of homeassistant, in order to do so, we just need to decompress the homeassistant backup and copy all the files inside `/bit_server/homeassistant/config/`
+
+7. before starting all the container we need also to restore the vaultwarden backup [wiki page](https://github.com/dani-garcia/vaultwarden/wiki/Backing-up-your-vault#restoring-backup-data), to do so, we just need to decompress the vaultwarden tar archive and copy all the files inside `/bit_server/vaultwarden/data/`
     
-7. start all docker containers executing
+8. start all docker containers executing
 
     ```bash
     sudo bash other_files/scripts/update.sh
     ```
 
-8. restoring deConz backup
+9. restoring deConz backup
 
     1. go to [deconz web page](about:blank) (the true address will be thee host address of the server and the port of the service setted using the secrets .env files)
     2. register using credentials found inside `secrets.txt`
@@ -74,15 +78,15 @@ now you should be inside the terminal of the server
     7. click a button on all remotes and move the motion sensor until it will show up under ***Menù -> Sensors***
     8. (bonus) check everything is fine using vncViewer app (all info in secrets files)
 
-9. restoring pihole backup
+10. restoring pihole backup
 
     1. go to [pihole web page](about:blank) (the true address will be thee host address of the server and the port of thee service setted using the secrets .env files)
     2. insert the password and login
     3. click on ***>>*** on the upper-left corner if the menù is not extended
     4. go to ***settings -> teleporter -> restore***
-    5. load the backup file
+    5. load the backup file 
 
-10. then for activate the automatic backup we need to configure the gdrive cli application already installed using the account credentials that can be found in `secrets`, just run (*file_name* is the exported account token from gdrive)
+11. then for activate the automatic backup we need to configure the gdrive cli application already installed using the account credentials that can be found in `secrets`, just run (*file_name* is the exported account token from gdrive)
 
     ```bash
     gdrive account import /bit_server/other_files/secrets/others/<file-name>.tar
@@ -90,30 +94,26 @@ now you should be inside the terminal of the server
 
 
 
-Now the file tree inside the base folder should look like this:
+Now the dir tree inside the base folder should look like this:
 
-    `tree -L 2`
+    `tree -L 2 -d`
 
     bit_server
     ├── backups
     │   ├── deconz
     │   ├── homeassistant
     │   ├── pihole
-    │   └── secrets
+    │   ├── secrets
+    │   └── vaultwarden
     ├── caddy
-    │   ├── Caddyfile
+    │   ├── config
     │   └── data
     ├── deconz
-    │   ├── config.ini
     │   ├── devices
     │   ├── otau
-    │   ├── vnc
-    │   ├── zcldb.txt
-    │   └── zll.db
-    ├── docker-compose.yaml
+    │   └── vnc
     ├── homeassistant
     │   └── config
-    ├── LICENSE
     ├── other_files
     │   ├── info_files
     │   ├── scripts
@@ -123,10 +123,18 @@ Now the file tree inside the base folder should look like this:
     │   ├── etc-dnsmasq.d
     │   ├── etc-pihole
     │   └── lighttpd
-    └── README.md
+    └── vaultwarden
+        └── data
 
 
 And if the router has the forwarding table and the dynamic DNS resolver activated, everything should work correctly.
 
+For the fritz!box:
+- URL di aggiornamento (to be copied as it is): `https://www.duckdns.org/update?domains=<domain>&token=<pass>&ip=<ipaddr>&ipv6=<ip6addr>`
+- Nome di dominio (substitute <> values): `<subdomain1>.duckdns.org,<subdomain2>.duckdns.org`
+- Nome utente: none
+- Password (substitute <> values): `<duck-dns-token>`
+
+The forwarding table will have to open all the ports use from serveces that needs to be accessed from a remote origin.
 
 

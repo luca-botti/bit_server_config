@@ -1,5 +1,4 @@
 # secrets file needed to run the containers; use 'docker compose --env-file <path-to-secret-env-file> up -d' to run
-version: "3.9"
 
 services:
   
@@ -51,17 +50,24 @@ services:
         COPY --from=builder /usr/bin/caddy /usr/bin/caddy
     environment:
       TZ: $TIMEZONE
-      EXTERNAL_HASSIO_URL: $EXTERNAL_HASSIO_URL
-      EXTERNAL_HASSIO_PORT: $EXTERNAL_HASSIO_PORT
-      DUCK_DNS_TOKEN: $DUCK_DNS_TOKEN
       HOST_ADDRESS: $HOST_ADDRESS
-      LOCAL_HASSIO_PORT: $LOCAL_HASSIO_PORT
+      DUCK_DNS_TOKEN: $DUCK_DNS_TOKEN
+      LOG_FILE: "/log/caddy.log"
+      HASSIO_EXT_URL: $HASSIO_EXT_URL
+      HASSIO_EXT_PORT: $HASSIO_EXT_PORT
+      HASSIO_INT_PORT: $HASSIO_INT_PORT
+      VAULT_EXT_URL: $VAULT_EXT_URL
+      VAULT_EXT_PORT: $VAULT_EXT_PORT
+      VAULT_INT_PORT: $VAULT_INT_PORT
     ports:
-      - "446:446"
+      - "$HASSIO_EXT_PORT:$HASSIO_EXT_PORT"
+      - "$VAULT_EXT_PORT:$VAULT_EXT_PORT"
       - "80:80"
     volumes:
       - "$BASE_FOLDER/caddy/Caddyfile:/etc/caddy/Caddyfile"
       - "$BASE_FOLDER/caddy/data:/data"
+      - "$BASE_FOLDER/caddy/config:/config"
+      - "$LOG_FOLDER/caddy.log:/log/caddy.log"
     restart: unless-stopped
   # https://hub.docker.com/_/caddy
     
@@ -71,7 +77,7 @@ services:
     image: pihole/pihole:latest
     environment:
       TZ: $TIMEZONE
-      WEBPASSWORD: $DECONZ_PIHOLE_PWD #'set a secure password here or it will be random'
+      WEBPASSWORD: $PIHOLE_PWD #'set a secure password here or it will be random'
       WEB_PORT: $PIHOLE_WEB_PORT
       FTLCONF_REPLY_ADDR4: $HOST_ADDRESS
     # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
@@ -91,3 +97,29 @@ services:
     # - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
     restart: unless-stopped
   # https://github.com/pi-hole/docker-pi-hole
+
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    ports:
+      - "$VAULT_INT_PORT:80"
+    environment:
+      DOMAIN: "https://$VAULT_EXT_URL:$VAULT_EXT_PORT/"  # Your domain; vaultwarden needs to know it's https to work properly with attachments
+      SIGNUPS_ALLOWED: false
+      ADMIN_TOKEN: $VAULT_ADMIN_TOKEN
+      PUSH_ENABLED: true
+      PUSH_INSTALLATION_ID: $VAULT_HOST_INSTALLATION_ID
+      PUSH_INSTALLATION_KEY: $VAULT_HOST_INSTALLATION_KEY
+      PUSH_RELAY_URI: "https://push.bitwarden.eu"
+      PUSH_IDENTITY_URI: "https://identity.bitwarden.eu"
+      ROCKET_LIMITS: "{json=10485760}"
+      ROCKET_WORKERS: 10
+      SHOW_PASSWORD_HINT: true
+      LOG_FILE: "/log/vaultwarden.log"
+      LOG_LEVEL: "info"
+      EXTENDED_LOGGING: true
+    volumes:
+      - "$BASE_FOLDER/vaultwarden/data:/data"
+      - "$LOG_FOLDER/vaultwarden.log:/log/vaultwarden.log"
+  # https://github.com/dani-garcia/vaultwarden/wiki/Using-Docker-Compose
