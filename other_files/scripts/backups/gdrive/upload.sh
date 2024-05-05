@@ -39,9 +39,17 @@ upload(){
         return 1
     fi
 
-    # cript files
+    # encrypt
+
+    gpg --batch --passphrase "$PASSPHRASE" --symmetric "$1"
+
+    filename="$1.gpg"
         
-    gdrive files upload --parent "$2" "$1" > /dev/null
+    gdrive files upload --parent "$2" "$filename" > /dev/null
+
+    # removing gpg file
+
+    rm -f "$filename"
 }
 
 default () {
@@ -126,7 +134,7 @@ default () {
     [[ $VERBOSE -ge $INFO ]] && echo "Deconz cloud folder id: $deconz_id"
     [[ $VERBOSE -ge $INFO ]] && echo "HomeAssistant cloud folder id: $homeassistant_id"
     [[ $VERBOSE -ge $INFO ]] && echo "Pihole cloud folder id: $pihole_id"
-    [[ $VERBOSE -ge $INFO ]] && echo "Pihole cloud folder id: $vaultwarden_id"
+    [[ $VERBOSE -ge $INFO ]] && echo "Vaultwarden cloud folder id: $vaultwarden_id"
     [[ $VERBOSE -ge $INFO ]] && echo "Secrets cloud folder id: $secrets_id"
 
     [[ $VERBOSE -ge $INFO ]] && echo "Retrieving files list inside cloud and on the local machine, then finding the new file to upload"
@@ -170,7 +178,7 @@ default () {
     for local_elem in "${local_deconz_list[@]}"; do
         local -i found=0
         for cloud_elem in "${cloud_deconz_list[@]}"; do
-            if [[ "$local_elem" == "$cloud_elem" ]]; then
+            if [[ "$local_elem.gpg" == "$cloud_elem" ]]; then
                 found=1
                 break
             fi
@@ -183,7 +191,7 @@ default () {
     for local_elem in "${local_homeassistant_list[@]}"; do
         local -i found=0
         for cloud_elem in "${cloud_homeassistant_list[@]}"; do
-            if [[ "$local_elem" == "$cloud_elem" ]]; then
+            if [[ "$local_elem.gpg" == "$cloud_elem" ]]; then
                 found=1
                 break
             fi
@@ -196,7 +204,7 @@ default () {
     for local_elem in "${local_pihole_list[@]}"; do
         local -i found=0
         for cloud_elem in "${cloud_pihole_list[@]}"; do
-            if [[ "$local_elem" == "$cloud_elem" ]]; then
+            if [[ "$local_elem.gpg" == "$cloud_elem" ]]; then
                 found=1
                 break
             fi
@@ -209,7 +217,7 @@ default () {
     for local_elem in "${local_vaultwarden_list[@]}"; do
         local -i found=0
         for cloud_elem in "${cloud_voultwarden_list[@]}"; do
-            if [[ "$local_elem" == "$cloud_elem" ]]; then
+            if [[ "$local_elem.gpg" == "$cloud_elem" ]]; then
                 found=1
                 break
             fi
@@ -222,7 +230,7 @@ default () {
     for local_elem in "${local_secrets_list[@]}"; do
         local -i found=0
         for cloud_elem in "${cloud_secrets_list[@]}"; do
-            if [[ "$local_elem" == "$cloud_elem" ]]; then
+            if [[ "$local_elem.gpg" == "$cloud_elem" ]]; then
                 found=1
                 break
             fi
@@ -235,7 +243,7 @@ default () {
     [[ $VERBOSE -ge $WARN ]] && echo "New for Deconz: $new_deconz"
     [[ $VERBOSE -ge $WARN ]] && echo "New for HomeAssistant: $new_homeassistant"
     [[ $VERBOSE -ge $WARN ]] && echo "New for Pihole: $new_pihole"
-    [[ $VERBOSE -ge $WARN ]] && echo "New for Pihole: $new_vaultwarden"
+    [[ $VERBOSE -ge $WARN ]] && echo "New for Vaultwarden: $new_vaultwarden"
     [[ $VERBOSE -ge $WARN ]] && echo "New for Secrets: $new_secrets"
 
     [[ $VERBOSE -ge $INFO ]] && echo "Uploading to the cloud the new files"

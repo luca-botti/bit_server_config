@@ -119,6 +119,12 @@ services:
       LOG_FILE: "/log/vaultwarden.log"
       LOG_LEVEL: "info"
       EXTENDED_LOGGING: true
+      SMTP_HOST: "smtp.gmail.com"
+      SMTP_FROM: "vaultwarden@gmail.com"
+      SMTP_PORT: "465"
+      SMTP_SECURITY: "force_tls"
+      SMTP_USERNAME: $VAULT_SMTP_EMAIL
+      SMTP_PASSWORD: $VAULT_SMTP_PSW
     volumes:
       - "$BASE_FOLDER/vaultwarden/data:/data"
       - "$LOG_FOLDER/vaultwarden.log:/log/vaultwarden.log"

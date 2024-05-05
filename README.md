@@ -1,6 +1,5 @@
 # TODO
 
- - add backups encryption
  - older backup remove polocy
 
 
@@ -55,19 +54,25 @@ now you should be inside the terminal of the server
     - secrets
     - vaultwarden
 
-5. for restoring the secrets we just copy the `secrets` folder that's inside the backup to `/bit_server/other_files`
+5. for all of them we will need to decrypt them, in order to this we just need to use this command using the chosen password:
 
-6. then we need to restore the backup of homeassistant, in order to do so, we just need to decompress the homeassistant backup and copy all the files inside `/bit_server/homeassistant/config/`
+    ```bash
+    gpg --batch --output <output-filename> --passphrase <password> --decrypt <output-filename>.gpg
+    ```
 
-7. before starting all the container we need also to restore the vaultwarden backup [wiki page](https://github.com/dani-garcia/vaultwarden/wiki/Backing-up-your-vault#restoring-backup-data), to do so, we just need to decompress the vaultwarden tar archive and copy all the files inside `/bit_server/vaultwarden/data/`
+6. for restoring the secrets we just copy the `secrets` folder that's inside the backup to `/bit_server/other_files`
+
+7. then we need to restore the backup of homeassistant, in order to do so, we just need to decompress the homeassistant backup and copy all the files inside `/bit_server/homeassistant/config/`
+
+8. before starting all the container we need also to restore the vaultwarden backup [wiki page](https://github.com/dani-garcia/vaultwarden/wiki/Backing-up-your-vault#restoring-backup-data), to do so, we just need to decompress the vaultwarden tar archive and copy all the files inside `/bit_server/vaultwarden/data/`
     
-8. start all docker containers executing
+9. start all docker containers executing
 
     ```bash
     sudo bash other_files/scripts/update.sh
     ```
 
-9. restoring deConz backup
+10. restoring deConz backup
 
     1. go to [deconz web page](about:blank) (the true address will be thee host address of the server and the port of the service setted using the secrets .env files)
     2. register using credentials found inside `secrets.txt`
@@ -78,7 +83,7 @@ now you should be inside the terminal of the server
     7. click a button on all remotes and move the motion sensor until it will show up under ***Menù -> Sensors***
     8. (bonus) check everything is fine using vncViewer app (all info in secrets files)
 
-10. restoring pihole backup
+11. restoring pihole backup
 
     1. go to [pihole web page](about:blank) (the true address will be thee host address of the server and the port of thee service setted using the secrets .env files)
     2. insert the password and login
@@ -86,7 +91,7 @@ now you should be inside the terminal of the server
     4. go to ***settings -> teleporter -> restore***
     5. load the backup file 
 
-11. then for activate the automatic backup we need to configure the gdrive cli application already installed using the account credentials that can be found in `secrets`, just run (*file_name* is the exported account token from gdrive)
+12. then for activate the automatic backup we need to configure the gdrive cli application already installed using the account credentials that can be found in `secrets`, just run (*file_name* is the exported account token from gdrive)
 
     ```bash
     gdrive account import /bit_server/other_files/secrets/others/<file-name>.tar
