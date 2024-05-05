@@ -107,6 +107,7 @@ services:
     environment:
       DOMAIN: "https://$VAULT_EXT_URL:$VAULT_EXT_PORT/"  # Your domain; vaultwarden needs to know it's https to work properly with attachments
       SIGNUPS_ALLOWED: false
+      INVITATIONS_ALLOWED: true
       ADMIN_TOKEN: $VAULT_ADMIN_TOKEN
       PUSH_ENABLED: true
       PUSH_INSTALLATION_ID: $VAULT_HOST_INSTALLATION_ID
