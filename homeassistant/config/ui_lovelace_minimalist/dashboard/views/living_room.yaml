@@ -147,6 +147,17 @@ cards:
         cards:
           - type: "custom:button-card"
             template: card_media_player
+            entity: media_player.chromecast
+            variables:
+              ulm_card_media_player_name: Chromecast
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_volume_slider: true
+              ulm_card_media_player_collapsible: true
+              ulm_card_media_player_more_info: true
+              ulm_card_media_player_power_button: true
+          - type: "custom:button-card"
+            template: card_media_player
             entity: media_player.ue40d6500
             variables:
               ulm_card_media_player_name: TV Salotto
@@ -161,24 +172,33 @@ cards:
               ulm_card_media_player_power_button: true
           - type: "custom:button-card"
             template: card_media_player
-            entity: media_player.chromecast
-            variables:
-              ulm_card_media_player_name: Chromecast
-              ulm_card_media_player_enable_art: true
-              ulm_card_media_player_enable_controls: true
-              ulm_card_media_player_enable_volume_slider: true
-              ulm_card_media_player_collapsible: true
-              ulm_card_media_player_more_info: true
-              ulm_card_media_player_power_button: true
-          - type: "custom:button-card"
-            template: card_media_player
             entity: media_player.hitachi_speaker
             variables:
               ulm_card_media_player_name: Hitachi Speaker
               ulm_card_media_player_icon: mdi:speaker-multiple
-              ulm_card_media_player_power_button: true
-          - type: "custom:button-card"
-            color_type: blank-card
+              # ulm_card_media_player_power_button: false
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                template: card_script
+                variables:
+                  ulm_card_script_title: "ON"
+                  ulm_card_script_icon: mdi:power-on
+                tap_action:
+                  action: call-service
+                  service: media_player.turn_on
+                  service_data:
+                    entity_id: media_player.hitachi_speaker
+              - type: 'custom:button-card'
+                template: card_script
+                variables:
+                  ulm_card_script_title: "OFF"
+                  ulm_card_script_icon: mdi:power-off
+                tap_action:
+                  action: call-service
+                  service: media_player.turn_off
+                  service_data:
+                    entity_id: media_player.hitachi_speaker
           - type: "custom:button-card"
             template: card_media_player
             entity: media_player.home
@@ -238,6 +258,42 @@ cards:
               ulm_card_power_outlet_consumption_sensor: sensor.outlet_1_power_local
               ulm_card_power_outlet_name: Presa Casse
               ulm_card_power_outlet_icon: mdi:power-socket-de
+      
+      - type: "custom:button-card"
+        color_type: blank-card
+      
+      #Power strip grid
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta2_1
+            variables:
+              ulm_card_power_outlet_name: 3D Printer
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta2_2
+            variables:
+              ulm_card_power_outlet_name: Outlet 2
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+          - type: custom:button-card
+            template: card_power_outlet
+            entity: switch.ciabatta2_3
+            variables:
+              ulm_card_power_outlet_name: Outlet 3
+              ulm_card_power_outlet_icon: mdi:power-socket-de
+      
+      - type: 'custom:button-card'
+        template: card_generic
+        entity: sensor.ciabatta2_power
+        variables:
+          ulm_card_generic_name: Power strip
+          ulm_card_generic_icon: mdi:power
+          ulm_card_generic_color: blue
+          ulm_card_generic_force_background_color: false
 
       - type: "custom:button-card"
         color_type: blank-card
