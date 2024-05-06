@@ -1,5 +1,5 @@
 blueprint:
-  name: FIX - Do Not Deactivate - Zigbee Ikea LIghts fix
+  name: FIX - Do Not Deactivate - Zigbee Ikea Lights fix
   description: fix the random turn on of lights (you will need an input_boolean for each lights you want to fix)
   domain: automation
   author: bit00
