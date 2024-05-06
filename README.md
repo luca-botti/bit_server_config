@@ -97,6 +97,28 @@ now you should be inside the terminal of the server
     gdrive account import /bit_server/other_files/secrets/others/<file-name>.tar
     ```
 
+13. (OPTIONAL) for retrieving the local_key for local-tuya execute this command for obatin the device.json with all tuya device informations [tinyTuya](https://pypi.org/project/tinytuya/):
+
+    ```bash
+    sudo apt install python3 python3-pip python3-full -y
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install tinytuya
+    ```
+
+    the next command will prompt for the key in your iot tuya platform and a device id as described on the tinytuya web page (using scan hadn't work for me).
+
+     ```bash
+    python -m tinytuya wizard
+    ```
+
+    then you should have the device.json filewith all the data needed. <br>
+    you can exit the venv using:
+
+     ```bash
+    deactivate
+    ```
+
 
 
 Now the dir tree inside the base folder should look like this:

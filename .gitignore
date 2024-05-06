@@ -1,5 +1,9 @@
 *~
 
+# python venv
+.venv
+
+
 # temp installation files
 .gdrive
 
