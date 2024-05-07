@@ -271,7 +271,7 @@ cards:
             template: card_power_outlet
             entity: switch.ciabatta2_1
             variables:
-              ulm_card_power_outlet_name: 3D Printer
+              ulm_card_power_outlet_name: Outlet 1
               ulm_card_power_outlet_icon: mdi:power-socket-de
           - type: custom:button-card
             template: card_power_outlet
@@ -283,7 +283,7 @@ cards:
             template: card_power_outlet
             entity: switch.ciabatta2_3
             variables:
-              ulm_card_power_outlet_name: Outlet 3
+              ulm_card_power_outlet_name: 3D Printer
               ulm_card_power_outlet_icon: mdi:power-socket-de
       
       - type: 'custom:button-card'
