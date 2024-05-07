@@ -292,7 +292,7 @@ cards:
         variables:
           ulm_card_generic_name: Power strip
           ulm_card_generic_icon: mdi:power
-          ulm_card_generic_color: blue
+          ulm_card_generic_color: yellow
           ulm_card_generic_force_background_color: false
 
       - type: "custom:button-card"
