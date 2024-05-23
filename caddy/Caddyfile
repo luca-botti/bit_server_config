@@ -18,9 +18,10 @@ https://{$HASSIO_EXT_URL}:{$HASSIO_EXT_PORT} {
 	log {
 		level INFO
 		output file {env.LOG_FILE} {
-			roll_size 10MB
-			roll_keep 10
+			roll_size 100MB
+			roll_keep 0
 		}
+		format console
 	}
 
 	tls {
@@ -53,9 +54,10 @@ https://{$VAULT_EXT_URL}:{$VAULT_EXT_PORT} {
 	log {
 		level INFO
 		output file {env.LOG_FILE} {
-			roll_size 10MB
-			roll_keep 10
+			roll_size 100MB
+			roll_keep 0
 		}
+		format console
 	}
 
 	tls {
