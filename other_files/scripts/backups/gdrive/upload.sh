@@ -33,6 +33,13 @@ get-folder-bytes-size() {
     echo "$temp"
 }
 
+# $1 file path
+get-file-bytes-size() {
+    local temp=$(stat --printf="%s" $1)
+    # echo "${temp@Q}"
+    echo "$temp"
+}
+
 # $1 path, $2 parent id
 upload(){
     if [[ $# -ne 2 ]]; then

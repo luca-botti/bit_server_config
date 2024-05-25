@@ -57,7 +57,7 @@ now you should be inside the terminal of the server
 5. for all of them we will need to decrypt them, in order to this we just need to use this command using the chosen password:
 
     ```bash
-    gpg --batch --output <output-filename> --passphrase <password> --decrypt <output-filename>.gpg
+    gpg --batch --output <output-filename> --passphrase <password> --decrypt <input-filename>.gpg
     ```
 
 6. for restoring the secrets we just copy the `secrets` folder that's inside the backup to `/bit_server/other_files`
@@ -150,6 +150,8 @@ Now the dir tree inside the base folder should look like this:
     │   ├── etc-dnsmasq.d
     │   ├── etc-pihole
     │   └── lighttpd
+    ├── unbound
+    │   └── config
     └── vaultwarden
         └── data
 

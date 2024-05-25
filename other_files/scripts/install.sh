@@ -35,6 +35,10 @@ sudo usermod -aG docker $USER
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 
+# unbound log file
+sudo touch /bit_server/other_files/scripts/logs/unbound.log
+sudo chmod 777 /bit_server/other_files/scripts/logs/unbound.log
+
 echo "Docker installed!"
 
 echo "Installing backup scripts dependencies..."
