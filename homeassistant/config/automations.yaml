@@ -640,3 +640,19 @@
     target:
       entity_id: media_player.samsung_tv
   mode: single
+- id: '1716977005538'
+  alias: FIX - Do Not Deactivate - Unsynchronized Deconz
+  description: ''
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - service: deconz.remove_orphaned_entries
+    data: {}
+  mode: single
