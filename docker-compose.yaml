@@ -1,4 +1,16 @@
 # secrets file needed to run the containers; use 'docker compose --env-file <path-to-secret-env-file> up -d' to run
+name: bit_server
+
+networks:
+  default_net:
+    name: "default_net"
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/24
+          ip_range: 10.0.0.0/24 # 10.0.0.1 <-> 10.0.0.254
+          gateway: 10.0.0.1
 
 services:
   
@@ -59,6 +71,8 @@ services:
       VAULT_EXT_URL: $VAULT_EXT_URL
       VAULT_EXT_PORT: $VAULT_EXT_PORT
       VAULT_INT_PORT: $VAULT_INT_PORT
+    networks:
+      - default_net
     ports:
       - "$HASSIO_EXT_PORT:$HASSIO_EXT_PORT"
       - "$VAULT_EXT_PORT:$VAULT_EXT_PORT"
@@ -81,6 +95,8 @@ services:
       WEB_PORT: $PIHOLE_WEB_PORT
       FTLCONF_REPLY_ADDR4: $HOST_ADDRESS
     # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
+    networks:
+      - default_net
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -248,6 +264,9 @@ services:
       - "sh"
       - "/entrypoint.sh"
     container_name: unbound
+    networks:
+      default_net:
+        ipv4_address: 10.0.0.10
     ports:
       - "$UNBOUND_PORT:53/tcp"
       - "$UNBOUND_PORT:53/udp"
@@ -260,6 +279,8 @@ services:
     image: vaultwarden/server:latest
     container_name: vaultwarden
     restart: unless-stopped
+    networks:
+      - default_net
     ports:
       - "$VAULT_INT_PORT:80"
     environment:
