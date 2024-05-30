@@ -44,7 +44,7 @@ cards:
           - type: "custom:button-card"
             template: chip_mdi_icon_state
             variables:
-              ulm_chip_mdi_icon_state_entity: sensor.vindstyrka
+              ulm_chip_mdi_icon_state_entity: sensor.temperature_4
               ulm_chip_mdi_icon_state_icon: mdi:thermometer
               # ulm_chip_mdi_icon_state_icon_color: orangered
               # ulm_chip_mdi_icon_state_label_color:
@@ -55,7 +55,7 @@ cards:
           - type: "custom:button-card"
             template: chip_mdi_icon_state
             variables:
-              ulm_chip_mdi_icon_state_entity: sensor.humidity_8
+              ulm_chip_mdi_icon_state_entity: sensor.humidity_5
               ulm_chip_mdi_icon_state_icon: mdi:water-percent
               # ulm_chip_mdi_icon_state_icon_color: deepskyblue
 

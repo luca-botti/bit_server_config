@@ -34,7 +34,7 @@ climate:
     unique_id: soggiorno_ac
     device_code: 1120
     controller_data: remote.rm4_pro
-    temperature_sensor: sensor.vindstyrka
-    humidity_sensor: sensor.humidity_8
+    temperature_sensor: sensor.temperature_4
+    humidity_sensor: sensor.humidity_5
     # power_sensor:
     # power_sensor_restore_state
