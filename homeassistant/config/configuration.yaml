@@ -341,12 +341,12 @@ template:
       - name: state_hue_button_deconz_device
         unique_id: state_hue_button_deconz_device
         state: >-
-          {{ is_state ('sensor.switch_4_battery', 'unavailable') }}
+          {{ is_state ('sensor.rwl022_battery', 'unavailable') }}
         device_class: problem
       - name: state_philips_button_deconz_device
         unique_id: state_philips_button_deconz_device
         state: >-
-          {{ is_state ('sensor.dimmer_switch_battery', 'unavailable') }}
+          {{ is_state ('sensor.rwl021_battery', 'unavailable') }}
         device_class: problem
       - name: state_cameretta_hue_device
         unique_id: state_cameretta_hue_device
