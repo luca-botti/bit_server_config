@@ -236,7 +236,7 @@ cards:
         cards:
           - type: custom:mini-graph-card
             entities:
-              - entity: sensor.particulatematter_9_pm25
+              - entity: sensor.particulatematter_6_pm25
                 # attribute:
                 # name:
                 # color:
@@ -315,7 +315,7 @@ cards:
 
           - type: custom:mini-graph-card
             entities:
-              - entity: sensor.airquality_10_ppb
+              - entity: sensor.airquality_7_ppb
                 state_adaptive_color: false
             icon: mdi:air-purifier
             name: TVOC
