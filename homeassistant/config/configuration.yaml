@@ -396,7 +396,7 @@ template:
       - name: state_ikea_air_quality_detector
         unique_id: state_ikea_air_quality_detector
         state: >-
-          {{ is_state ('sensor.vindstyrka', 'unavailable' ) }}
+          {{ is_state ('sensor.temperature_4', 'unavailable' ) }}
         device_class: problem
 #
 
