@@ -610,7 +610,7 @@
     - conditions:
       - condition: numeric_state
         entity_id: sensor.poco_f1_battery_level
-        above: 79
+        above: 80
       sequence:
       - service: switch.turn_off
         data: {}
