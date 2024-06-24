@@ -251,6 +251,7 @@ services:
           #!/bin/sh
           set -e
           unbound-checkconf -q /etc/unbound/unbound.conf
+          unbound-anchor -v
           exec unbound -d -c /etc/unbound/unbound.conf
         EOF
     healthcheck:
