@@ -656,3 +656,25 @@
   - service: deconz.remove_orphaned_entries
     data: {}
   mode: single
+- id: '1720285950917'
+  alias: 'Autospegnimento pale cameretta '
+  description: Di giorno spegne le pale dopo 4 ore che sono accese
+  trigger:
+  - platform: state
+    entity_id:
+    - fan.fan_id8
+    to: 'on'
+    for:
+      hours: 4
+      minutes: 0
+      seconds: 0
+  condition:
+  - condition: sun
+    before: sunset
+    after: sunrise
+  action:
+  - service: fan.turn_off
+    target:
+      entity_id: fan.fan_id8
+    data: {}
+  mode: single
