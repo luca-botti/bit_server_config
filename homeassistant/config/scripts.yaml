@@ -40,3 +40,31 @@ request_location_update_mobile_apps:
       message: request_location_update
   mode: single
   icon: mdi:google-maps
+toggle_for_area_lights:
+  alias: Toggle for area of lights
+  fields:
+    area_id:
+      name: Area
+      description: Area where to toggle lights
+      required: true
+      selector:
+        area:
+          entity:
+            domain: light
+  sequence:
+    - if:
+        - condition: template
+          value_template: >-
+            {{ (area_entities(area_id) | select('match', 'light.*') |
+            select('is_state', 'on') | list | count ) > 0 }}
+      then:
+        - service: light.turn_off
+          target:
+            area_id: "{{ area_id }}"
+          data: {}
+      else:
+        - service: light.turn_on
+          target:
+            area_id: "{{ area_id }}"
+          data: {}
+

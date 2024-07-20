@@ -1,0 +1,174 @@
+template:
+  - binary_sensor:
+    # List of Errors
+
+    # LocalTuya
+    - name: state_power_strip
+      unique_id: state_power_strip
+      state: >-
+        {% from 'sensor_problems.jinja' import power_strip4_unavailable %}
+        {{ power_strip4_unavailable('switch.ciabatta_1', 'switch.ciabatta_2', 'switch.ciabatta_3', 'switch.ciabatta_usb') }}
+      device_class: problem
+    - name: state_power_strip_2
+      unique_id: state_power_strip_2
+      state: >-
+        {% from 'sensor_problems.jinja' import power_strip3_unavailable %}
+        {{ power_strip3_unavailable('switch.ciabatta2_1', 'switch.ciabatta2_2', 'switch.ciabatta2_3') }}
+      device_class: problem
+    - name: state_outlet_1
+      unique_id: state_outlet_1
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('switch.presa_1') }}
+      device_class: problem
+    - name: state_outlet_2
+      unique_id: state_outlet_2
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('switch.presa_2') }}
+      device_class: problem
+    - name: state_luce_scrivania
+      unique_id: state_luce_scrivania
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('light.luce_scrivania') }}
+      device_class: problem
+
+    # MerossLan
+    - name: state_outlet_3
+      unique_id: state_outlet_3
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('switch.smart_switch_20072959117396251h5648e1e928e76c_outlet') }}
+      device_class: problem
+
+    # Sonoff
+    - name: state_sonoff_1000fa41c9
+      unique_id: state_sonoff_1000fa41c9
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('light.sonoff_1000fa41c9') }}
+      device_class: problem
+    - name: state_sonoff_1000f9103b
+      unique_id: state_sonoff_1000f9103b
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('light.sonoff_1000f9103b') }}
+      device_class: problem
+    
+    # Broadlink
+    - name: state_rm4_mini
+      unique_id: state_rm4_mini
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on %}
+        {{ error_not_on('remote.rm4_mini') }}
+      device_class: problem
+    - name: state_rm4_pro
+      unique_id: state_rm4_pro
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on %}
+        {{ error_not_on('remote.rm4_pro') }}
+      device_class: problem
+    
+    # Deconz lights
+    - name: state_faretto_deconz_device
+      unique_id: state_faretto_deconz_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('light.color_temperature_light_1') }}
+      device_class: problem
+    - name: state_faretto_scrivania_deconz_device
+      unique_id: state_faretto_scrivania_deconz_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('light.color_temperature_light_2') }}
+      device_class: problem
+    # Deconz remotes
+    - name: state_ikea_button_deconz_device
+      unique_id: state_ikea_button_deconz_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('sensor.tradfri_remote_control_battery') }}
+      device_class: problem
+    - name: state_ikea2_button_deconz_device
+      unique_id: state_ikea2_button_deconz_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('sensor.tradfri_on_off_switch_battery') }}
+      device_class: problem
+    - name: state_hue_button_deconz_device
+      unique_id: state_hue_button_deconz_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('sensor.rwl022_battery') }}
+      device_class: problem
+    - name: state_philips_button_deconz_device
+      unique_id: state_philips_button_deconz_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('sensor.rwl021_battery') }}
+      device_class: problem
+    # Deconz senosrs
+    - name: state_ikea_motion_sensor_deconz_device
+      unique_id: state_ikea_motion_sensor_deconz_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('binary_sensor.tradfri_motion_sensor') }}
+      device_class: problem
+    - name: state_ikea_air_quality_detector_deconz_device
+      unique_id: state_ikea_air_quality_detector_deconz_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_unavailable %}
+        {{ error_unavailable('sensor.temperature_4') }}
+      device_class: problem
+
+    # Hue
+    - name: state_cameretta_hue_device
+      unique_id: state_cameretta_hue_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('light.cameretta') }}
+      device_class: problem
+    - name: state_lampada_hue_device
+      unique_id: state_lampada_hue_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('light.lampada') }}
+      device_class: problem
+    - name: state_sala_da_pranzo_hue_device
+      unique_id: state_sala_da_pranzo_hue_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('light.sala_da_pranzo') }}
+      device_class: problem
+    - name: state_cucina_hue_device
+      unique_id: state_cucina_hue_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('light.cucina') }}
+      device_class: problem
+    - name: state_sala_1_hue_device
+      unique_id: state_sala_1_hue_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('light.sala_1') }}
+      device_class: problem      
+    - name: state_sala_2_hue_device
+      unique_id: state_sala_2_hue_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('light.sala_2') }}
+      device_class: problem
+    - name: state_sala_3_hue_device
+      unique_id: state_sala_3_hue_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('light.sala_3') }}
+      device_class: problem
+    - name: state_sala_4_hue_device
+      unique_id: state_sala_4_hue_device
+      state: >-
+        {% from 'sensor_problems.jinja' import error_not_on_off %}
+        {{ error_not_on_off('light.sala_4') }}
+      device_class: problem
+      

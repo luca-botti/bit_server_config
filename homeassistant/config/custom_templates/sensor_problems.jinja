@@ -1,0 +1,25 @@
+{% macro error_unavailable(entity_id) %}
+    {{ is_state (entity_id, 'unavailable') }}
+{% endmacro %}
+
+{% macro power_strip4_unavailable(entity_id1, entity_id2, entity_id3, entity_id4) %}
+    {{ is_state (entity_id1, 'unavailable') or 
+        is_state (entity_id2, 'unavailable') or 
+        is_state (entity_id3, 'unavailable') or 
+        is_state (entity_id4, 'unavailable') }}
+{% endmacro %}
+
+{% macro error_not_on(entity_id) %}
+    {{ not ( is_state(entity_id, 'on') ) }}
+{% endmacro %}
+
+{% macro error_not_on_off(entity_id) %}
+    {{ not ( is_state(entity_id, 'on') or is_state(entity_id, 'off') ) }}
+{% endmacro %}
+
+{% macro power_strip3_unavailable(entity_id1, entity_id2, entity_id3) %}
+    {{ is_state (entity_id1, 'unavailable') or 
+        is_state (entity_id2, 'unavailable') or 
+        is_state (entity_id3, 'unavailable') }}
+{% endmacro %}
+

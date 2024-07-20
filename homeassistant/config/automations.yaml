@@ -211,11 +211,9 @@
       event: 2000
   condition: []
   action:
-  - service: light.toggle
+  - service: script.toggle_for_area_lights
+    metadata: {}
     data:
-      brightness_pct: 100
-      kelvin: 2700
-    target:
       area_id: soggiorno
   mode: single
 - id: '1659889328993'
@@ -382,10 +380,10 @@
   condition: []
   action:
   - service: light.toggle
+    metadata: {}
+    data: {}
     target:
       entity_id: light.sala_da_pranzo
-    data:
-      brightness_pct: 100
   mode: single
 - id: '1661187324296'
   alias: REMOTES - Ikea Rotondo - Left
@@ -398,11 +396,9 @@
       event: 4002
   condition: []
   action:
-  - service: light.toggle
+  - service: script.toggle_for_area_lights
+    metadata: {}
     data:
-      brightness_pct: 100
-      kelvin: 2700
-    target:
       area_id: soggiorno
   mode: single
 - id: '1661187366199'
