@@ -68,5 +68,7 @@ other_files/scripts/backups/gdrive/.temp
 # !other_files/scripts/backups/gdrive/.temp/.nodata
 
 # logs
-other_files/scripts/logs/*
-!other_files/scripts/logs/.nodata
+other_files/logs/script_logs/*
+!other_files/logs/script_logs/.nodata
+other_files/logs/service_logs/*
+!other_files/logs/service_logs/.nodata

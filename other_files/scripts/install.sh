@@ -35,9 +35,17 @@ sudo usermod -aG docker $USER
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 
-# unbound log file
-sudo touch /bit_server/other_files/scripts/logs/unbound.log
-sudo chmod 777 /bit_server/other_files/scripts/logs/unbound.log
+# log files
+sudo touch /bit_server/other_files/logs/service_logs/home-assistant.log
+sudo touch /bit_server/other_files/logs/service_logs/caddy.log
+sudo touch /bit_server/other_files/logs/service_logs/pihole.log
+sudo touch /bit_server/other_files/logs/service_logs/unbound.log
+sudo touch /bit_server/other_files/logs/service_logs/vaultwarden.log
+sudo chmod 777 /bit_server/other_files/logs/service_logs/home-assistant.log
+sudo chmod 777 /bit_server/other_files/logs/service_logs/caddy.log
+sudo chmod 777 /bit_server/other_files/logs/service_logs/pihole.log
+sudo chmod 777 /bit_server/other_files/logs/service_logs/unbound.log
+sudo chmod 777 /bit_server/other_files/logs/service_logs/vaultwarden.log
 
 echo "Docker installed!"
 
@@ -70,9 +78,10 @@ sudo chmod u+x /bit_server/other_files/scripts/updater.sh
 
 # adding automated update script
 sudo crontab -l > sudocrontab 
-echo "PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin" >> usercrontab
-echo "LD_LIBRARY_PATH=/usr/local/lib" >> usercrontab
+echo "PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin" >> sudocrontab
+echo "LD_LIBRARY_PATH=/usr/local/lib" >> sudocrontab
 echo "0 4 * * 2 /bin/bash -c \"/bit_server/other_files/scripts/updater.sh\"" >> sudocrontab
+echo "0 1 1 * * /bin/bash -c \"/bit_server/other_files/scripts/log-rollers.sh\"" >> sudocrontab
 sudo crontab sudocrontab
 sudo rm sudocrontab
 

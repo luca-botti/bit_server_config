@@ -24,6 +24,7 @@ services:
       - $BASE_FOLDER/homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
+      - $LOG_FOLDER/home-assistant.log:/config/home-assistant.log
     restart: unless-stopped
     privileged: true
   # https://www.home-assistant.io/installation/alternative#docker-compose
@@ -109,6 +110,7 @@ services:
         source: $BASE_FOLDER/pihole/lighttpd/external.conf
         target: /etc/lighttpd/external.conf
       - "$BASE_FOLDER/pihole/backups:/backups"
+      - $LOG_FOLDER/pihole.log:/var/log/pihole/pihole.log
     # cap_add:
     # - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
     restart: unless-stopped
