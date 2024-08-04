@@ -18,6 +18,8 @@ DEBUG=4     # debug=4 will set the -x parameter and disable all manual echo
 
 VERBOSE=${VERBOSE_OVERRIDE:-1}
 
+FILES_TO_KEEP=5
+
 cleanExit() {
     [[ $VERBOSE -ge $WARN ]] && echo "Upload script finished"
 }
@@ -59,7 +61,14 @@ upload(){
     rm -f "$filename"
 }
 
+# $1 max new file to upload for service
 default () {
+
+    if [[ $# -ne 1 ]]; then
+        local keep=100
+    else
+        local keep=$1
+    fi
 
     [[ $VERBOSE -ge $INFO ]] && echo "Checking variables"
 
@@ -153,32 +162,12 @@ default () {
     IFS=' ' read -a cloud_voultwarden_list <<< $(bash "$HELPER" --get-list="$CLOUD_VAULTWARDEN" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_VAULTWARDEN}" --name -p --verbose=$v)
     IFS=' ' read -a cloud_secrets_list <<< $(bash "$HELPER" --get-list="$CLOUD_SECRETS" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_SECRETS}" --name -p --verbose=$v)
 
-    # locals list
-    local temp=($DECONZ_LONG_TERM_BACKUP_FOLDER/*)
-    local local_deconz_list=()
-    for elem in "${temp[@]}"; do
-        local_deconz_list+=("$(basename "$elem")")
-    done
-    temp=($HASSIO_LONG_TERM_BACKUP_FOLDER/*)
-    local local_homeassistant_list=()
-    for elem in "${temp[@]}"; do
-        local_homeassistant_list+=("$(basename "$elem")")
-    done
-    temp=($PIHOLE_LONG_TERM_BACKUP_FOLDER/*)
-    local local_pihole_list=()
-    for elem in "${temp[@]}"; do
-        local_pihole_list+=("$(basename "$elem")")
-    done
-    temp=($VAULTWARDEN_LONG_TERM_BACKUP_FOLDER/*)
-    local local_vaultwarden_list=()
-    for elem in "${temp[@]}"; do
-        local_vaultwarden_list+=("$(basename "$elem")")
-    done
-    temp=($SECRETS_LONG_TERM_BACKUP_FOLDER/*)
-    local local_secrets_list=()
-    for elem in "${temp[@]}"; do
-        local_secrets_list+=("$(basename "$elem")")
-    done
+    # locals list with at most $1 files
+    local local_deconz_list=($(ls -t $DECONZ_LONG_TERM_BACKUP_FOLDER | head -n $keep))
+    local local_homeassistant_list=($(ls -t $HASSIO_LONG_TERM_BACKUP_FOLDER | head -n $keep))
+    local local_pihole_list=($(ls -t $PIHOLE_LONG_TERM_BACKUP_FOLDER | head -n $keep))
+    local local_vaultwarden_list=($(ls -t $VAULTWARDEN_LONG_TERM_BACKUP_FOLDER | head -n $keep))
+    local local_secrets_list=($(ls -t $SECRETS_LONG_TERM_BACKUP_FOLDER | head -n $keep))
 
     # new files to upload
     local new_deconz=()
@@ -247,11 +236,11 @@ default () {
         fi
     done
 
-    [[ $VERBOSE -ge $WARN ]] && echo "New for Deconz: $new_deconz"
-    [[ $VERBOSE -ge $WARN ]] && echo "New for HomeAssistant: $new_homeassistant"
-    [[ $VERBOSE -ge $WARN ]] && echo "New for Pihole: $new_pihole"
-    [[ $VERBOSE -ge $WARN ]] && echo "New for Vaultwarden: $new_vaultwarden"
-    [[ $VERBOSE -ge $WARN ]] && echo "New for Secrets: $new_secrets"
+    [[ $VERBOSE -ge $WARN ]] && echo "${#new_deconz[@]} New for Deconz: $new_deconz"
+    [[ $VERBOSE -ge $WARN ]] && echo "${#new_homeassistant[@]} New for HomeAssistant: $new_homeassistant"
+    [[ $VERBOSE -ge $WARN ]] && echo "${#new_pihole[@]} New for Pihole: $new_pihole"
+    [[ $VERBOSE -ge $WARN ]] && echo "${#new_vaultwarden[@]} New for Vaultwarden: $new_vaultwarden"
+    [[ $VERBOSE -ge $WARN ]] && echo "${#new_secrets[@]} New for Secrets: $new_secrets"
 
     [[ $VERBOSE -ge $INFO ]] && echo "Uploading to the cloud the new files"
 
@@ -272,12 +261,221 @@ default () {
     done
     
     [[ $VERBOSE -ge $INFO ]] && echo "Upload completed"
+}
 
-    bash "$HELPER" -i --verbose=$v
+# $1 string of type id,name
+delete-file () {
+    if [[ $# -ne 1 ]]; then
+        return 1
+    fi
+    IFS="," read -a temp <<< "$1"
+    gdrive files delete "${temp[0]}"
+}
+
+# $1 file to keep
+remove-drive-old-files () {
+
+    if [[ $# -ne 1 ]]; then
+        [[ $VERBOSE -ge $ERROR ]] && echo "remove-drive-old-files wrong number of parameters"
+        return 0
+    fi
+
+    local keep=$1
+
+    [[ $VERBOSE -ge $INFO ]] && echo "Checking variables"
+
+    # if [[ -z $GDRIVE_ACCOUNT ]]; then
+    #     [[ $VERBOSE -ge $ERROR ]] && echo "GDRIVE_ACCOUNT variable is empty or not set"
+    #     exit 0
+    # fi
+    # if [[ -z $GDRIVE_CREDENTIALS_PATH ]]; then
+    #     [[ $VERBOSE -ge $ERROR ]] && echo "GDRIVE_CREDENTIALS_PATH variable is empty or not set"
+    #     exit 0
+    # fi
+    if [[ -z $HASSIO_LONG_TERM_BACKUP_FOLDER ]]; then
+        [[ $VERBOSE -ge $ERROR ]] && echo "HASSIO_LONG_TERM_BACKUP_FOLDER variable is empty or not set"
+        exit 0
+    fi
+    if [[ -z $DECONZ_LONG_TERM_BACKUP_FOLDER ]]; then
+        [[ $VERBOSE -ge $ERROR ]] && echo "DECONZ_LONG_TERM_BACKUP_FOLDER variable is empty or not set"
+        exit 0
+    fi
+    if [[ -z $PIHOLE_LONG_TERM_BACKUP_FOLDER ]]; then
+        [[ $VERBOSE -ge $ERROR ]] && echo "PIHOLE_LONG_TERM_BACKUP_FOLDER variable is empty or not set"
+        exit 0
+    fi
+    if [[ -z $VAULTWARDEN_LONG_TERM_BACKUP_FOLDER ]]; then
+        [[ $VERBOSE -ge $ERROR ]] && echo "VAULTWARDEN_LONG_TERM_BACKUP_FOLDER variable is empty or not set"
+        exit 0
+    fi
+    if [[ -z $SECRETS_LONG_TERM_BACKUP_FOLDER ]]; then
+        [[ $VERBOSE -ge $ERROR ]] && echo "SECRETS_LONG_TERM_BACKUP_FOLDER variable is empty or not set"
+        exit 0
+    fi
+
+
+
+    if [[ $VERBOSE -ge $DEBUG ]]; then
+        local v=3
+    else
+        local v=0
+    fi
+
+    [[ $VERBOSE -ge $INFO ]] && echo "Done cheching variables"
+
+    # gdrive account import "$GDRIVE_CREDENTIALS_PATH"
+    # gdrive account list
+    # gdrive account switch "$GDRIVE_ACCOUNT"
+
+    [[ $VERBOSE -ge $INFO ]] && echo "Getting root folder id"
+
+    local root_directory_id=$(bash "$HELPER" --get-id="$CLOUD_FOLDER_NAME" --path="root/${CLOUD_FOLDER_NAME}" --verbose=$v)
+    if [[ -z "$root_directory_id" ]]; then
+        root_directory_id=$(gdrive files mkdir --print-only-id "$CLOUD_FOLDER_NAME")
+    fi
+
+    [[ $VERBOSE -ge $INFO ]] && echo "Root folder id: $root_directory_id"
+    [[ $VERBOSE -ge $INFO ]] && echo "Getting services cloud folders ids"
+
+    # not using persistant because we are modifing the drive
+    local deconz_id=$(bash "$HELPER" --get-id="$CLOUD_DECONZ" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_DECONZ}" --verbose=$v)
+    if [[ -z "$deconz_id" ]]; then
+        deconz_id=$(gdrive files mkdir --parent "$root_directory_id" --print-only-id "$CLOUD_DECONZ")
+    fi
+    local homeassistant_id=$(bash "$HELPER" --get-id="$CLOUD_HOMEASSISTANT" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_HOMEASSISTANT}" --verbose=$v)
+    if [[ -z "$homeassistant_id" ]]; then
+        homeassistant_id=$(gdrive files mkdir --parent "$root_directory_id" --print-only-id "$CLOUD_HOMEASSISTANT")
+    fi
+    local pihole_id=$(bash "$HELPER" --get-id="$CLOUD_PIHOLE" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_PIHOLE}" --verbose=$v)
+    if [[ -z "$pihole_id" ]]; then
+        pihole_id=$(gdrive files mkdir --parent "$root_directory_id" --print-only-id "$CLOUD_PIHOLE")
+    fi
+    local vaultwarden_id=$(bash "$HELPER" --get-id="$CLOUD_VAULTWARDEN" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_VAULTWARDEN}" --verbose=$v)
+    if [[ -z "$vaultwarden_id" ]]; then
+        vaultwarden_id=$(gdrive files mkdir --parent "$root_directory_id" --print-only-id "$CLOUD_VAULTWARDEN")
+    fi
+    local secrets_id=$(bash "$HELPER" --get-id="$CLOUD_SECRETS" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_SECRETS}" --verbose=$v)
+    if [[ -z "$secrets_id" ]]; then
+        secrets_id=$(gdrive files mkdir --parent "$root_directory_id" --print-only-id "$CLOUD_SECRETS")
+    fi
+
+    [[ $VERBOSE -ge $INFO ]] && echo "Deconz cloud folder id: $deconz_id"
+    [[ $VERBOSE -ge $INFO ]] && echo "HomeAssistant cloud folder id: $homeassistant_id"
+    [[ $VERBOSE -ge $INFO ]] && echo "Pihole cloud folder id: $pihole_id"
+    [[ $VERBOSE -ge $INFO ]] && echo "Vaultwarden cloud folder id: $vaultwarden_id"
+    [[ $VERBOSE -ge $INFO ]] && echo "Secrets cloud folder id: $secrets_id"
+
+    [[ $VERBOSE -ge $INFO ]] && echo "Retrieving files list inside cloud and then remove the oldest ones"
+
+    # complete list
+    IFS=' ' read -a cloud_deconz_list_all <<< $(bash "$HELPER" --get-list="$CLOUD_DECONZ" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_DECONZ}" -p --verbose=$v)
+    IFS=' ' read -a cloud_homeassistant_list_all <<< $(bash "$HELPER" --get-list="$CLOUD_HOMEASSISTANT" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_HOMEASSISTANT}" -p --verbose=$v)
+    IFS=' ' read -a cloud_pihole_list_all <<< $(bash "$HELPER" --get-list="$CLOUD_PIHOLE" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_PIHOLE}" -p --verbose=$v)
+    IFS=' ' read -a cloud_voultwarden_list_all <<< $(bash "$HELPER" --get-list="$CLOUD_VAULTWARDEN" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_VAULTWARDEN}" -p --verbose=$v)
+    IFS=' ' read -a cloud_secrets_list_all <<< $(bash "$HELPER" --get-list="$CLOUD_SECRETS" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_SECRETS}" -p --verbose=$v)
+
+    # just $1 new files
+
+    IFS=' ' read -a cloud_deconz_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_DECONZ" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_DECONZ}" -p --options "--order-by;"modifiedTime\ desc";--max;$keep" --verbose=$v)
+    IFS=' ' read -a cloud_homeassistant_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_HOMEASSISTANT" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_HOMEASSISTANT}" -p --options "--order-by;"modifiedTime\ desc";--max;$keep" --verbose=$v)
+    IFS=' ' read -a cloud_pihole_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_PIHOLE" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_PIHOLE}" -p --options "--order-by;"modifiedTime\ desc";--max;$keep" --verbose=$v)
+    IFS=' ' read -a cloud_voultwarden_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_VAULTWARDEN" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_VAULTWARDEN}" -p --options "--order-by;"modifiedTime\ desc";--max;$keep" --verbose=$v)
+    IFS=' ' read -a cloud_secrets_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_SECRETS" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_SECRETS}" -p --options "--order-by;"modifiedTime\ desc";--max;$keep" --verbose=$v)
+
+
+    # find older files to delete
+    local del_deconz=()
+    for elem in "${cloud_deconz_list_all[@]}"; do
+        local -i found=0
+        for keep_elem in "${cloud_deconz_list_to_keep[@]}"; do
+            if [[ "$elem" == "$keep_elem" ]]; then
+                found=1
+                break
+            fi
+        done
+        if [[ $found -eq 0 ]]; then
+            del_deconz+=("$elem")
+        fi
+    done
+    local del_homeassistant=()
+    for elem in "${cloud_homeassistant_list_all[@]}"; do
+        local -i found=0
+        for keep_elem in "${cloud_homeassistant_list_to_keep[@]}"; do
+            if [[ "$elem" == "$keep_elem" ]]; then
+                found=1
+                break
+            fi
+        done
+        if [[ $found -eq 0 ]]; then
+            del_homeassistant+=("$elem")
+        fi
+    done
+    local del_pihole=()
+    for elem in "${cloud_pihole_list_all[@]}"; do
+        local -i found=0
+        for keep_elem in "${cloud_pihole_list_to_keep[@]}"; do
+            if [[ "$elem" == "$keep_elem" ]]; then
+                found=1
+                break
+            fi
+        done
+        if [[ $found -eq 0 ]]; then
+            del_pihole+=("$elem")
+        fi
+    done
+    local del_voultwarden=()
+    for elem in "${cloud_voultwarden_list_all[@]}"; do
+        local -i found=0
+        for keep_elem in "${cloud_voultwarden_list_to_keep[@]}"; do
+            if [[ "$elem" == "$keep_elem" ]]; then
+                found=1
+                break
+            fi
+        done
+        if [[ $found -eq 0 ]]; then
+            del_voultwarden+=("$elem")
+        fi
+    done
+    local del_secrets=()
+    for elem in "${cloud_secrets_list_all[@]}"; do
+        local -i found=0
+        for keep_elem in "${cloud_secrets_list_to_keep[@]}"; do
+            if [[ "$elem" == "$keep_elem" ]]; then
+                found=1
+                break
+            fi
+        done
+        if [[ $found -eq 0 ]]; then
+            del_secrets+=("$elem")
+        fi
+    done
+
+    # now we have a list for all folders of "id,name"
+    for elem in "${del_deconz[@]}"; do
+        delete-file $elem
+    done
+    for elem in "${del_homeassistant[@]}"; do
+        delete-file $elem
+    done
+    for elem in "${del_pihole[@]}"; do
+        delete-file $elem
+    done
+    for elem in "${del_voultwarden[@]}"; do
+        delete-file $elem
+    done
+    for elem in "${del_secrets[@]}"; do
+        delete-file $elem
+    done
+
+    [[ $VERBOSE -ge $INFO ]] && echo "Completed deleting old files, now at most $1 files are on the drive for each service"
 }
 
 [[ $VERBOSE -ge $INFO ]] && echo "Upload script started"
 
-default
+default $FILES_TO_KEEP
+
+remove-drive-old-files $FILES_TO_KEEP
+
+bash "$HELPER" -i --verbose=$v
 
 exit 0

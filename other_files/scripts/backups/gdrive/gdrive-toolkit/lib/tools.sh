@@ -31,6 +31,26 @@ gen-folder-csv() {
     return 0
 }
 
+# $1 string '<i>,<name>' of the folder, $2 options to pass to gdrive (semicolon separeted list with escaped whitespaces), $3 csv-file name to create, use a not existing folder name (not existing on the drive)
+modified-gen-folder-csv() {
+    if [[ $# -eq 3 ]]; then
+        [[ $VERBOSE -ge $DEBUG ]] && echo "gen-folder-csv-with-options - $1" >&2
+        IFS=',' read -a arg <<< "$1"
+        local id=${arg[0]}
+        local name=$3
+        if [[ ! -e "$name.csv" ]]; then
+            IFS=';' read -a t <<< "$2"
+            gdrive files list --field-separator "," --full-name --parent "$id" "${t[@]}" > "$name.csv"
+            [[ $VERBOSE -ge $INFO ]] && echo "gen-folder-csv-with-options - created $name.csv" >&2
+        fi
+        echo "$name"
+    else
+        [[ $VERBOSE -ge $QUIET ]] && echo "gen-folder-csv-with-options - error wrong argument - $*" >&2
+        return 1
+    fi
+    return 0
+}
+
 # $1 csv file name to search, $2 exact string to search
 # return value 0 -> found, return value 1 -> not found
 retrieve-id() {

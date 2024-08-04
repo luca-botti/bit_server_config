@@ -44,23 +44,26 @@ RESULTS=()
 # s shortcut
 SELECTOR=()
 
+# variable used for specifiing some arguments to be passed directly to gdrive while constructiong the csv file
+OPTIONS=""
+
 
 ########################################
 
 FUNCTION=()
 ARG=""
 
-TEMP_FOLDER="/bit_server/other_files/scripts/backups/gdrive/.temp"
+TEMP_FOLDER_NAME=".temp"
 ROOT_CSV="root"
 
 mk-cd-folder() {
-    if [[ -e "$1" ]] && [[ -d "$1" ]]; then
+    if [[ -e $1 ]] && [[ -d $1 ]]; then
         [[ $VERBOSE -ge $DEBUG ]] && echo "$1 folder already created" >&2
     else
-        mkdir -p "$1"
+        mkdir $1
         [[ $VERBOSE -ge $INFO ]] && echo "$1 folder just created">&2
     fi
-    cd "$1"
+    cd $1
     return 0
 }
 
@@ -68,29 +71,29 @@ cd-rm-folder () {
     cd ..
 
     if [[ $PERSISTENT -eq 0 ]]; then
-        rm -r -f "$1"
+        rm -r -f $1
         [[ $VERBOSE -ge $WARN ]] && echo "removed $1 folder">&2
     fi
 }
 
 Help() {
-   echo "TODO help" >&2
+   echo "TODO help"
 }
 
 GetId() {
 
-    mk-cd-folder $TEMP_FOLDER
+    mk-cd-folder $TEMP_FOLDER_NAME
 
     if [[ ! -z $GIVEN_PATH ]]; then
         IFS='/' read -a path <<< "$GIVEN_PATH"
         if [[ "$ROOT_CSV" != "${path[0]}" ]]; then
             [[ $VERBOSE -ge $QUIET ]] && echo "GIVEN_PATH not starting with required incipit root/">&2
-            cd-rm-folder $TEMP_FOLDER
+            cd-rm-folder $TEMP_FOLDER_NAME
             return 1
         fi
         if [[ "$1" != "${path[-1]}" ]]; then
             [[ $VERBOSE -ge $QUIET ]] && echo "the required file and the path do not corrispond">&2
-            cd-rm-folder $TEMP_FOLDER
+            cd-rm-folder $TEMP_FOLDER_NAME
             return 1
         fi
         echo "$(search-directly-id path)"
@@ -101,51 +104,52 @@ GetId() {
             echo "$(dfs-get-id "$1")"
         else
             [[ $VERBOSE -ge $QUIET ]] && echo "\$MODE error can be only 0 (DFS) or 1 (BFS), -> $MODE">&2
-            cd-rm-folder $TEMP_FOLDER
+            cd-rm-folder $TEMP_FOLDER_NAME
             return 1
         fi
     fi
-    cd-rm-folder $TEMP_FOLDER
+    cd-rm-folder $TEMP_FOLDER_NAME
     return 0
 }
 
 Invalidate() {
-    mk-cd-folder $TEMP_FOLDER
-    cd-rm-folder $TEMP_FOLDER
+    mk-cd-folder $TEMP_FOLDER_NAME
+    cd-rm-folder $TEMP_FOLDER_NAME
     return 0
 }
 
 GetList(){
 
-    local pers=$PERSISTENT
-    if [[ $PERSISTENT -eq 0 ]]; then
-        PERSISTENT=1
-    fi
-
     local folder_id=$(GetId "$1")
 
     if [[ -z $folder_id ]]; then
-        echo "Folder not found" >&2
+        echo "Folder not found"
         return 1
     fi
     
-    mk-cd-folder $TEMP_FOLDER
+    mk-cd-folder $TEMP_FOLDER_NAME
 
     local string="$folder_id,$1"
 
-    gen-folder-csv "$string" > /dev/null
+    if [[ ! -z $OPTIONS ]]; then
+        local csv_name="$(tr -d "[:punct:]\n " <<< $(echo $OPTIONS)-$1)"
+        modified-gen-folder-csv "$string" "$OPTIONS" "$csv_name" > /dev/null
+    else
+        local csv_name=$1
+        gen-folder-csv "$string" > /dev/null
+    fi
+
+    
 
     local -a results
 
     if [[ ${#SELECTOR[@]} -eq 0 ]]; then
-        get-list results "$1"
+        get-list results "$csv_name"
     elif [[ ${#SELECTOR[@]} -eq 1 ]]; then
-        get-list results "$1" "${SELECTOR[0]}"
+        get-list results "$csv_name" "${SELECTOR[0]}"
     fi
 
-    PERSISTENT=$pers
-
-    cd-rm-folder $TEMP_FOLDER
+    cd-rm-folder $TEMP_FOLDER_NAME
 
     if [[ ${#RESULTS[@]} -gt 0 ]]; then
 
@@ -180,36 +184,30 @@ GetList(){
 # $1 file or folder name, use -f option for getting the complessive size of all file in a folder
 GetSize () {
 
-    local pers=$PERSISTENT
-    if [[ $PERSISTENT -eq 0 ]]; then
-        PERSISTENT=1
-    fi
-
     local selected_id=$(GetId "$1")
 
     if [[ -z $selected_id ]]; then
-        echo "Not found">&2
+        echo "Not found"
         return 1
     fi
 
 
     if [[ ${#SELECTOR[@]} -eq 1 && "${SELECTOR[0]}" == "f" ]]; then # request for the size of a folder
-        mk-cd-folder $TEMP_FOLDER
+        mk-cd-folder $TEMP_FOLDER_NAME
         local temp=$1
         echo "$(get-folder-size-recursive "${selected_id},${temp}")"
-        PERSISTENT=$pers
-        cd-rm-folder $TEMP_FOLDER
+        cd-rm-folder $TEMP_FOLDER_NAME
     else
         echo "$(get-file-size "$selected_id")"
     fi
 }
 
 OPSTRING=":hg:cvmil:pfdrs"
-OPLONGSTRING="help,get-id:,cached,verbose::,mode,invalidate,persistent,get-list:,id,name,get-size:,path:"
+OPLONGSTRING="help,get-id:,cached,verbose::,mode,invalidate,persistent,get-list:,id,name,get-size:,path:,options:"
 TEMP=$(getopt -o $OPSTRING --long $OPLONGSTRING -n 'gdrive-tools.bash' -- "$@")
 
 if [ $? -ne 0 ]; then
-        echo "Error parsing argouments">&2
+        echo 'Error parsing argouments'
         Help
         exit 1
 fi
@@ -255,6 +253,11 @@ while true; do
         '--name')
             RESULTS+=("n")
             shift
+            continue
+            ;;
+        '--options')
+            OPTIONS="$2"
+            shift 2
             continue
             ;;
         '-i'|'--invalidate') 
@@ -321,37 +324,37 @@ while true; do
 done
 
 if [[ $VERBOSE -ge $DEBUG ]]; then
-    echo 'Remaining arguments:'>&2
+    echo 'Remaining arguments:'
     for arg; do
-            echo "--> '$arg'">&2
+            echo "--> '$arg'"
     done
 fi
 
 
 if [[ ${#FUNCTION[@]} -gt 1 ]]; then
-    [[ $VERBOSE -ge $QUIET ]] && echo "you can use only one of this argouments in one call: -g or --get-id, -i or --invalidate, --get-list, --get-size">&2
+    [[ $VERBOSE -ge $QUIET ]] && echo "you can use only one of this argouments in one call: -g or --get-id, -i or --invalidate, --get-list, --get-size"
     exit
 fi
 
 if [[ $PERSISTEN -eq 0 ]]; then
-    [[ $VERBOSE -ge $DEBUG ]] && echo "Not Persistent Mode">&2
+    [[ $VERBOSE -ge $DEBUG ]] && echo "Not Persistent Mode"
 else
-    [[ $VERBOSE -ge $DEBUG ]] && echo "Persistent Mode">&2
+    [[ $VERBOSE -ge $DEBUG ]] && echo "Persistent Mode"
 fi
 
 if [[ $MODE -eq 0 ]]; then
-    [[ $VERBOSE -ge $DEBUG ]] && echo "Deep First Search algorithm">&2
+    [[ $VERBOSE -ge $DEBUG ]] && echo "Deep First Search algorithm"
 else
-    [[ $VERBOSE -ge $DEBUG ]] && echo "Branch First Search algorithm">&2
+    [[ $VERBOSE -ge $DEBUG ]] && echo "Branch First Search algorithm"
 fi
 
 if [[ ${#SELECTOR[@]} -gt 1 ]]; then
-    [[ $VERBOSE -ge $DEBUG ]] && echo "More selector chosen, reset to default all">&2
+    [[ $VERBOSE -ge $DEBUG ]] && echo "More selector chosen, reset to default all"
     SELECTOR=()
 fi
 
 if [[ ${#RESULTS[@]} -gt 1 ]]; then
-    [[ $VERBOSE -ge $DEBUG ]] && echo "Both result mode choosen, putting both">&2
+    [[ $VERBOSE -ge $DEBUG ]] && echo "Both result mode choosen, putting both"
     RESULTS=()
 fi
 
@@ -360,3 +363,9 @@ if [[ ${#FUNCTION[@]} -gt 0 ]]; then
 fi
 
 exit 0
+
+
+
+
+
+

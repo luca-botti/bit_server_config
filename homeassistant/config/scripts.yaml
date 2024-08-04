@@ -52,19 +52,19 @@ toggle_for_area_lights:
           entity:
             domain: light
   sequence:
-    - if:
-        - condition: template
-          value_template: >-
-            {{ (area_entities(area_id) | select('match', 'light.*') |
-            select('is_state', 'on') | list | count ) > 0 }}
-      then:
-        - service: light.turn_off
-          target:
-            area_id: "{{ area_id }}"
-          data: {}
-      else:
-        - service: light.turn_on
-          target:
-            area_id: "{{ area_id }}"
-          data: {}
-
+  - if:
+    - condition: template
+      value_template: '{{ (area_entities(area_id) | select(''match'', ''light.*'')
+        | select(''is_state'', ''on'') | list | count ) > 0 }}'
+    then:
+    - service: light.turn_off
+      target:
+        area_id: '{{ area_id }}'
+      data: {}
+    else:
+    - service: light.turn_on
+      target:
+        area_id: '{{ area_id }}'
+      data:
+        kelvin: 3000
+        brightness_pct: 100
