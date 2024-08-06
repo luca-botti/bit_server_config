@@ -53,7 +53,7 @@ echo "Installing backup scripts dependencies..."
 
 # backup dependencies
 
-sudo apt install jq cron findutils coreutils diffutils csvkit coreutils gpg sqlite3 -y # used in backup scripts
+sudo apt install bc jq cron findutils coreutils diffutils csvkit coreutils gpg sqlite3 -y # used in backup scripts
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y # installing rust
 source "$HOME/.cargo/env" # adding rust binaries to PATH
@@ -82,6 +82,7 @@ echo "PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin" >> sudocrontab
 echo "LD_LIBRARY_PATH=/usr/local/lib" >> sudocrontab
 echo "0 4 * * 2 /bin/bash -c \"/bit_server/other_files/scripts/updater.sh\"" >> sudocrontab
 echo "0 1 1 * * /bin/bash -c \"/bit_server/other_files/scripts/log-rollers.sh\"" >> sudocrontab
+echo "30 1 1 * * /bin/bash -c \"/bit_server/other_files/scripts/local-backup-eraser-starter.sh\"" >> sudocrontab
 sudo crontab sudocrontab
 sudo rm sudocrontab
 

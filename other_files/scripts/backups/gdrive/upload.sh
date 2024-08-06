@@ -26,22 +26,6 @@ cleanExit() {
 
 trap cleanExit EXIT # setting exit function
 
-# $1 folder path
-get-folder-bytes-size() {
-    local temp=$(du -s -B 1 "$1/")
-    local suffix_starter=$'\t'
-    local temp=${temp%%$suffix_starter*}
-    # echo "${temp@Q}"
-    echo "$temp"
-}
-
-# $1 file path
-get-file-bytes-size() {
-    local temp=$(stat --printf="%s" $1)
-    # echo "${temp@Q}"
-    echo "$temp"
-}
-
 # $1 path, $2 parent id
 upload(){
     if [[ $# -ne 2 ]]; then
@@ -55,6 +39,8 @@ upload(){
     filename="$1.gpg"
         
     gdrive files upload --parent "$2" "$filename" > /dev/null
+
+    [[ $VERBOSE -ge $INFO ]] && echo "Uploaded $filename"
 
     # removing gpg file
 
@@ -269,7 +255,9 @@ delete-file () {
         return 1
     fi
     IFS="," read -a temp <<< "$1"
-    gdrive files delete "${temp[0]}"
+    gdrive files delete "${temp[0]}" > /dev/null
+
+    [[ $VERBOSE -ge $INFO ]] && echo "Deleted ${temp[1]}"
 }
 
 # $1 file to keep
@@ -449,6 +437,12 @@ remove-drive-old-files () {
             del_secrets+=("$elem")
         fi
     done
+
+    [[ $VERBOSE -ge $WARN ]] && echo "${#del_deconz[@]} to be deleted for Deconz: $del_deconz"
+    [[ $VERBOSE -ge $WARN ]] && echo "${#del_homeassistant[@]} to be deleted for HomeAssistant: $del_homeassistant"
+    [[ $VERBOSE -ge $WARN ]] && echo "${#del_pihole[@]} to be deleted for Pihole: $del_pihole"
+    [[ $VERBOSE -ge $WARN ]] && echo "${#del_voultwarden[@]} to be deleted for Vaultwarden: $del_voultwarden"
+    [[ $VERBOSE -ge $WARN ]] && echo "${#del_secrets[@]} to be deleted for Secrets: $del_secrets"
 
     # now we have a list for all folders of "id,name"
     for elem in "${del_deconz[@]}"; do
