@@ -26,9 +26,9 @@ binary_sensor.state_outlet_2:
 binary_sensor.state_outlet_3:
   friendly_name: Problema Presa 3
 binary_sensor.state_sonoff_1000fa41c9:
-  friendly_name: Problema Balcone Sala da pranzo
-binary_sensor.state_sonoff_1000f9103b:
   friendly_name: Problema Balcone Cucina
+binary_sensor.state_sonoff_1000f9103b:
+  friendly_name: Problema Balcone Salotto
 binary_sensor.state_rm4_mini:
   friendly_name: Problema Controller Infrarossi RM4 Mini
 binary_sensor.state_rm4_pro:
