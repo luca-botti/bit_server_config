@@ -35,6 +35,7 @@ upload(){
     # encrypt
 
     gpg --batch --passphrase "$PASSPHRASE" --symmetric "$1"
+    touch -r "$1" "$1.gpg"
 
     filename="$1.gpg"
         
@@ -364,11 +365,11 @@ remove-drive-old-files () {
 
     # just $1 new files
 
-    IFS=' ' read -a cloud_deconz_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_DECONZ" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_DECONZ}" -p --options "--order-by;"modifiedTime\ desc";--max;$keep" --verbose=$v)
-    IFS=' ' read -a cloud_homeassistant_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_HOMEASSISTANT" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_HOMEASSISTANT}" -p --options "--order-by;"modifiedTime\ desc";--max;$keep" --verbose=$v)
-    IFS=' ' read -a cloud_pihole_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_PIHOLE" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_PIHOLE}" -p --options "--order-by;"modifiedTime\ desc";--max;$keep" --verbose=$v)
-    IFS=' ' read -a cloud_voultwarden_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_VAULTWARDEN" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_VAULTWARDEN}" -p --options "--order-by;"modifiedTime\ desc";--max;$keep" --verbose=$v)
-    IFS=' ' read -a cloud_secrets_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_SECRETS" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_SECRETS}" -p --options "--order-by;"modifiedTime\ desc";--max;$keep" --verbose=$v)
+    IFS=' ' read -a cloud_deconz_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_DECONZ" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_DECONZ}" -p --options "--order-by;"createdTime\ desc";--max;$keep" --verbose=$v)
+    IFS=' ' read -a cloud_homeassistant_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_HOMEASSISTANT" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_HOMEASSISTANT}" -p --options "--order-by;"createdTime\ desc";--max;$keep" --verbose=$v)
+    IFS=' ' read -a cloud_pihole_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_PIHOLE" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_PIHOLE}" -p --options "--order-by;"createdTime\ desc";--max;$keep" --verbose=$v)
+    IFS=' ' read -a cloud_voultwarden_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_VAULTWARDEN" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_VAULTWARDEN}" -p --options "--order-by;"createdTime\ desc";--max;$keep" --verbose=$v)
+    IFS=' ' read -a cloud_secrets_list_to_keep <<< $(bash "$HELPER" --get-list="$CLOUD_SECRETS" --path="root/${CLOUD_FOLDER_NAME}/${CLOUD_SECRETS}" -p --options "--order-by;"createdTime\ desc";--max;$keep" --verbose=$v)
 
 
     # find older files to delete
@@ -437,6 +438,17 @@ remove-drive-old-files () {
             del_secrets+=("$elem")
         fi
     done
+
+    [[ $VERBOSE -ge $INFO ]] && echo "${#cloud_deconz_list_all[@]} Clouds Deconz: $cloud_deconz_list_all"
+    [[ $VERBOSE -ge $INFO ]] && echo "${#cloud_deconz_list_to_keep[@]} Clouds Deconz to keep: $cloud_deconz_list_to_keep"
+    [[ $VERBOSE -ge $INFO ]] && echo "${#cloud_homeassistant_list_all[@]} Clouds HomeAssistant: $cloud_homeassistant_list_all"
+    [[ $VERBOSE -ge $INFO ]] && echo "${#cloud_homeassistant_list_to_keep[@]} Clouds HomeAssistant to keep: $cloud_homeassistant_list_to_keep"
+    [[ $VERBOSE -ge $INFO ]] && echo "${#cloud_pihole_list_all[@]} Clouds Pihole: $cloud_pihole_list_all"
+    [[ $VERBOSE -ge $INFO ]] && echo "${#cloud_pihole_list_to_keep[@]} Clouds Pihole to keep: $cloud_pihole_list_to_keep"
+    [[ $VERBOSE -ge $INFO ]] && echo "${#cloud_voultwarden_list_all[@]} Clouds Vaultwarden: $cloud_voultwarden_list_all"
+    [[ $VERBOSE -ge $INFO ]] && echo "${#cloud_voultwarden_list_to_keep[@]} Clouds Vaultwarden to keep: $cloud_voultwarden_list_to_keep"
+    [[ $VERBOSE -ge $INFO ]] && echo "${#cloud_secrets_list_all[@]} Clouds Secrets: $cloud_secrets_list_all"
+    [[ $VERBOSE -ge $INFO ]] && echo "${#cloud_secrets_list_to_keep[@]} Clouds Secrets to keep: $cloud_secrets_list_to_keep"
 
     [[ $VERBOSE -ge $WARN ]] && echo "${#del_deconz[@]} to be deleted for Deconz: $del_deconz"
     [[ $VERBOSE -ge $WARN ]] && echo "${#del_homeassistant[@]} to be deleted for HomeAssistant: $del_homeassistant"

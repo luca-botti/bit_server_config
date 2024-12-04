@@ -63,7 +63,7 @@ binary_sensor.state_sala_2_hue_device:
   friendly_name: Problema Luce Hue Sala 2
 binary_sensor.state_sala_1_hue_device:
   friendly_name: Problema Luce Hue Sala 1
-binary_sensor.state_ikea_motion_sensor:
+binary_sensor.state_ikea_motion_sensor_deconz_device:
   friendly_name: Problema Sensore di Movimento Ikea
 binary_sensor.state_ikea_air_quality_detector:
   friendly_name: Problema Sensore Qualità dell'Aria Ikea

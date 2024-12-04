@@ -674,3 +674,66 @@
       entity_id: fan.fan_id8
     data: {}
   mode: single
+- id: '1726254353899'
+  alias: Reduce Speakers Volumes
+  description: If the volume is too high it will be set to half of the max.
+  trigger:
+  - platform: template
+    value_template: "{% set ns = namespace(found=false) %}\n{% for media in (states.media_player
+      | selectattr('state', 'eq', 'playing') | list)  %}\n  {% if (media.attributes.volume_level
+      | float > 0.5) %}\n    {% set ns.found = true %}\n  {% endif %}\n{% endfor %}\n{{
+      ns.found }}"
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - repeat:
+      sequence:
+      - if:
+        - condition: template
+          value_template: '{{ is_state( trigger.entity_id, "playing" ) and state_attr(
+            trigger.entity_id, "volume_level" ) | float > 0.5 }}'
+        then:
+        - action: media_player.volume_set
+          target:
+            entity_id: '{{ trigger.entity_id }}'
+          data:
+            volume_level: 0.5
+      - delay:
+          hours: 0
+          minutes: 1
+          seconds: 0
+          milliseconds: 0
+      while:
+      - condition: template
+        value_template: '{{ is_state( trigger.entity_id, "playing" ) }}'
+  mode: single
+- id: '1727375937317'
+  alias: Single Use
+  description: Turn off phone charging and keep charging phone up to 100%
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - action: automation.turn_off
+    metadata: {}
+    data:
+      stop_actions: true
+    target:
+      entity_id: automation.phone_charging
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.ciabatta_1
+  - action: automation.turn_off
+    metadata: {}
+    data:
+      stop_actions: false
+    target:
+      entity_id: automation.single_use
+  mode: single

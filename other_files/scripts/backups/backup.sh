@@ -19,7 +19,7 @@ ONLY_UPLOAD=${U:-0}
 
 ###### GLOBAL VARIABLES ######
 args=()
-[[ $VERBOSE -ge $DEBUG ]] && set -x && args+=( '-x' ) && VERBOSE=1
+[[ $VERBOSE -ge $DEBUG ]] && set -x && args+=( '-x' ) # && VERBOSE=1
 
 DATE=$(date +"%Y-%m-%d-%H-%M-%S")
 
