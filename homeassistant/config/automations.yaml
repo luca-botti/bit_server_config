@@ -737,3 +737,11 @@
     target:
       entity_id: automation.single_use
   mode: single
+- id: '1744381938634'
+  alias: FIX - Do Not Deactivate - Luce Scrivania
+  description: ''
+  use_blueprint:
+    path: custom/ikea_lights_fix.yaml
+    input:
+      ikea_light_entity: light.color_temperature_light_2
+      input_boolean: input_boolean.ikea_light_2_fix

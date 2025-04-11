@@ -22,8 +22,8 @@ blueprint:
           filter:
             domain: input_boolean
 
-mode: queued
-max: 10
+mode: parallel
+max: 100
 max_exceeded: warning
 
 trigger:
@@ -33,27 +33,51 @@ trigger:
       domain: light
       service: turn_on
       service_data:
-        entity_id:
-          - !input ikea_light_entity
-    id: call
+        entity_id: !input ikea_light_entity
+    id: "call_on"
+  - platform: event
+    event_type: call_service
+    event_data:
+      domain: light
+      service: turn_off
+      service_data:
+        entity_id: !input ikea_light_entity
+    id: "call_off"
   - platform: event
     event_type: call_service
     event_data:
       domain: light
       service: toggle
       service_data:
-        entity_id:
-          - !input ikea_light_entity
-    id: toggle
-  - platform: state
-    entity_id:
-      - !input ikea_light_entity
-    to: "on"
+        entity_id: !input ikea_light_entity
+    id: "toggle"
+  # - platform: state
+  #   entity_id:
+  #     - !input ikea_light_entity
+  #   to: "on"
+  #   id: "on"
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input ikea_light_entity
+      new_state:
+        state: "on"
+      old_state:
+        state: "off"
     id: "on"
-  - platform: state
-    entity_id:
-      - !input ikea_light_entity
-    to: "off"
+  # - platform: state
+  #   entity_id:
+  #     - !input ikea_light_entity
+  #   to: "off"
+  #   id: "off"
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input ikea_light_entity
+      new_state:
+        state: "off"
+      old_state:
+        state: "on"
     id: "off"
 condition: []
 action:
@@ -61,9 +85,19 @@ action:
       - conditions:
           - condition: trigger
             id:
-              - call
+              - call_on
         sequence:
           - service: input_boolean.turn_on
+            metadata: {}
+            data: {}
+            target:
+              entity_id: !input input_boolean
+      - conditions:
+          - condition: trigger
+            id:
+              - call_off
+        sequence:
+          - service: input_boolean.turn_off
             metadata: {}
             data: {}
             target:
@@ -72,11 +106,8 @@ action:
           - condition: trigger
             id:
               - toggle
-          - condition: state
-            entity_id: !input ikea_light_entity
-            state: "off"
         sequence:
-          - service: input_boolean.turn_on
+          - service: input_boolean.toggle
             metadata: {}
             data: {}
             target:
@@ -85,15 +116,22 @@ action:
           - condition: trigger
             id:
               - "on"
-          - condition: state
-            entity_id: !input input_boolean
-            state: "off"
         sequence:
-          - service: light.turn_off
-            metadata: {}
-            data: {}
-            target:
-              entity_id: !input ikea_light_entity
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 1
+              milliseconds: 0
+          - if:
+              - condition: state
+                entity_id: !input input_boolean
+                state: "off"
+            then:
+              - service: light.turn_off
+                metadata: {}
+                data: {}
+                target:
+                  entity_id: !input ikea_light_entity
       - conditions:
           - condition: trigger
             id:
